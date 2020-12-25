@@ -9,6 +9,7 @@ void set_of_pipes::add_pipe(double length, double diameter)
 void set_of_pipes::delete_pipe(int index)
 {
     pipes[index] = pipes.back();
+    pipes[index].id = index;
     pipes.pop_back();
     pipe_count--;
 }
@@ -63,6 +64,7 @@ void set_of_pipes::deselect_pipe(int id)
 void set_of_pipes::change_repair_status(int index)
 {
     pipes[index].inRepair = !pipes[index].inRepair;
+    std::cout << "Труба ID " << index << ((pipes[index].inRepair) ? " отправлена на ремонт" : " снова работает") << std::endl;
 }
 
 void set_of_pipes::print_all_pipes_to_console(void)
@@ -91,6 +93,7 @@ void set_of_pipes::save_to_file(void)
         << pipes[i].diameter << ' '
         << pipes[i].inRepair << std::endl;
     std::cout << "Сохранение успешно завершено" << std::endl;
+    file.close();
 }
 
 void set_of_pipes::load_from_file(void)
@@ -100,18 +103,30 @@ void set_of_pipes::load_from_file(void)
     std::cout << "Введите имя загружаемого файла: ";
     std::cin >> filename;
     file.open(filename, std::ofstream::in);
-    unsigned int extra_pipe_count;
-    file >> extra_pipe_count;
-    for (size_t i = pipe_count; i < pipe_count + extra_pipe_count; i++)
+    if (file.is_open())
     {
-        double length_tmp;
-        double diameter_tmp;
-        bool inRepait_tmp;
-        file >> length_tmp >> diameter_tmp >> inRepait_tmp;
-        pipes.push_back(pipe(i, length_tmp, diameter_tmp, inRepait_tmp));
+        unsigned int extra_pipe_count;
+        file >> extra_pipe_count;
+        for (size_t i = pipe_count; i < pipe_count + extra_pipe_count; i++)
+        {
+            double length_tmp;
+            double diameter_tmp;
+            bool inRepait_tmp;
+            file >> length_tmp >> diameter_tmp >> inRepait_tmp;
+            pipes.push_back(pipe(i, length_tmp, diameter_tmp, inRepait_tmp));
+        }
+        pipe_count += extra_pipe_count;
+        std::cout << "Загружено " << extra_pipe_count << " труб" << std::endl;
+        file.close();
     }
-    pipe_count += extra_pipe_count;
-    std::cout << "Загружено " << extra_pipe_count << " труб" << std::endl;
+    else
+    {
+        std::cout << "Программа не смогла найти указанный файл" << std::endl;
+        std::cout << "Запустить поиск другого файла? (Нет - 0 | Да - 1): ";
+        int msg = get_number(0, 1);
+        if (msg == 1)
+            load_from_file();
+    }
 }
 
 int set_of_pipes::return_pipe_count(void)

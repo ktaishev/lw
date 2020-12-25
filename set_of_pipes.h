@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector> 
 
+int get_number(int, int);
+
 class set_of_pipes {
 private:
     class pipe {
@@ -39,7 +41,12 @@ private:
             else if (parameter_id == 2)
                 diameter = new_value;
             else
-                inRepair = new_value;
+            {
+                if (new_value == 0)
+                    inRepair = true;
+                else
+                    inRepair = false;
+            }
         }
     };
 
@@ -78,13 +85,7 @@ inline void set_of_pipes::search_pipe(T left, T right, int parameter_id)
     std::cout << "Найдено " << searched_pipes.size() << " труб" << std::endl;
     std::cout << "Добавить найденные трубы к выбранным? (Нет - 0 | Да - 1): ";
  
-    int msg;
-    while ((std::cin >> msg).fail() || msg < 0 || msg > 1)
-    {
-        std::cin.clear();
-        std::cin.ignore(32767, '\n');
-        std::cout << "Неккоректный ввод. Введите число в диапазоне " << 0 << "-" << 1 << ": ";
-    }
+    int msg = get_number(0, 1);
 
     if (msg == 1)
         for (auto it = searched_pipes.begin(); it != searched_pipes.end(); it++)

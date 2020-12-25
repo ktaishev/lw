@@ -139,7 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="lw.cpp" />
+    <ClCompile Include="graph.cpp" />
+    <ClCompile Include="set_of_kss.cpp" />
+    <ClCompile Include="set_of_pipes.cpp" />
+    <ClCompile Include="source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="graph.h" />
+    <ClInclude Include="set_of_kss.h" />
+    <ClInclude Include="set_of_pipes.h" />
+    <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

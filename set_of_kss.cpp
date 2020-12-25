@@ -105,6 +105,7 @@ void set_of_kss::save_to_file(void)
         << kss[i].num_of_active_shops << ' '
         << kss[i].efficiency << std::endl;
     std::cout << "Сохранение успешно завершено" << std::endl;
+    file.close();
 }
 
 void set_of_kss::load_from_file(void)
@@ -114,19 +115,31 @@ void set_of_kss::load_from_file(void)
     std::cout << "Введите имя загружаемого файла: ";
     std::cin >> filename;
     file.open(filename, std::ofstream::in);
-    unsigned int extra_ks_count;
-    file >> extra_ks_count;
-    for (size_t i = ks_count; i < ks_count + extra_ks_count; i++)
+    if (file.is_open())
     {
-        std::string name_tmp;
-        int num_of_shops_tmp;
-        int num_of_active_shops_tmp;
-        double efficiency_tmp;
-        file >> name_tmp >> num_of_shops_tmp >> num_of_active_shops_tmp >> efficiency_tmp;
-        kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp));
+        unsigned int extra_ks_count;
+        file >> extra_ks_count;
+        for (size_t i = ks_count; i < ks_count + extra_ks_count; i++)
+        {
+            std::string name_tmp;
+            int num_of_shops_tmp;
+            int num_of_active_shops_tmp;
+            double efficiency_tmp;
+            file >> name_tmp >> num_of_shops_tmp >> num_of_active_shops_tmp >> efficiency_tmp;
+            kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp));
+        }
+        ks_count += extra_ks_count;
+        std::cout << "Загружено " << extra_ks_count << " компрессорных станций" << std::endl;
+        file.close();
     }
-    ks_count += extra_ks_count;
-    std::cout << "Загружено " << extra_ks_count << " компрессорных станций" << std::endl;
+    else
+    {
+        std::cout << "Программа не смогла найти указанный файл" << std::endl;
+        std::cout << "Запустить поиск другого файла? (Нет - 0 | Да - 1): ";
+        int msg = get_number(0, 1);
+        if (msg == 1)
+            load_from_file();
+    }
 }
 
 int set_of_kss::return_ks_count(void)

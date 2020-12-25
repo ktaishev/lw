@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+int get_number(int, int);
+
 class set_of_kss {
 private:
     class ks {
@@ -94,13 +96,7 @@ inline void set_of_kss::search_ks(T left, T right, int parameter_id)
 
     std::cout << "Добавить найденные компрессорные станции к выбранным? (Нет - 0 | Да - 1): ";
     
-    int msg;
-    while ((std::cin >> msg).fail() || msg < 0 || msg > 1)
-    {
-        std::cin.clear();
-        std::cin.ignore(32767, '\n');
-        std::cout << "Неккоректный ввод. Введите число в диапазоне " << 0 << "-" << 1 << ": ";
-    }
+    int msg = get_number(0, 1);
 
     if (msg == 1)
         for (auto it = searched_ks.begin(); it != searched_ks.end(); it++)
