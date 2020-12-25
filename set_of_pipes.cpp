@@ -2,20 +2,28 @@
 
 void set_of_pipes::add_pipe(double length, double diameter)
 {
-    pipes.push_back(pipe(pipe_count, length, diameter));
-    pipe_count++;
+    pipes.push_back(pipe(pipe_count, length, diameter)); //Добавляем трубу в вектом
+    pipe_count++; //Увеличиваем счетчик всех на 1 
 }
 
 void set_of_pipes::delete_pipe(int index)
 {
-    pipes[index] = pipes.back();
+    //Если труба была в выбранных, то при ее удалении автоматические деселектим ее
+    if (std::find(selected_pipes.begin(), selected_pipes.end(), pipes[index].id) != selected_pipes.end())
+        deselect_pipe(pipes[index].id);
+
+    //Чтобы не тратить время удаление (сдвиг элементов стоящих после нашего в векторе), время вплоть до O(n)
+    //Ставим на место удаляемого последний элемент, так как отсортированность не важна
+    //Последний элемент удаляем, время O(1)
+    pipes[index] = pipes.back();  
     pipes[index].id = index;
     pipes.pop_back();
-    pipe_count--;
+    pipe_count--; //Уменьшаем счетчик всех труб
 }
 
 void set_of_pipes::print_to_console(int index)
 {
+    //Печать трубы по индексу
     std::cout << "ID трубы: " << pipes[index].id << std::endl
         << "Длина трубы: " << pipes[index].length << std::endl
         << "Диаметр трубы: " << pipes[index].diameter << std::endl
@@ -25,26 +33,17 @@ void set_of_pipes::print_to_console(int index)
 
 void set_of_pipes::print_selected_pipes_to_console(void)
 {
+    //Если труб не выбрано, сообщаем пользователю, иначе выводим их на печать
     if (selected_pipes.empty())
-    {
         std::cout << "Нет выбранных труб" << std::endl;
-    }
     else
-    {
         for (size_t i = 0; i < selected_pipes.size(); i++)
-        {
-            int index = selected_pipes[i];
-            std::cout << "ID трубы: " << pipes[index].id << std::endl
-                << "Длина трубы: " << pipes[index].length << std::endl
-                << "Диаметр трубы: " << pipes[index].diameter << std::endl
-                << (pipes[index].inRepair ? "Труба в ремонте" : "Труба работает") << std::endl;
-            std::cout << std::endl;
-        }
-    }
+            print_to_console(selected_pipes[i]); //Последовательно отправляем на печать все трубы
 }
 
 void set_of_pipes::select_pipe(int id)
 {
+    //Если труба ранее не была выбрана, выбираем ее
     if (std::find(selected_pipes.begin(), selected_pipes.end(), id) == selected_pipes.end())
     {
         selected_pipes.push_back(id);
@@ -56,35 +55,40 @@ void set_of_pipes::select_pipe(int id)
 
 void set_of_pipes::deselect_pipe(int id)
 {
+    //Если труба не была выбрана, сообщаем пльзователю
+    //Иначе добавляем к выбранным
     auto pos = std::find(selected_pipes.begin(), selected_pipes.end(), id);
-    *pos = selected_pipes.back();
-    selected_pipes.pop_back();
+    if (pos != selected_pipes.end())
+    {
+        *pos = selected_pipes.back();
+        selected_pipes.pop_back();
+    }
+    else
+        std::cout << "Данная труба не была выбрана" << std::endl;
 }
 
 void set_of_pipes::change_repair_status(int index)
 {
+    //Меняем статус ремонта на обратный
     pipes[index].inRepair = !pipes[index].inRepair;
     std::cout << "Труба ID " << index << ((pipes[index].inRepair) ? " отправлена на ремонт" : " снова работает") << std::endl;
 }
 
 void set_of_pipes::print_all_pipes_to_console(void)
 {
+    //Печатаем последовательно все трубы
     if (pipe_count == 0)
-    {
         std::cout << "Нет добавленных труб" << std::endl;
-    }
     else
-    {
         for (unsigned int i = 0; i < pipe_count; i++)
             print_to_console(i);
-    }
 }
 
 void set_of_pipes::save_to_file(void)
 {
     std::ofstream file;
     std::string filename;
-    std::cout << "Введите имя сохран¤емого файла: ";
+    std::cout << "Введите имя сохраняемого файла: ";
     std::cin >> filename;
     file.open(filename + "_pipe.txt", std::ofstream::out);
     file << pipe_count << std::endl;
