@@ -25,7 +25,9 @@ private:
         }
         double return_parameter(int parameter_id)
         {
-            if (parameter_id == 1)
+            if (parameter_id == 0)
+                return id;
+            else if (parameter_id == 1)
                 return length;
             else if (parameter_id == 2)
                 return diameter;
