@@ -1,20 +1,22 @@
 #include <iostream>
 #include <fstream>
 #include <locale>
+#include <set>
 
 #include "utility.h"
 #include "set_of_kss.h"
 #include "set_of_pipes.h"
 #include "graph.h"
 
-void pipes_setup(set_of_pipes);
-void ks_setup(set_of_kss);
-void graph_setup(void);
+void pipes_setup(set_of_pipes&);
+void ks_setup(set_of_kss&);
+void graph_setup(set_of_pipes&, set_of_kss&, graph&);
 
 int main()
 {
     set_of_pipes pipes;
     set_of_kss kss;
+    graph g;
 
     setlocale(LC_ALL, "Russian");
     std::cout << "Лабораторная работа за 1 семестр 2 курса" << std::endl;
@@ -43,7 +45,7 @@ int main()
         }
         else if (msg == 3)
         {
-            //graph_setup();
+            graph_setup(pipes, kss);
             std::cout << "\tВы в главном меню" << std::endl;
             print_main_menu();
         }
@@ -346,7 +348,63 @@ void ks_setup(set_of_kss& kss)
     }
 }
 
-void graph_setup(void)
+void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
 {
+    unsigned int free_nodes_count = kss.return_ks_count();
+    unsigned int free_edges_count = pipes.return_pipe_count();
 
+    bool finish = false;
+    while (!finish)
+    {
+        std::cout << "\tВыбранный пункт: ";
+        int msg = get_number(0, 4);
+        if (msg == 0)
+        {
+            finish = true;
+        }
+        else if (msg == 1)
+        {
+            std::cout << "\tВведите ID компрессорной станции для добавленив в граф: ";
+            int index = get_number(0, kss.return_ks_count() - 1);
+            g.add_node(index);
+        }
+        else if (msg == 2)
+        {
+            std::cout << "\tВведите ID компрессорной станции для доудаления из графа: ";
+            int index = get_number(0, kss.return_ks_count() - 1);
+            g.delete_node(index);
+        }
+        else if (msg == 3)
+        {
+            //Посмотреть вершину
+        }
+        else if (msg == 4)
+        {
+            //Посмотреть список вершин
+        }
+        else if (msg == 5)
+        {
+            //Соединить две вершины трубой 
+        }
+        else if (msg == 6)
+        {
+            //Убрать соединение между двумя вершинами 
+        }
+        else if (msg == 7)
+        {
+            //Переориентировать дугу
+        }
+        else if (msg == 8)
+        {
+            //Топологическая сортировка
+        }
+        else if (msg == 9)
+        {
+            print_graph_menu();
+        }
+        else
+        {
+            std::cout << "\tКоманда не распознана. Повторите ввод. Введите 4 для получения помощи" << std::endl;
+        }
+    }
 }
