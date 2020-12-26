@@ -84,20 +84,24 @@ inline void set_of_pipes::search_pipe(T left, T right, int parameter_id)
     std::for_each(pipes.begin(), pipes.end(), [&](pipe p) mutable {
         if (left <= p.return_parameter(parameter_id) && p.return_parameter(parameter_id) <= right)
             searched_pipes.push_back(p.id); });
-    std::cout << "Найдено " << searched_pipes.size() << " труб" << std::endl;
-    std::cout << "Добавить найденные трубы к выбранным? (Нет - 0 | Да - 1): ";
+    std::cout << "\tНайдено " << searched_pipes.size() << " труб" << std::endl;
+    std::cout << "\tДобавить найденные трубы к выбранным? (Нет - 0 | Да - 1): ";
  
     int msg = get_number(0, 1);
 
     if (msg == 1)
+    {
         for (auto it = searched_pipes.begin(); it != searched_pipes.end(); it++)
             selected_pipes.push_back(*it);
+        std::cout << "\tТрубы успешно добавлены к выбранным" << std::endl;
+    }
 }
 
 template<typename T> 
 inline void set_of_pipes::bunch_editing_pipe(T new_value, int parameter_id)
 {
     std::for_each(selected_pipes.begin(), selected_pipes.end(), [&](int index) {pipes[index].change_parameter(new_value, parameter_id); });
+    std::cout << "\tУказанные изменения успешно применены к выбранным трубам" << std::endl;
 }
 
 #endif

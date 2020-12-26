@@ -13,36 +13,38 @@ void graph_setup(void);
 
 int main()
 {
-    setlocale(LC_ALL, "Russian");
-    bool finish = false;
-    print_main_menu();
     set_of_pipes pipes;
     set_of_kss kss;
+
+    setlocale(LC_ALL, "Russian");
+    std::cout << "Лабораторная работа за 1 семестр 2 курса" << std::endl;
+    bool finish = false;
+    print_main_menu();
     while (!finish)
     {
-        std::cout << "Выбранный пункт: ";
+        std::cout << "\tВыбранный пункт: ";
         int msg = get_number(0, 4);
         if (msg == 0)
         {
             finish = true;
-            std::cout << "Завершение работы" << std::endl;
+            std::cout << "\tЗавершение работы" << std::endl;
         }
         else if (msg == 1)
         {
             pipes_setup(pipes);
-            std::cout << "Вы в главном меню" << std::endl;
+            std::cout << "\tВы в главном меню" << std::endl;
             print_main_menu();
         }
         else if (msg == 2)
         {
             ks_setup(kss);
-            std::cout << "Вы в главном меню" << std::endl;
+            std::cout << "\tВы в главном меню" << std::endl;
             print_main_menu();
         }
         else if (msg == 3)
         {
             //graph_setup();
-            std::cout << "Вы в главном меню" << std::endl;
+            std::cout << "\tВы в главном меню" << std::endl;
             print_main_menu();
         }
         else if (msg == 4)
@@ -51,7 +53,7 @@ int main()
         }
         else
         {
-            std::cout << "Команда не распознана. Повторите ввод. Введите 4 для получения помощи" << std::endl;
+            std::cout << "\tКоманда не распознана. Повторите ввод. Введите 4 для получения помощи" << std::endl;
         }
     }
     return 0;
@@ -63,7 +65,7 @@ void pipes_setup(set_of_pipes pipes)
     print_pipe_menu();
     while (!finish)
     {
-        std::cout << "Выбранный пункт: ";
+        std::cout << "\tВыбранный пункт: ";
         int msg = get_number(0, 12);
         if (msg == 0)
         {
@@ -71,83 +73,95 @@ void pipes_setup(set_of_pipes pipes)
         }
         else if (msg == 1)
         {
-            std::cout << "Введите параметры трубы:" << std::endl;
-            std::cout << "Введите длину: ";
+            std::cout << "\tВведите параметры трубы:" << std::endl;
+            std::cout << "\tВведите длину: ";
             int length_tmp = get_number(0, INT_MAX);
-            std::cout << "Введите диаметр (500-1420): ";
+            std::cout << "\tВведите диаметр (500-1420): ";
             int diameter_tmp = get_number(500, 1420);
             pipes.add_pipe(length_tmp, diameter_tmp);
+            std::cout << "\tТруба успешно добавлена" << std::endl;
+            PRINT_HASH_LINE;
         }
         else if (msg == 2)
         {
-            std::cout << "Введите ID удаляемой трубы: ";
+            std::cout << "\tВведите ID удаляемой трубы: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.delete_pipe(index);
+            std::cout << "\tТруба ID " << index << " успешно удалена" << std::endl;
+            PRINT_HASH_LINE;
         }
         else if (msg == 3)
         {
-            std::cout << "Введите ID трубы для изменения статуса ремонта: ";
+            std::cout << "\tВведите ID трубы для изменения статуса ремонта: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.change_repair_status(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 4)
         {
+            std::cout << "\tВсе трубы:" << std::endl << std::endl;
             pipes.print_all_pipes_to_console();
+            PRINT_HASH_LINE;
         }
         else if (msg == 5)
         {
-            std::cout << "Введите ID трубы для выбора: ";
+            std::cout << "\tВведите ID трубы для выбора: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.select_pipe(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 6)
         {
-            std::cout << "Введите ID трубы для удаления из выбранных: ";
+            std::cout << "\tВведите ID трубы для удаления из выбранных: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.deselect_pipe(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 7)
         {
+            std::cout << "\tВсе выбранные трубы:" << std::endl;
             pipes.print_selected_pipes_to_console();
+            PRINT_HASH_LINE;
         }
         else if (msg == 8)
         {
-            std::cout << "Выберите параметр для поиска (ID - 0 | Длина - 1 | Диаметр - 2 | Состояние работоспособности - 3): ";
+            std::cout << "\tВыберите параметр для поиска (ID - 0 | Длина - 1 | Диаметр - 2 | Состояние работоспособности - 3): ";
             int parametr_id = get_number(0, 3);
             if (parametr_id == 0)
             {
-                std::cout << "Введите ID: ";
+                std::cout << "\tВведите ID: ";
                 int index = get_number(0, pipes.return_pipe_count() - 1);
                 pipes.search_pipe(index, index, 0);
             }
             else if (parametr_id == 1)
             {
-                std::cout << "Введите минимальное значение: ";
+                std::cout << "\tВведите минимальное значение: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "Введите максимальное значение: ";
+                std::cout << "\tВведите максимальное значение: ";
                 int right = get_number(left, INT_MAX);
                 pipes.search_pipe(left, right, 1);
             }
             else if (parametr_id == 2)
             {
-                std::cout << "Введите минимальное значение: ";
+                std::cout << "\tВведите минимальное значение: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "Введите максимальное значение: ";
+                std::cout << "\tВведите максимальное значение: ";
                 int right = get_number(left, INT_MAX);
                 pipes.search_pipe(left, right, 2);
             }
             else
             { 
-                std::cout << "Введите состояние трубы для поиска (Работает - 0 | В ремонте - 1): ";
+                std::cout << "\tВведите состояние трубы для поиска (Работает - 0 | В ремонте - 1): ";
                 int param = get_number(0, 1);
                 pipes.search_pipe(param, param, 3);
             }
+            PRINT_HASH_LINE;
         }
         else if (msg == 9)
         {
-            std::cout << "Выберите параметр для группового изменения (Длина - 1 | Диаметр - 2 | Состояние работоспособности - 3): ";
+            std::cout << "\tВыберите параметр для группового изменения (Длина - 1 | Диаметр - 2 | Состояние работоспособности - 3): ";
             int parametr_id = get_number(1, 3);
-            std::cout << "Введите новое значение: ";
+            std::cout << "\tВведите новое значение: ";
             int new_value;
             if (parametr_id == 1)
                 new_value = get_number(0, INT_MAX);
@@ -156,14 +170,17 @@ void pipes_setup(set_of_pipes pipes)
             else
                 new_value = get_number(0, 1);
             pipes.bunch_editing_pipe(new_value, parametr_id);
+            PRINT_HASH_LINE;
         }
         else if (msg == 10)
         {
             pipes.save_to_file();
+            PRINT_HASH_LINE;
         }
         else if (msg == 11)
         {
             pipes.load_from_file();
+            PRINT_HASH_LINE;
         }
         else if (msg == 12)
         {
@@ -171,7 +188,8 @@ void pipes_setup(set_of_pipes pipes)
         }
         else
         {
-            std::cout << "Команда не распознана. Повторите ввод. Введите 11 для получения помощи" << std::endl;
+            std::cout << "\tКоманда не распознана. Повторите ввод. Введите 11 для получения помощи" << std::endl;
+            PRINT_HASH_LINE;
         }
     }
 }
