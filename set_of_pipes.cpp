@@ -37,8 +37,11 @@ void set_of_pipes::print_selected_pipes_to_console(void)
     if (selected_pipes.empty())
         std::cout << "\tНет выбранных труб" << std::endl;
     else
+    {
+        std::cout << "\tВсе выбранные трубы:" << std::endl;
         for (size_t i = 0; i < selected_pipes.size(); i++)
-            print_to_console(selected_pipes[i]); //Последовательно отправляем на печать все трубы
+            print_to_console(selected_pipes[i]); //Последовательно отправляем на печать все трубы из выбранных
+    }
 }
 
 void set_of_pipes::select_pipe(int id)
@@ -81,8 +84,11 @@ void set_of_pipes::print_all_pipes_to_console(void)
     if (pipe_count == 0)
         std::cout << "\tНет добавленных труб" << std::endl;
     else
+    {
+        std::cout << "\tВсе трубы:" << std::endl << std::endl;
         for (unsigned int i = 0; i < pipe_count; i++)
             print_to_console(i);
+    }
 }
 
 void set_of_pipes::save_to_file(void)

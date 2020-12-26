@@ -59,7 +59,7 @@ int main()
     return 0;
 }
 
-void pipes_setup(set_of_pipes pipes)
+void pipes_setup(set_of_pipes& pipes)
 {
     bool finish = false;
     print_pipe_menu();
@@ -99,7 +99,6 @@ void pipes_setup(set_of_pipes pipes)
         }
         else if (msg == 4)
         {
-            std::cout << "\tВсе трубы:" << std::endl << std::endl;
             pipes.print_all_pipes_to_console();
             PRINT_HASH_LINE;
         }
@@ -119,7 +118,6 @@ void pipes_setup(set_of_pipes pipes)
         }
         else if (msg == 7)
         {
-            std::cout << "\tВсе выбранные трубы:" << std::endl;
             pipes.print_selected_pipes_to_console();
             PRINT_HASH_LINE;
         }
@@ -194,103 +192,120 @@ void pipes_setup(set_of_pipes pipes)
     }
 }
 
-void ks_setup(set_of_kss kss)
+void ks_setup(set_of_kss& kss)
 {
     bool finish = false;
     print_ks_menu();
     while (!finish)
     {
-        std::cout << "Выбранный пункт: ";
-        int msg = get_number(0, 12);
+        std::cout << "\tВыбранный пункт: ";
+        int msg = get_number(0, 13);
         if (msg == 0)
         {
             finish = true;
         }
         else if (msg == 1)
         {
-            std::cout << "Введите параметры компрессорной станции:" << std::endl;
-            std::cout << "Введите имя: ";
+            std::cout << "\tВведите параметры компрессорной станции:" << std::endl;
+            std::cout << "\tВведите имя: ";
             std::string name_tmp;
             std::cin >> name_tmp;
-            std::cout << "Введите количество цехов: ";
+            std::cout << "\tВведите количество цехов: ";
             int num_of_shops_tmp = get_number(0, INT_MAX);
-            std::cout << "Введите количество активных цехов: ";
+            std::cout << "\tВведите количество активных цехов: ";
             int num_of_active_shops_tmp = get_number(0, num_of_shops_tmp);
-            std::cout << "Введите эффективность (0-100): ";
+            std::cout << "\tВведите эффективность (0-100): ";
             int efficiency = get_number(0, 100);
             kss.add_ks(name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency / 100.0);
+            std::cout << "\tКомпрессорная станция успешно добавлена" << std::endl;
+            PRINT_HASH_LINE;
         }
         else if (msg == 2)
         {
-            std::cout << "Введите ID удаляемой компрессорной станции: ";
+            std::cout << "\tВведите ID удаляемой компрессорной станции: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.delete_ks(index);
+            std::cout << "\tКомрпессорная станция ID " << index << " успешно удалена" << std::endl;
+            PRINT_HASH_LINE;
         }
         else if (msg == 3)
         {
-            std::cout << "Введите ID трубы для изменения закрытия цеха: ";
+            std::cout << "\tВведите ID трубы для изменения закрытия цеха: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.close_shop(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 4)
         {
-            std::cout << "Введите ID трубы для изменения открытия цеха: ";
+            std::cout << "\tВведите ID трубы для изменения открытия цеха: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.open_shop(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 5)
         {
             kss.print_all_kss_to_console();
+            PRINT_HASH_LINE;
         }
         else if (msg == 6)
         {
-            std::cout << "Введите ID компрессорной станции для выбора: ";
+            std::cout << "\tВведите ID компрессорной станции для выбора: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.select_ks(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 7)
         {
-            kss.print_selected_kss_to_console();
+            std::cout << "\tВведите ID компрессорной станции для удаления из выбранных: ";
+            int index = get_number(0, kss.return_ks_count() - 1);
+            kss.deselect_ks(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 8)
         {
-            std::cout << "Выберите параметр для поиска (ID - 0 | Имя - 1 | Количество цехов - 2 | Количество активных цехов - 3 | Эффективность - 4): ";
+            kss.print_selected_kss_to_console();
+            PRINT_HASH_LINE;
+        }
+        else if (msg == 9)
+        {
+            std::cout << "\tВыберите параметр для поиска (ID - 0 | Имя - 1 | Количество цехов - 2 | Количество активных цехов - 3 | Эффективность - 4): ";
             int parametr_id = get_number(0, 4);
             if (parametr_id == 0)
             {
-                std::cout << "Введите ID: ";
+                std::cout << "\tВведите ID: ";
                 int index = get_number(0, kss.return_ks_count() - 1);
                 kss.search_ks(index, index, 0);
             }
             else if (parametr_id == 1)
             {
-                std::cout << "Введите имя для поиска: ";
+                std::cout << "\tВведите имя для поиска: ";
                 std::string param;
                 kss.search_ks(param, param, 1);
             }
             else if (parametr_id == 2)
             {
-                std::cout << "Введите минимальное значение: ";
+                std::cout << "\tВведите минимальное значение: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "Введите максимальное значение: ";
+                std::cout << "\tВведите максимальное значение: ";
                 int right = get_number(left, INT_MAX);
                 kss.search_ks(left, right, 2);
             }
             else
             {
-                std::cout << "Введите минимальное значение: ";
+                std::cout << "\tВведите минимальное значение: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "Введите максимальное значение: ";
+                std::cout << "\tВведите максимальное значение: ";
                 int right = get_number(left, INT_MAX);
                 kss.search_ks(left, right, 4);
             }
-            std::cout << "Параметр успешно изменен" << std::endl;
+            std::cout << "\tПараметр успешно изменен" << std::endl;
+            PRINT_HASH_LINE;
         }
-        else if (msg == 9)
+        else if (msg == 10)
         {
-            std::cout << "Выберите параметр для группового изменения (Имя - 1 | Количество цехов - 2 | Количество активных цехов - 3 | Эффективность - 4): ";
+            std::cout << "\tВыберите параметр для группового изменения (Имя - 1 | Количество цехов - 2 | Количество активных цехов - 3 | Эффективность - 4): ";
             int parametr_id = get_number(1, 4);
-            std::cout << "Введите новое значение: ";
+            std::cout << "\tВведите новое значение: ";
             if (parametr_id == 1)
             {
                 std::string new_value;
@@ -307,22 +322,26 @@ void ks_setup(set_of_kss kss)
                 int new_value = get_number(0, 100);
                 kss.bunch_editing_ks(new_value / 100.0 , parametr_id);
             }
-        }
-        else if (msg == 10)
-        {
-            kss.save_to_file();
+            PRINT_HASH_LINE;
         }
         else if (msg == 11)
         {
-            kss.load_from_file();
+            kss.save_to_file();
+            PRINT_HASH_LINE;
         }
         else if (msg == 12)
+        {
+            kss.load_from_file();
+            PRINT_HASH_LINE;
+        }
+        else if (msg == 13)
         {
             print_ks_menu();
         }
         else
         {
-            std::cout << "Команда не распознана. Повторите ввод. Введите 11 для получения помощи" << std::endl;
+            std::cout << "\tКоманда не распознана. Повторите ввод. Введите 11 для получения помощи" << std::endl;
+            PRINT_HASH_LINE;
         }
     }
 }

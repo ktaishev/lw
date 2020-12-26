@@ -15,32 +15,23 @@ void set_of_kss::delete_ks(int index)
 
 void set_of_kss::print_to_console(int index)
 {
-    std::cout << "ID компрессорной  станции: " << kss[index].id << std::endl
-        << "Имя: " << kss[index].name << std::endl
-        << "Количество цехов: " << kss[index].num_of_shops << std::endl
-        << "Количество активных цехов: " << kss[index].num_of_active_shops << std::endl
-        << "Эффективность: " << kss[index].efficiency << std::endl;
+    std::cout << "\tID компрессорной  станции: " << kss[index].id << std::endl
+        << "\tИмя: " << kss[index].name << std::endl
+        << "\tКоличество цехов: " << kss[index].num_of_shops << std::endl
+        << "\tКоличество активных цехов: " << kss[index].num_of_active_shops << std::endl
+        << "\tЭффективность: " << kss[index].efficiency * 100 << "%" << std::endl;
     std::cout << std::endl;
 }
 
 void set_of_kss::print_selected_kss_to_console(void)
 {
     if (selected_ks.empty())
-    {
-        std::cout << "Нет выбранных компрессорных станций" << std::endl;
-    }
+        std::cout << "\tНет выбранных компрессорных станций" << std::endl;
     else
     {
+        std::cout << "\tВсе выбранные компрессорные станции:" << std::endl;
         for (size_t i = 0; i < selected_ks.size(); i++)
-        {
-            int index = selected_ks[i];
-            std::cout << "ID компрессорной  станции: " << kss[index].id << std::endl
-                << "Имя: " << kss[index].name << std::endl
-                << "Количество цехов: " << kss[index].num_of_shops << std::endl
-                << "Количество активных цехов: " << kss[index].num_of_active_shops << std::endl
-                << "Эффективность: " << kss[index].efficiency << std::endl;
-            std::cout << std::endl;
-        }
+            print_to_console(selected_ks[i]);
     }
 }
 
@@ -49,53 +40,64 @@ void set_of_kss::select_ks(int id)
     if (std::find(selected_ks.begin(), selected_ks.end(), id) == selected_ks.end())
     {
         selected_ks.push_back(id);
-        std::cout << "Компрессорная станция ID " << id << " добавлена к выбранным" << std::endl;
+        std::cout << "\tКомпрессорная станция ID " << id << " добавлена к выбранным" << std::endl;
     }
     else
-        std::cout << "Компрессорная станция уже была выбрана";
+        std::cout << "\tКомпрессорная станция уже была выбрана";
 }
 
 void set_of_kss::deselect_ks(int id)
 {
     auto pos = std::find(selected_ks.begin(), selected_ks.end(), id);
-    *pos = selected_ks.back();
-    selected_ks.pop_back();
+    if (pos != selected_ks.end())
+    {
+        *pos = selected_ks.back();
+        selected_ks.pop_back();
+        std::cout << "\tКомперссорная станция успешно удалена из выбранных" << std::endl;
+    }
+    else
+        std::cout << "\tДанная компрессорная станция не была выбрана" << std::endl;
 }
 
 void set_of_kss::close_shop(int index)
 {
     if (kss[index].num_of_active_shops > 0)
+    {
         kss[index].num_of_active_shops--;
+        std::cout << "\tЦех (Компрессорная станция ID " << index << ") успешно закрыт" << std::endl;
+    }
     else
-        std::cout << "Все цеха закрыты (Открыто " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
+        std::cout << "\tВсе цеха закрыты (Открыто " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
 }
 
 void set_of_kss::open_shop(int index)
 {
     if (kss[index].num_of_active_shops < kss[index].num_of_shops)
+    {
         kss[index].num_of_active_shops++;
+        std::cout << "\tЦех (Компрессорная станция ID " << index << ") успешно открыт" << std::endl;
+    }
     else
-        std::cout << "Все цеха открыты (Открыто " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
+        std::cout << "\tВсе цеха открыты (Открыто " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
 }
 
 void set_of_kss::print_all_kss_to_console(void)
 {
     if (ks_count == 0)
-    {
-        std::cout << "Нет добавленных компрессорных станций" << std::endl;
-    }
+        std::cout << "\tНет добавленных компрессорных станций" << std::endl;
     else
     {
+        std::cout << "\tВсе компрессорные станции:" << std::endl << std::endl;
         for (unsigned int i = 0; i < ks_count; i++)
             print_to_console(i);
-    }
+    }        
 }
 
 void set_of_kss::save_to_file(void)
 {
     std::ofstream file;
     std::string filename;
-    std::cout << "Введите имя сохран¤емого файла: ";
+    std::cout << "\tВведите имя сохраняемого файла: ";
     std::cin >> filename;
     file.open(filename + "_ks.txt", std::ofstream::out);
     file << ks_count << std::endl;
@@ -104,7 +106,7 @@ void set_of_kss::save_to_file(void)
         << kss[i].num_of_shops << ' '
         << kss[i].num_of_active_shops << ' '
         << kss[i].efficiency << std::endl;
-    std::cout << "Сохранение успешно завершено" << std::endl;
+    std::cout << "\tДанные успешно сохранены в файл " << filename + "_ks.txt" << std::endl;
     file.close();
 }
 
@@ -112,7 +114,7 @@ void set_of_kss::load_from_file(void)
 {
     std::ifstream file;
     std::string filename;
-    std::cout << "Введите имя загружаемого файла: ";
+    std::cout << "\tВведите имя загружаемого файла: ";
     std::cin >> filename;
     file.open(filename, std::ofstream::in);
     if (file.is_open())
@@ -129,16 +131,18 @@ void set_of_kss::load_from_file(void)
             kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp));
         }
         ks_count += extra_ks_count;
-        std::cout << "Загружено " << extra_ks_count << " компрессорных станций" << std::endl;
+        std::cout << "\tЗагружено " << extra_ks_count << " компрессорных станций" << std::endl;
         file.close();
     }
     else
     {
-        std::cout << "Программа не смогла найти указанный файл" << std::endl;
-        std::cout << "Запустить поиск другого файла? (Нет - 0 | Да - 1): ";
+        std::cout << "\tПрограмма не смогла найти указанный файл" << std::endl;
+        std::cout << "\tЗапустить поиск другого файла? (Нет - 0 | Да - 1): ";
         int msg = get_number(0, 1);
         if (msg == 1)
             load_from_file();
+        else
+            std::cout << "\tОшибка в ходе загрузки" << std::endl;
     }
 }
 
