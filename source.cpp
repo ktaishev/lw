@@ -367,14 +367,26 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         {
             std::cout << "\tВведите ID компрессорной станции для добавленив в граф: ";
             int index = get_number(0, kss.return_ks_count() - 1);
-            g.add_node(index);
+            if (kss.is_node(index) == true)
+                std::cout << "\tКомпрессорная станция уже является веришной" << std::endl;
+            else
+            {
+                g.add_node(index);
+                kss.set_node(index, true);
+            }
             PRINT_HASH_LINE;
         }
         else if (msg == 2)
         {
             std::cout << "\tВведите ID компрессорной станции для удаления из графа: ";
             int index = get_number(0, g.return_node_count() - 1);
-            g.delete_node(index);
+            if (kss.is_node(index) == false)
+                std::cout << "\tКомпрессорная станция не является веришной" << std::endl;
+            else
+            {
+                g.delete_node(index);
+                kss.set_node(index, false);
+            }
             PRINT_HASH_LINE;
         }
         else if (msg == 3)

@@ -150,3 +150,13 @@ int set_of_kss::return_ks_count(void)
 {
     return ks_count;
 }
+
+bool set_of_kss::is_node(int index)
+{
+    return kss[index].is_node;
+}
+
+void set_of_kss::set_node(int index, bool status)
+{
+    kss[index].is_node = status;
+}

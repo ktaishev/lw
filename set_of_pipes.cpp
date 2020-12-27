@@ -142,6 +142,16 @@ void set_of_pipes::load_from_file(void)
     }
 }
 
+void set_of_pipes::set_edge(int index, bool status)
+{
+    pipes[index].is_edge = status;
+}
+
+bool set_of_pipes::is_edge(int index)
+{
+    return pipes[index].is_edge;
+}
+
 int set_of_pipes::return_pipe_count(void)
 {
     return pipe_count;

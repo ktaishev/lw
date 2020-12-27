@@ -3,7 +3,7 @@
 void graph::add_node(unsigned int index)
 {
 	for (auto it = matrix.begin(); it != matrix.end(); it++)
-		(*it).push_back(0);
+		(*it).push_back(-1);
 	node_count++;
 	std::vector<int> v(node_count, -1);
 	matrix.push_back(v);
@@ -54,15 +54,30 @@ void graph::delete_node(unsigned int index)
 
 void graph::print_node(unsigned int index)
 {
-	std::cout << "\tИз вершины " << index << " можно попасть в вершины: " << std::endl;
+	bool is_way = false;
+	std::cout << "\tИз вершины " << index << " можно попасть в вершины: ";
 	for (size_t i = 0; i < node_count; i++)
-		if (matrix[index][i] != 0)
+		if (matrix[index][i] != -1)
+		{
 			std::cout << i << " ";
-
-	std::cout << "\tВ вершины " << index << " можно попасть из вершин: " << std::endl;
+			is_way = true;
+		}
+	if (!is_way)
+		std::cout << "\tИз вершины нет исходящих путей" << std::endl;
+	else
+		std::cout << std::endl;
+	is_way = false;
+	std::cout << "\tВ вершину " << index << " можно попасть из вершин: ";
 	for (size_t i = 0; i < node_count; i++)
-		if (matrix[i][index] != 0)
+		if (matrix[i][index] != -1)
+		{
 			std::cout << i << " ";
+			is_way = true;
+		}
+	if (!is_way)
+		std::cout << "\tВ вершину нет входящих путей" << std::endl;
+	else
+		std::cout << std::endl;
 }
 
 void graph::print_nodes(void)
