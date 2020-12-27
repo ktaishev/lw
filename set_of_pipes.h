@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector> 
 
-int get_number(int, int);
+unsigned int get_number(unsigned int min, unsigned int max);
 
 class set_of_pipes {
 private:
@@ -16,6 +16,7 @@ private:
         double length; //В метрах
         double diameter; //В миллиметрах от 500 до 1420
         bool inRepair;
+        bool usedInGraph = false;
         pipe(unsigned int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
@@ -67,6 +68,8 @@ public:
     void print_all_pipes_to_console(void); //Печать всех труб в консоль
     void save_to_file(void); //Сохранение всех труб в файл
     void load_from_file(void); //Загрузка труб из файла
+    void is_used_in_graph(void);
+    void used_in_graph(int); 
     int return_pipe_count(void); //Возврат числа труб
 
     template<typename T> //Поиск трубы в диапазоне по параметру 

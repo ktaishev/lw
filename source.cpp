@@ -45,7 +45,7 @@ int main()
         }
         else if (msg == 3)
         {
-            graph_setup(pipes, kss);
+            graph_setup(pipes, kss, g);
             std::cout << "\tВы в главном меню" << std::endl;
             print_main_menu();
         }
@@ -354,6 +354,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
     unsigned int free_edges_count = pipes.return_pipe_count();
 
     bool finish = false;
+    print_graph_menu();
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
@@ -367,25 +368,46 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             std::cout << "\tВведите ID компрессорной станции для добавленив в граф: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             g.add_node(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 2)
         {
-            std::cout << "\tВведите ID компрессорной станции для доудаления из графа: ";
-            int index = get_number(0, kss.return_ks_count() - 1);
+            std::cout << "\tВведите ID компрессорной станции для удаления из графа: ";
+            int index = get_number(0, g.return_node_count() - 1);
             g.delete_node(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 3)
         {
-            //Посмотреть вершину
+            std::cout << "\tВведите ID компрессорной станции для просмотра: ";
+            int index = get_number(0, g.return_node_count() - 1);
+            g.print_node(index);
+            PRINT_HASH_LINE;
         }
         else if (msg == 4)
         {
-            //Посмотреть список вершин
+            std::cout << "\tВсе вершины:" << std::endl;
+            g.print_nodes();
+            PRINT_HASH_LINE;
         }
         else if (msg == 5)
         {
-            //Соединить две вершины трубой 
+            std::cout << "\tВведите начальную вершину для соединения: ";
+            unsigned int node1 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tВведите конечную вершину для соединения: ";
+            unsigned int node2 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tВведите соединяющую трубу: ";
+            unsigned int pipe_id = get_number(0, pipes.return_pipe_count() - 1);
+            if (node1 == node2)
+                std::cout << "\tНевозможно соединить вершину с самой собой";
+            else
+            {
+                g.connect_two_nodes(node1, node2, pipe_id);
+            }
         }
+
+        //ПРОДОЛЖИТЬ ОТСЮДА
+
         else if (msg == 6)
         {
             //Убрать соединение между двумя вершинами 

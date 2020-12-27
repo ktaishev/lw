@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-int get_number(int, int);
+unsigned int get_number(unsigned int min, unsigned int max);
 
 class set_of_kss {
 private:
