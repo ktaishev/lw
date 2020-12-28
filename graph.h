@@ -1,4 +1,4 @@
-#ifndef LW_GRAPH_H_
+п»ї#ifndef LW_GRAPH_H_
 #define LW_GRAPH_H_
 
 #include <iostream>
@@ -9,23 +9,23 @@
 unsigned int get_number(unsigned int min, unsigned int max);
 
 class graph {
-    unsigned int node_count = 0; //Число вершин 
-    std::vector<std::vector<int>> matrix; //Матрица смежности
-    void swap_nodes(std::queue<unsigned int>); //Обмен двух вершин местами
+    unsigned int node_count = 0; //Р§РёСЃР»Рѕ РІРµСЂС€РёРЅ 
+    std::vector<std::vector<int>> matrix; //РњР°С‚СЂРёС†Р° СЃРјРµР¶РЅРѕСЃС‚Рё
+    void swap_nodes(std::queue<unsigned int>); //РћР±РјРµРЅ РґРІСѓС… РІРµСЂС€РёРЅ РјРµСЃС‚Р°РјРё
 public:
-    void init(unsigned int); //Инициализация графа
-    void add_node(unsigned int); //Добавление вершины в граф
-    std::vector<unsigned int> delete_node(unsigned int); //Удаление вершины из графа 
-    void print_node(unsigned int); //Печать информации о конкретной вершине
-    void print_nodes(void); //Печать информации о всех вершинах
-    void print_matrix(void); //Временная функция, печатающая матрицу смежности
-    void connect_two_nodes(unsigned int, unsigned int, unsigned int); //Соединение двух вершин трубой
-    int disconnect_two_nodes(unsigned int, unsigned int); //Удаление дуги между двумя вершинами
-    void redirect_arc(unsigned int, unsigned int); //Перенаправление дуги между двумя вершинами
-    void save_to_file(void); //Сохранение графа в файл
-    void load_from_file(void); //Загрузка графа из файла
-    void top_sort(void); //Топологическая сортировка
-    unsigned int return_node_count(void); //Возврат числа вершин
+    void init(unsigned int); //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РіСЂР°С„Р°
+    void add_node(unsigned int); //Р”РѕР±Р°РІР»РµРЅРёРµ РІРµСЂС€РёРЅС‹ РІ РіСЂР°С„
+    std::vector<unsigned int> delete_node(unsigned int); //РЈРґР°Р»РµРЅРёРµ РІРµСЂС€РёРЅС‹ РёР· РіСЂР°С„Р° 
+    void print_node(unsigned int); //РџРµС‡Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РєРѕРЅРєСЂРµС‚РЅРѕР№ РІРµСЂС€РёРЅРµ
+    void print_nodes(void); //РџРµС‡Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РІСЃРµС… РІРµСЂС€РёРЅР°С…
+    void print_matrix(void); //Р’СЂРµРјРµРЅРЅР°СЏ С„СѓРЅРєС†РёСЏ, РїРµС‡Р°С‚Р°СЋС‰Р°СЏ РјР°С‚СЂРёС†Сѓ СЃРјРµР¶РЅРѕСЃС‚Рё
+    void connect_two_nodes(unsigned int, unsigned int, unsigned int); //РЎРѕРµРґРёРЅРµРЅРёРµ РґРІСѓС… РІРµСЂС€РёРЅ С‚СЂСѓР±РѕР№
+    int disconnect_two_nodes(unsigned int, unsigned int); //РЈРґР°Р»РµРЅРёРµ РґСѓРіРё РјРµР¶РґСѓ РґРІСѓРјСЏ РІРµСЂС€РёРЅР°РјРё
+    void redirect_arc(unsigned int, unsigned int); //РџРµСЂРµРЅР°РїСЂР°РІР»РµРЅРёРµ РґСѓРіРё РјРµР¶РґСѓ РґРІСѓРјСЏ РІРµСЂС€РёРЅР°РјРё
+    void save_to_file(void); //РЎРѕС…СЂР°РЅРµРЅРёРµ РіСЂР°С„Р° РІ С„Р°Р№Р»
+    void load_from_file(void); //Р—Р°РіСЂСѓР·РєР° РіСЂР°С„Р° РёР· С„Р°Р№Р»Р°
+    void top_sort(void); //РўРѕРїРѕР»РѕРіРёС‡РµСЃРєР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР°
+    unsigned int return_node_count(void); //Р’РѕР·РІСЂР°С‚ С‡РёСЃР»Р° РІРµСЂС€РёРЅ
 };
 
 #endif 
