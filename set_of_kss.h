@@ -13,12 +13,12 @@ class set_of_kss {
 private:
     class ks {
     public:
-        unsigned int id;
+        unsigned int id; 
         std::string name;
-        int num_of_shops;
-        int num_of_active_shops;
+        int num_of_shops; //Количество цехов
+        int num_of_active_shops; //Количество активных цехов
         double efficiency; //Число в диапазоне 0-1, отношение числа рабочих цехов ко всем
-        bool is_node = false;
+        bool is_node = false; //Для работы с нефтесетью, проверка является ли КС вершиной
         ks(unsigned int param0, std::string param1, int param2, int param3, double param4)
         {
             id = param0;
@@ -73,9 +73,9 @@ public:
     void print_all_kss_to_console(void); //Печать всех компрессорных станций в консоль
     void save_to_file(void); //Сохранение всех компрессорных станций в файл
     void load_from_file(void); //Загрузка компрессорных станций из файла
-    void set_node(int, bool);
+    void set_node(int, bool); //Установка является ли КС вершиной 
     unsigned int return_ks_count(void); //Возврат числа компрессорных станций
-    bool is_node(int);
+    bool is_node(int); //Проверка является ли КС вершиной
 
     template<typename T> //Поиск компрессорной станции в диапазоне по параметру 
     void search_ks(T, T, int);

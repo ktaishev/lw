@@ -16,7 +16,7 @@ private:
         double length; //В метрах
         double diameter; //В миллиметрах от 500 до 1420
         bool inRepair;
-        bool is_edge = false;
+        bool is_edge = false; //Для работы с нефтесетью, проверка является ли труба ребром
         pipe(unsigned int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
@@ -68,8 +68,8 @@ public:
     void print_all_pipes_to_console(void); //Печать всех труб в консоль
     void save_to_file(void); //Сохранение всех труб в файл
     void load_from_file(void); //Загрузка труб из файла
-    void set_edge(int, bool);
-    bool is_edge(int); 
+    void set_edge(int, bool); //Установка является ли труба ребром в графе
+    bool is_edge(int); //Проверкаа является ли труба ребром в графе
     unsigned int return_pipe_count(void); //Возврат числа труб
 
     template<typename T> //Поиск трубы в диапазоне по параметру 

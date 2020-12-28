@@ -58,7 +58,7 @@ void set_of_pipes::select_pipe(int id)
 
 void set_of_pipes::deselect_pipe(int id)
 {
-    //Если труба не была выбрана, сообщаем пльзователю
+    //Если труба не была выбрана, сообщаем пользователю
     //Иначе добавляем к выбранным
     auto pos = std::find(selected_pipes.begin(), selected_pipes.end(), id);
     if (pos != selected_pipes.end())
@@ -97,13 +97,13 @@ void set_of_pipes::save_to_file(void)
     std::string filename;
     std::cout << "\tВведите имя сохраняемого файла: ";
     std::cin >> filename;
-    file.open(filename + "_pipe.txt", std::ofstream::out);
+    file.open(filename + ".pipe", std::ofstream::out);
     file << pipe_count << std::endl;
     for (unsigned int i = 0; i < pipe_count; i++)
         file << pipes[i].length << ' '
         << pipes[i].diameter << ' '
         << pipes[i].inRepair << std::endl;
-    std::cout << "\tДанные успешно сохранены в файл " << filename + "_pipe.txt" << std::endl;
+    std::cout << "\tДанные успешно сохранены в файл " << filename + ".pipe" << std::endl;
     file.close();
 }
 

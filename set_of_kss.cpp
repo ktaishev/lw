@@ -99,14 +99,14 @@ void set_of_kss::save_to_file(void)
     std::string filename;
     std::cout << "\tВведите имя сохраняемого файла: ";
     std::cin >> filename;
-    file.open(filename + "_ks.txt", std::ofstream::out);
+    file.open(filename + ".ks", std::ofstream::out);
     file << ks_count << std::endl;
     for (unsigned int i = 0; i < ks_count; i++)
         file << kss[i].name << ' '
         << kss[i].num_of_shops << ' '
         << kss[i].num_of_active_shops << ' '
         << kss[i].efficiency << std::endl;
-    std::cout << "\tДанные успешно сохранены в файл " << filename + "_ks.txt" << std::endl;
+    std::cout << "\tДанные успешно сохранены в файл " << filename + ".ks" << std::endl;
     file.close();
 }
 

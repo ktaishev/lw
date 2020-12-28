@@ -359,7 +359,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 10); // Заменить на 9
+        int msg = get_number(0, 12); // Заменить на 11
         if (msg == 0)
         {
             finish = true;
@@ -396,30 +396,47 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         {
             std::cout << "\tВведите ID компрессорной станции для просмотра: ";
             int index = get_number(0, g.return_node_count() - 1);
-            g.print_node(index);
+            if (kss.is_node(index) == false)
+                std::cout << "\tКомпрессорная станция не является веришной" << std::endl;
+            else
+                g.print_node(index);
             PRINT_HASH_LINE;
         }
         else if (msg == 4)
         {
+            //Печатает информацию о всех вершинах, даже не инициализированных
+            //Возможно стоит делать запуск отсюда print_node для всех кс, которые вершины
             std::cout << "\tВсе вершины:" << std::endl;
             g.print_nodes();
             PRINT_HASH_LINE;
         }
         else if (msg == 5)
         {
+            //Один раз поймал ошибку vector range error, обращение было к 0 трубе
+            //В дальнейшем повторить ошибку не удалось
             std::cout << "\tВведите начальную вершину для соединения: ";
             unsigned int node1 = get_number(0, g.return_node_count() - 1);
             std::cout << "\tВведите конечную вершину для соединения: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
-            if (node1 == node2)
+            if (kss.is_node(node1) == false)
+                std::cout << "\tКомпресорных станция ID " << node1 << " не является вершиной" << std::endl;
+            else if (kss.is_node(node2) == false)
+                std::cout << "\tКомпресорных станция ID " << node2 << " не является вершиной" << std::endl;
+            else if (node1 == node2)
                 std::cout << "\tНевозможно соединить вершину с самой собой";
             else
             {
                 std::cout << "\tВведите соединяющую трубу: ";
                 unsigned int pipe_id = get_number(0, pipes.return_pipe_count() - 1);
-                g.connect_two_nodes(node1, node2, pipe_id);
-                pipes.set_edge(pipe_id, true);
+                if (pipes.is_edge(pipe_id) == true)
+                    std::cout << "\tТруба уже задействована в нефтесети, соединение с помощью нее не возможно" << std::endl;
+                else
+                {
+                    g.connect_two_nodes(node1, node2, pipe_id);
+                    pipes.set_edge(pipe_id, true);
+                }
             }
+            PRINT_HASH_LINE;
         }
 
         else if (msg == 6)
@@ -431,7 +448,6 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             int pipe_id = g.disconnect_two_nodes(node1, node2);
             if (pipe_id != -1)
                 pipes.set_edge(pipe_id, false);
-            //Убрать соединение между двумя вершинами 
         }
         else if (msg == 7)
         {
@@ -443,9 +459,8 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             if (node1 == node2)
                 std::cout << "\tВведите две отличные вершины";
             else
-            {
                 g.redirect_arc(node1, node2);
-            }
+            PRINT_HASH_LINE;
         }
 
 
@@ -458,11 +473,20 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else if (msg == 9)
         {
-            print_graph_menu();
+            //Сохранение в файл
         }
         else if (msg == 10)
         {
+            //Загрузка из файла
+        }
+        else if (msg == 11)
+        {
+            print_graph_menu();
+        }
+        else if (msg == 12)
+        {
             g.print_matrix();
+            PRINT_HASH_LINE;
         }
         else
         {
