@@ -146,7 +146,7 @@ void set_of_kss::load_from_file(void)
     }
 }
 
-int set_of_kss::return_ks_count(void)
+unsigned int set_of_kss::return_ks_count(void)
 {
     return ks_count;
 }

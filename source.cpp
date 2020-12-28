@@ -355,10 +355,11 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
 
     bool finish = false;
     print_graph_menu();
+    g.init(kss.return_ks_count());
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 4);
+        int msg = get_number(0, 10); // Заменить на 9
         if (msg == 0)
         {
             finish = true;
@@ -384,7 +385,9 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
                 std::cout << "\tКомпрессорная станция не является веришной" << std::endl;
             else
             {
-                g.delete_node(index);
+                auto edges_to_free = g.delete_node(index);
+                for (auto it = edges_to_free.begin(); it != edges_to_free.end(); it++)
+                    pipes.set_edge(*it, false);
                 kss.set_node(index, false);
             }
             PRINT_HASH_LINE;
@@ -408,26 +411,47 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             unsigned int node1 = get_number(0, g.return_node_count() - 1);
             std::cout << "\tВведите конечную вершину для соединения: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
-            std::cout << "\tВведите соединяющую трубу: ";
-            unsigned int pipe_id = get_number(0, pipes.return_pipe_count() - 1);
             if (node1 == node2)
                 std::cout << "\tНевозможно соединить вершину с самой собой";
             else
             {
+                std::cout << "\tВведите соединяющую трубу: ";
+                unsigned int pipe_id = get_number(0, pipes.return_pipe_count() - 1);
                 g.connect_two_nodes(node1, node2, pipe_id);
+                pipes.set_edge(pipe_id, true);
             }
         }
 
-        //ПРОДОЛЖИТЬ ОТСЮДА
-
         else if (msg == 6)
         {
+            std::cout << "\tВведите начальную вершину для отсоединения: ";
+            unsigned int node1 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tВведите конечную вершину для отсоединения: ";
+            unsigned int node2 = get_number(0, g.return_node_count() - 1);
+            int pipe_id = g.disconnect_two_nodes(node1, node2);
+            if (pipe_id != -1)
+                pipes.set_edge(pipe_id, false);
             //Убрать соединение между двумя вершинами 
         }
         else if (msg == 7)
         {
-            //Переориентировать дугу
+            std::cout << "\tВведите вершины, дуги между которыми нужно развернуть: " << std::endl;
+            std::cout << "\tВведите начальную вершину: ";
+            unsigned int node1 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tВведите конечную вершину: ";
+            unsigned int node2 = get_number(0, g.return_node_count() - 1);
+            if (node1 == node2)
+                std::cout << "\tВведите две отличные вершины";
+            else
+            {
+                g.redirect_arc(node1, node2);
+            }
         }
+
+
+        //ПРОДОЛЖИТЬ ОТСЮДА
+
+
         else if (msg == 8)
         {
             //Топологическая сортировка
@@ -435,6 +459,10 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         else if (msg == 9)
         {
             print_graph_menu();
+        }
+        else if (msg == 10)
+        {
+            g.print_matrix();
         }
         else
         {

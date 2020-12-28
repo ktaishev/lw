@@ -152,7 +152,7 @@ bool set_of_pipes::is_edge(int index)
     return pipes[index].is_edge;
 }
 
-int set_of_pipes::return_pipe_count(void)
+unsigned int set_of_pipes::return_pipe_count(void)
 {
     return pipe_count;
 }

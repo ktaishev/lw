@@ -70,7 +70,7 @@ public:
     void load_from_file(void); //Загрузка труб из файла
     void set_edge(int, bool);
     bool is_edge(int); 
-    int return_pipe_count(void); //Возврат числа труб
+    unsigned int return_pipe_count(void); //Возврат числа труб
 
     template<typename T> //Поиск трубы в диапазоне по параметру 
     void search_pipe(T, T, int);

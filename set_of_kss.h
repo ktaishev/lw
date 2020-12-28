@@ -74,7 +74,7 @@ public:
     void save_to_file(void); //Сохранение всех компрессорных станций в файл
     void load_from_file(void); //Загрузка компрессорных станций из файла
     void set_node(int, bool);
-    int return_ks_count(void); //Возврат числа компрессорных станций
+    unsigned int return_ks_count(void); //Возврат числа компрессорных станций
     bool is_node(int);
 
     template<typename T> //Поиск компрессорной станции в диапазоне по параметру 
