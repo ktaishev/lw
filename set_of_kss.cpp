@@ -160,3 +160,4 @@ void set_of_kss::set_node(int index, bool status)
 {
     kss[index].is_node = status;
 }
+
