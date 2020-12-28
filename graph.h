@@ -3,10 +3,15 @@
 
 #include <iostream>
 #include <vector> 
+#include <queue>
+#include <fstream>
+
+unsigned int get_number(unsigned int min, unsigned int max);
 
 class graph {
     unsigned int node_count = 0; //Число вершин 
     std::vector<std::vector<int>> matrix; //Матрица смежности
+    void swap_nodes(std::queue<unsigned int>); //Обмен двух вершин местами
 public:
     void init(unsigned int); //Инициализация графа
     void add_node(unsigned int); //Добавление вершины в граф
@@ -17,6 +22,9 @@ public:
     void connect_two_nodes(unsigned int, unsigned int, unsigned int); //Соединение двух вершин трубой
     int disconnect_two_nodes(unsigned int, unsigned int); //Удаление дуги между двумя вершинами
     void redirect_arc(unsigned int, unsigned int); //Перенаправление дуги между двумя вершинами
+    void save_to_file(void); //Сохранение графа в файл
+    void load_from_file(void); //Загрузка графа из файла
+    void top_sort(void); //Топологическая сортировка
     unsigned int return_node_count(void); //Возврат числа вершин
 };
 

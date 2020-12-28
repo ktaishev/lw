@@ -1,8 +1,38 @@
 #include "graph.h"
 
+void graph::swap_nodes(std::queue<unsigned int> stack)
+{
+	auto matrix_old = matrix;
+	for (size_t i = 0; i < node_count; i++, stack.pop())
+	{
+		auto node1 = i; 
+		auto node2 = stack.front();
+		if (node1 != node2)
+		{
+			std::vector<unsigned int> in_tmp(node_count, -1);
+			std::vector<unsigned int> out_tmp(node_count, -1);
+			unsigned int from_1_to_2 = matrix_old[node1][node2];
+			unsigned int from_2_to_1 = matrix_old[node2][node1];
+
+			for (size_t i = 0; i < node_count; i++)
+			{
+				in_tmp[i] = matrix_old[i][node1];
+				out_tmp[i] = matrix_old[node1][i];
+				matrix[i][node1] = matrix_old[i][node2];
+				matrix[node1][i] = matrix_old[node2][i];
+				matrix[i][node2] = in_tmp[i];
+				matrix[node2][i] = out_tmp[i];
+			}
+			matrix[node1][node1] = -1;
+			matrix[node2][node2] = -1;
+			matrix[node1][node2] = from_2_to_1;
+			matrix[node2][node1] = from_1_to_2;
+		}
+	}
+}
+
 void graph::init(unsigned int size)
 {
-	node_count = size;
 	for (size_t i = 0; i < size; i++)
 	{
 		std::vector<int> v(size, -1);
@@ -12,6 +42,7 @@ void graph::init(unsigned int size)
 
 void graph::add_node(unsigned int index)
 {
+	node_count++;
 	std::cout << "\tВершина добавлена в граф" << std::endl;
 }
 
@@ -34,43 +65,8 @@ std::vector<unsigned int> graph::delete_node(unsigned int index)
 	}
 
 	std::cout << "\tВершина удалена из графа" << std::endl;
+	node_count--;
 	return edges_to_free;
-	/*
-	if (node_count < index)
-		std::cout << "\tВершина не присутсвовала в графе";
-	else
-	{
-		/*
-		//При удалении просто "отсоединяем вершину"
-		for (auto it = matrix.begin(); it != matrix.end(); it++)
-			(*it)[index] = 0;
-
-		for (size_t i = 0; i < node_count; i++)
-			for (auto it = matrix[index].begin(); it != matrix[index].end(); it++)
-				*it = 0;
-
-		std::cout << "\tВершина удалена из графа" << std::endl;
-		node_count--;
-
-		//Сдвиг вершин
-		//part a
-		for (size_t i = 0; i < index; i++)
-			for (size_t j = index; j < node_count - 1; j++)
-				matrix[i][j] = matrix[i][j + 1];
-		//part b
-		for (size_t i = 0; i < index; i++)
-			for (size_t j = index; j < node_count - 1; j++)
-				matrix[j][i] = matrix[j][i + 1];
-		//part c
-		for (size_t i = index + 1; i < node_count; i++)
-			for (size_t j = index + 1; j < node_count; j++)
-				matrix[i - 1][j - 1] = matrix[i][j];
-
-		node_count--;
-		std::cout << "\tВершина удалена из графа" << std::endl;
-
-	}
-	*/
 }
 
 void graph::print_node(unsigned int index)
@@ -150,6 +146,109 @@ void graph::redirect_arc(unsigned int node1, unsigned int node2)
 	}
 	else
 		std::cout << "\tМежду указаннами вершинами нет дуг" << std::endl;
+}
+
+void graph::save_to_file(void)
+{
+	std::ofstream file;
+	std::string filename;
+	std::cout << "\tВведите имя сохраняемого файла: ";
+	std::cin >> filename;
+	file.open(filename + ".graph", std::ofstream::out);
+	if (file.is_open())
+	{
+		file << node_count << std::endl;
+		for (unsigned int i = 0; i < node_count; i++)
+		{
+			for (unsigned int j = 0; j < node_count; j++)
+				file << matrix[i][j] << " ";
+			file << std::endl;
+		}
+		std::cout << "\tДанные успешно сохранены в файл " << filename + ".graph" << std::endl;
+		file.close();
+	}
+	else
+		std::cout << "Ошибка при попытке сохранения: не удалось открыть файл" << std::endl;
+}
+
+void graph::load_from_file(void)
+{
+	std::ifstream file;
+	std::string filename;
+	std::cout << "\tВведите имя загружаемого файла: ";
+	std::cin >> filename;
+	file.open(filename, std::ofstream::in);
+	if (file.is_open())
+	{
+		unsigned int node_count_tmp;
+		file >> node_count_tmp;
+		init(node_count_tmp);
+		for (size_t i = 0; i < node_count; i++)
+			for (size_t j = 0; j < node_count; j++)
+				file >> matrix[i][j];
+		file.close();
+	}
+	else
+	{
+		std::cout << "\tПрограмма не смогла найти указанный файл" << std::endl;
+		std::cout << "\tЗапустить поиск другого файла? (Нет - 0 | Да - 1): ";
+		int msg = get_number(0, 1);
+		if (msg == 1)
+			load_from_file();
+		else
+			std::cout << "\tОшибка в ходе загрузки" << std::endl;
+	}
+}
+
+void graph::top_sort(void)
+{
+	//	Принцип работы алгоритма (Алгоритм Демукрона)
+	/*
+	* Часть 1
+	* 1. Определить степени всех вершин (количесвто исходящих дуг)
+	* 2. Выделить пустой стек (FIFO)
+	* 3. Начать с вершины со степенью 0, поместить ее в стек
+	* 4. Данную вершину отправить в стек
+	* 5. У всех смежных вершин (в которые вела данные вершины) уменьшить степень на 2
+	* 6. Если есть еще необработанные вершины перейти в шаг 3, если вершин со степенью 
+	     0 не осталось, и обработаны не все вершины, то граф не является сетью
+	* 
+	* Часть 2
+	* По окончании работы есть стек с номерами вершин
+	* 0. Создаем счетчик i = 0
+	* 1. Достаем элемент из стека (номер вершины)
+	* 2. Эту вершину нумеруем как i-тую, i++
+	* 3. Если стек не пуст, переходим в шаг 1
+	* 4. После освобождения стека работа алгоритма завершается
+	*/
+
+	std::queue<unsigned int> stack; //Стек, заполняющийся ко второй части алгоритма
+	std::vector<unsigned int> table(node_count, 0); //Таблица, хранящая степени вершин. Значение i-того элемента равно степени i-той вершины
+	//Заполнение таблицы степенями
+	for (size_t i = 0; i < node_count; i++)
+		for (size_t j = 0; j < node_count; j++)
+			if (matrix[j][i] != -1)
+				table[i]++;
+
+	//Нахождение нового порядка (Часть 1)
+	while (stack.size() < node_count)
+	{
+		auto pos = std::find(table.begin(), table.end(), 0);
+		if (pos == table.end())
+			std::cout << "\tВ графе присутсвует цепь, топологическая сортировка невозможна" << std::endl;
+		else
+		{
+			*pos = -1;
+			auto index = std::distance(table.begin(), pos);
+			stack.push(index);
+			for (size_t i = 0; i < node_count; i++)
+				if (matrix[index][i] != -1)
+					table[i]--;
+		}
+	}
+
+	//Установка нового порядка вершин в графе (Часть 2)
+	swap_nodes(stack);
 }
 
 unsigned int graph::return_node_count(void)

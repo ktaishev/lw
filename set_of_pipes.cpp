@@ -98,13 +98,18 @@ void set_of_pipes::save_to_file(void)
     std::cout << "\tВведите имя сохраняемого файла: ";
     std::cin >> filename;
     file.open(filename + ".pipe", std::ofstream::out);
-    file << pipe_count << std::endl;
-    for (unsigned int i = 0; i < pipe_count; i++)
-        file << pipes[i].length << ' '
-        << pipes[i].diameter << ' '
-        << pipes[i].inRepair << std::endl;
-    std::cout << "\tДанные успешно сохранены в файл " << filename + ".pipe" << std::endl;
-    file.close();
+    if (file.is_open())
+    {
+        file << pipe_count << std::endl;
+        for (unsigned int i = 0; i < pipe_count; i++)
+            file << pipes[i].length << ' '
+            << pipes[i].diameter << ' '
+            << pipes[i].inRepair << std::endl;
+        std::cout << "\tДанные успешно сохранены в файл " << filename + ".pipe" << std::endl;
+        file.close();
+    }
+    else
+        std::cout << "Ошибка при попытке сохранения: не удалось открыть файл" << std::endl;
 }
 
 void set_of_pipes::load_from_file(void)

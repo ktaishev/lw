@@ -359,7 +359,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 12); // Заменить на 11
+        int msg = get_number(0, 9);
         if (msg == 0)
         {
             finish = true;
@@ -438,7 +438,6 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             }
             PRINT_HASH_LINE;
         }
-
         else if (msg == 6)
         {
             std::cout << "\tВведите начальную вершину для отсоединения: ";
@@ -448,6 +447,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             int pipe_id = g.disconnect_two_nodes(node1, node2);
             if (pipe_id != -1)
                 pipes.set_edge(pipe_id, false);
+            PRINT_HASH_LINE;
         }
         else if (msg == 7)
         {
@@ -462,31 +462,15 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
                 g.redirect_arc(node1, node2);
             PRINT_HASH_LINE;
         }
-
-
-        //ПРОДОЛЖИТЬ ОТСЮДА
-
-
         else if (msg == 8)
         {
-            //Топологическая сортировка
+            g.top_sort();
+            std::cout << "\tТопологическая сортировка завершена" << std::endl;
+            PRINT_HASH_LINE;
         }
         else if (msg == 9)
         {
-            //Сохранение в файл
-        }
-        else if (msg == 10)
-        {
-            //Загрузка из файла
-        }
-        else if (msg == 11)
-        {
             print_graph_menu();
-        }
-        else if (msg == 12)
-        {
-            g.print_matrix();
-            PRINT_HASH_LINE;
         }
         else
         {

@@ -352,6 +352,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-#Pipe & KS Data
+#Pipe & KS & Graph Data
 *.pipe
 *.ks
+*.graph

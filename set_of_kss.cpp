@@ -100,14 +100,19 @@ void set_of_kss::save_to_file(void)
     std::cout << "\tВведите имя сохраняемого файла: ";
     std::cin >> filename;
     file.open(filename + ".ks", std::ofstream::out);
-    file << ks_count << std::endl;
-    for (unsigned int i = 0; i < ks_count; i++)
-        file << kss[i].name << ' '
-        << kss[i].num_of_shops << ' '
-        << kss[i].num_of_active_shops << ' '
-        << kss[i].efficiency << std::endl;
-    std::cout << "\tДанные успешно сохранены в файл " << filename + ".ks" << std::endl;
-    file.close();
+    if (file.is_open())
+    {
+        file << ks_count << std::endl;
+        for (unsigned int i = 0; i < ks_count; i++)
+            file << kss[i].name << ' '
+            << kss[i].num_of_shops << ' '
+            << kss[i].num_of_active_shops << ' '
+            << kss[i].efficiency << std::endl;
+        std::cout << "\tДанные успешно сохранены в файл " << filename + ".ks" << std::endl;
+        file.close();
+    }
+    else
+        std::cout << "Ошибка при попытке сохранения: не удалось открыть файл" << std::endl;
 }
 
 void set_of_kss::load_from_file(void)
