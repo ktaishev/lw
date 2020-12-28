@@ -1,4 +1,4 @@
-#include "set_of_kss.h"
+ï»¿#include "set_of_kss.h"
 
 void set_of_kss::add_ks(std::string name, int num_of_shops, int num_of_active_shops, double efficiency)
 {
@@ -15,21 +15,21 @@ void set_of_kss::delete_ks(int index)
 
 void set_of_kss::print_to_console(int index)
 {
-    std::cout << "\tID êîìïðåññîðíîé  ñòàíöèè: " << kss[index].id << std::endl
-        << "\tÈìÿ: " << kss[index].name << std::endl
-        << "\tÊîëè÷åñòâî öåõîâ: " << kss[index].num_of_shops << std::endl
-        << "\tÊîëè÷åñòâî àêòèâíûõ öåõîâ: " << kss[index].num_of_active_shops << std::endl
-        << "\tÝôôåêòèâíîñòü: " << kss[index].efficiency * 100 << "%" << std::endl;
+    std::cout << "\tID ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹  ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸: " << kss[index].id << std::endl
+        << "\tÐ˜Ð¼Ñ: " << kss[index].name << std::endl
+        << "\tÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ†ÐµÑ…Ð¾Ð²: " << kss[index].num_of_shops << std::endl
+        << "\tÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ñ… Ñ†ÐµÑ…Ð¾Ð²: " << kss[index].num_of_active_shops << std::endl
+        << "\tÐ­Ñ„Ñ„ÐµÐºÑ‚Ð¸Ð²Ð½Ð¾ÑÑ‚ÑŒ: " << kss[index].efficiency * 100 << "%" << std::endl;
     std::cout << std::endl;
 }
 
 void set_of_kss::print_selected_kss_to_console(void)
 {
     if (selected_ks.empty())
-        std::cout << "\tÍåò âûáðàííûõ êîìïðåññîðíûõ ñòàíöèé" << std::endl;
+        std::cout << "\tÐÐµÑ‚ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ñ‹Ñ… ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¹" << std::endl;
     else
     {
-        std::cout << "\tÂñå âûáðàííûå êîìïðåññîðíûå ñòàíöèè:" << std::endl;
+        std::cout << "\tÐ’ÑÐµ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ðµ ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ñ‹Ðµ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸:" << std::endl;
         for (size_t i = 0; i < selected_ks.size(); i++)
             print_to_console(selected_ks[i]);
     }
@@ -40,10 +40,10 @@ void set_of_kss::select_ks(int id)
     if (std::find(selected_ks.begin(), selected_ks.end(), id) == selected_ks.end())
     {
         selected_ks.push_back(id);
-        std::cout << "\tÊîìïðåññîðíàÿ ñòàíöèÿ ID " << id << " äîáàâëåíà ê âûáðàííûì" << std::endl;
+        std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ID " << id << " Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð° Ðº Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¼" << std::endl;
     }
     else
-        std::cout << "\tÊîìïðåññîðíàÿ ñòàíöèÿ óæå áûëà âûáðàíà";
+        std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ÑƒÐ¶Ðµ Ð±Ñ‹Ð»Ð° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð°";
 }
 
 void set_of_kss::deselect_ks(int id)
@@ -53,10 +53,10 @@ void set_of_kss::deselect_ks(int id)
     {
         *pos = selected_ks.back();
         selected_ks.pop_back();
-        std::cout << "\tÊîìïåðññîðíàÿ ñòàíöèÿ óñïåøíî óäàëåíà èç âûáðàííûõ" << std::endl;
+        std::cout << "\tÐšÐ¾Ð¼Ð¿ÐµÑ€ÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ ÑƒÐ´Ð°Ð»ÐµÐ½Ð° Ð¸Ð· Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ…" << std::endl;
     }
     else
-        std::cout << "\tÄàííàÿ êîìïðåññîðíàÿ ñòàíöèÿ íå áûëà âûáðàíà" << std::endl;
+        std::cout << "\tÐ”Ð°Ð½Ð½Ð°Ñ ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ Ð½Ðµ Ð±Ñ‹Ð»Ð° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð°" << std::endl;
 }
 
 void set_of_kss::close_shop(int index)
@@ -64,10 +64,10 @@ void set_of_kss::close_shop(int index)
     if (kss[index].num_of_active_shops > 0)
     {
         kss[index].num_of_active_shops--;
-        std::cout << "\tÖåõ (Êîìïðåññîðíàÿ ñòàíöèÿ ID " << index << ") óñïåøíî çàêðûò" << std::endl;
+        std::cout << "\tÐ¦ÐµÑ… (ÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ID " << index << ") ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð·Ð°ÐºÑ€Ñ‹Ñ‚" << std::endl;
     }
     else
-        std::cout << "\tÂñå öåõà çàêðûòû (Îòêðûòî " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
+        std::cout << "\tÐ’ÑÐµ Ñ†ÐµÑ…Ð° Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ñ‹ (ÐžÑ‚ÐºÑ€Ñ‹Ñ‚Ð¾ " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
 }
 
 void set_of_kss::open_shop(int index)
@@ -75,19 +75,19 @@ void set_of_kss::open_shop(int index)
     if (kss[index].num_of_active_shops < kss[index].num_of_shops)
     {
         kss[index].num_of_active_shops++;
-        std::cout << "\tÖåõ (Êîìïðåññîðíàÿ ñòàíöèÿ ID " << index << ") óñïåøíî îòêðûò" << std::endl;
+        std::cout << "\tÐ¦ÐµÑ… (ÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ID " << index << ") ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚" << std::endl;
     }
     else
-        std::cout << "\tÂñå öåõà îòêðûòû (Îòêðûòî " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
+        std::cout << "\tÐ’ÑÐµ Ñ†ÐµÑ…Ð° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ñ‹ (ÐžÑ‚ÐºÑ€Ñ‹Ñ‚Ð¾ " << kss[index].num_of_active_shops << "/" << kss[index].num_of_shops << ")" << std::endl;
 }
 
 void set_of_kss::print_all_kss_to_console(void)
 {
     if (ks_count == 0)
-        std::cout << "\tÍåò äîáàâëåííûõ êîìïðåññîðíûõ ñòàíöèé" << std::endl;
+        std::cout << "\tÐÐµÑ‚ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð½Ñ‹Ñ… ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ñ‹Ñ… ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¹" << std::endl;
     else
     {
-        std::cout << "\tÂñå êîìïðåññîðíûå ñòàíöèè:" << std::endl << std::endl;
+        std::cout << "\tÐ’ÑÐµ ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ñ‹Ðµ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸:" << std::endl << std::endl;
         for (unsigned int i = 0; i < ks_count; i++)
             print_to_console(i);
     }        
@@ -97,7 +97,7 @@ void set_of_kss::save_to_file(void)
 {
     std::ofstream file;
     std::string filename;
-    std::cout << "\tÂâåäèòå èìÿ ñîõðàíÿåìîãî ôàéëà: ";
+    std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð°: ";
     std::cin >> filename;
     file.open(filename + ".ks", std::ofstream::out);
     if (file.is_open())
@@ -108,18 +108,18 @@ void set_of_kss::save_to_file(void)
             << kss[i].num_of_shops << ' '
             << kss[i].num_of_active_shops << ' '
             << kss[i].efficiency << std::endl;
-        std::cout << "\tÄàííûå óñïåøíî ñîõðàíåíû â ôàéë " << filename + ".ks" << std::endl;
+        std::cout << "\tÐ”Ð°Ð½Ð½Ñ‹Ðµ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ñ‹ Ð² Ñ„Ð°Ð¹Ð» " << filename + ".ks" << std::endl;
         file.close();
     }
     else
-        std::cout << "Îøèáêà ïðè ïîïûòêå ñîõðàíåíèÿ: íå óäàëîñü îòêðûòü ôàéë" << std::endl;
+        std::cout << "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÐµ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ñ: Ð½Ðµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»" << std::endl;
 }
 
 void set_of_kss::load_from_file(void)
 {
     std::ifstream file;
     std::string filename;
-    std::cout << "\tÂâåäèòå èìÿ çàãðóæàåìîãî ôàéëà: ";
+    std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÐ¼Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð°: ";
     std::cin >> filename;
     file.open(filename, std::ofstream::in);
     if (file.is_open())
@@ -136,18 +136,18 @@ void set_of_kss::load_from_file(void)
             kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp));
         }
         ks_count += extra_ks_count;
-        std::cout << "\tÇàãðóæåíî " << extra_ks_count << " êîìïðåññîðíûõ ñòàíöèé" << std::endl;
+        std::cout << "\tÐ—Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½Ð¾ " << extra_ks_count << " ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ñ‹Ñ… ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¹" << std::endl;
         file.close();
     }
     else
     {
-        std::cout << "\tÏðîãðàììà íå ñìîãëà íàéòè óêàçàííûé ôàéë" << std::endl;
-        std::cout << "\tÇàïóñòèòü ïîèñê äðóãîãî ôàéëà? (Íåò - 0 | Äà - 1): ";
+        std::cout << "\tÐŸÑ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ð° Ð½Ðµ ÑÐ¼Ð¾Ð³Ð»Ð° Ð½Ð°Ð¹Ñ‚Ð¸ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ñ‹Ð¹ Ñ„Ð°Ð¹Ð»" << std::endl;
+        std::cout << "\tÐ—Ð°Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð¸ÑÐº Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð°? (ÐÐµÑ‚ - 0 | Ð”Ð° - 1): ";
         int msg = get_number(0, 1);
         if (msg == 1)
             load_from_file();
         else
-            std::cout << "\tÎøèáêà â õîäå çàãðóçêè" << std::endl;
+            std::cout << "\tÐžÑˆÐ¸Ð±ÐºÐ° Ð² Ñ…Ð¾Ð´Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸" << std::endl;
     }
 }
 

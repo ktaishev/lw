@@ -1,93 +1,110 @@
-#ifndef LW_UTILITY_H_
-#define LW_UTILITY_H_
+п»ї#ifndef LW_SET_OF_PIPES_H_
+#define LW_SET_OF_PIPES_H_
 
+#include <algorithm>
+#include <fstream>
 #include <iostream>
+#include <vector> 
 
-#define PRINT_HASH_LINE std::cout << std::endl << "#################################################################" << std::endl << std::endl;
+unsigned int get_number(unsigned int min, unsigned int max);
 
-//Функция печатающая основное меню
-void print_main_menu(void)
+class set_of_pipes {
+private:
+    class pipe {
+    public:
+        unsigned int id;
+        double length; //Р’ РјРµС‚СЂР°С…
+        double diameter; //Р’ РјРёР»Р»РёРјРµС‚СЂР°С… РѕС‚ 500 РґРѕ 1420
+        bool inRepair;
+        bool is_edge = false; //Р”Р»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅРµС„С‚РµСЃРµС‚СЊСЋ, РїСЂРѕРІРµСЂРєР° СЏРІР»СЏРµС‚СЃСЏ Р»Рё С‚СЂСѓР±Р° СЂРµР±СЂРѕРј
+        pipe(unsigned int param0, double param1, double param2, bool param3 = false)
+        {
+            id = param0;
+            length = param1;
+            diameter = param2;
+            inRepair = param3;
+        }
+        double return_parameter(int parameter_id)
+        {
+            if (parameter_id == 0)
+                return id;
+            else if (parameter_id == 1)
+                return length;
+            else if (parameter_id == 2)
+                return diameter;
+            else
+                return (inRepair ? 1.0 : 0.0);
+        }
+
+        template<typename T>
+        void change_parameter(T new_value, int parameter_id)
+        {
+            if (parameter_id == 1)
+                length = new_value;
+            else if (parameter_id == 2)
+                diameter = new_value;
+            else
+            {
+                if (new_value == 0)
+                    inRepair = true;
+                else
+                    inRepair = false;
+            }
+        }
+    };
+
+    std::vector<pipe> pipes; //Р’РµРєС‚РѕСЂ, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ С‚СЂСѓР±С‹ 
+    std::vector<int> selected_pipes; //Р’РµРєС‚РѕСЂ, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ С‚СЂСѓР±С‹
+    std::vector<int> searched_pipes; //Р’РµРєС‚РѕСЂ, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ РЅР°Р№РґРµРЅРЅС‹Рµ С‚СЂСѓР±С‹ (С‚РѕР»СЊРєРѕ СЂРµР·СѓР»СЊС‚Р°С‚С‹ РїРѕСЃР»РµРґРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР°)
+    unsigned int pipe_count; //РўРµРєСѓС‰РµРµ С‡РёСЃР»Рѕ С‚СЂСѓР±
+public:
+    void add_pipe(double, double); //Р”РѕР±Р°РІР»РµРЅРёРµ С‚СЂСѓР±С‹
+    void delete_pipe(int); //РЈРґР°Р»РµРЅРёРµ С‚СЂСѓР±С‹
+    void print_to_console(int); //РџРµС‡Р°С‚СЊ С‚СЂСѓР±С‹ РІ РєРѕРЅСЃРѕР»СЊ РїРѕ РёРЅРґРµРєСЃСѓ
+    void print_selected_pipes_to_console(void); //РџРµС‡Р°С‚СЊ РІСЃРµС… РІС‹Р±СЂР°РЅРЅС‹С… С‚СЂСѓР± РІ РєРѕРЅСЃРѕР»СЊ
+    void select_pipe(int); //Р’С‹Р±РѕСЂ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ С‚СЂСѓР±С‹ РїРѕ РёРЅРґРµРєСЃСѓ
+    void deselect_pipe(int); //РЈРґР°Р»РµРЅРёРµ РІС‹Р±РѕСЂР° СЃ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ С‚СЂСѓР±С‹ РїРѕ РёРЅРґРµРєСЃСѓ
+    void change_repair_status(int); //РР·РјРµРЅРµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ "Р РµРјРѕРЅС‚Р°" С‚СЂСѓР±С‹ РїРѕ РёРЅРґРµРєСЃСѓ
+    void print_all_pipes_to_console(void); //РџРµС‡Р°С‚СЊ РІСЃРµС… С‚СЂСѓР± РІ РєРѕРЅСЃРѕР»СЊ
+    void save_to_file(void); //РЎРѕС…СЂР°РЅРµРЅРёРµ РІСЃРµС… С‚СЂСѓР± РІ С„Р°Р№Р»
+    void load_from_file(void); //Р—Р°РіСЂСѓР·РєР° С‚СЂСѓР± РёР· С„Р°Р№Р»Р°
+    void set_edge(int, bool); //РЈСЃС‚Р°РЅРѕРІРєР° СЏРІР»СЏРµС‚СЃСЏ Р»Рё С‚СЂСѓР±Р° СЂРµР±СЂРѕРј РІ РіСЂР°С„Рµ
+    bool is_edge(int); //РџСЂРѕРІРµСЂРєР°Р° СЏРІР»СЏРµС‚СЃСЏ Р»Рё С‚СЂСѓР±Р° СЂРµР±СЂРѕРј РІ РіСЂР°С„Рµ
+    unsigned int return_pipe_count(void); //Р’РѕР·РІСЂР°С‚ С‡РёСЃР»Р° С‚СЂСѓР±
+
+    template<typename T> //РџРѕРёСЃРє С‚СЂСѓР±С‹ РІ РґРёР°РїР°Р·РѕРЅРµ РїРѕ РїР°СЂР°РјРµС‚СЂСѓ 
+    void search_pipe(T, T, int);
+
+    template<typename T> //РР·РјРµРЅРµРЅРёРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° Сѓ РІСЃРµС… РІС‹Р±СЂР°РЅРЅС‹С… С‚СЂСѓР±
+    void bunch_editing_pipe(T, int);
+};
+
+template<typename T>
+inline void set_of_pipes::search_pipe(T left, T right, int parameter_id)
 {
-    std::cout << std::endl << "#################################################################" << std::endl
-        << "#\t 1. Работа с трубами                              \t#" << std::endl
-        << "#\t 2. Работа с компрессорными станциями             \t#" << std::endl
-        << "#\t 3. Работа с нефтесетью                           \t#" << std::endl
-        << "#\t 4. Помощь                                        \t#" << std::endl
-        << "#\t 0. Выход                                         \t#" << std::endl
-        << "#################################################################" << std::endl << std::endl;
-}
+    std::vector<int> ids;
+    searched_pipes.clear();
+    std::for_each(pipes.begin(), pipes.end(), [&](pipe p) mutable {
+        if (left <= p.return_parameter(parameter_id) && p.return_parameter(parameter_id) <= right)
+            searched_pipes.push_back(p.id); });
+    std::cout << "\tРќР°Р№РґРµРЅРѕ " << searched_pipes.size() << " С‚СЂСѓР±" << std::endl;
+    std::cout << "\tР”РѕР±Р°РІРёС‚СЊ РЅР°Р№РґРµРЅРЅС‹Рµ С‚СЂСѓР±С‹ Рє РІС‹Р±СЂР°РЅРЅС‹Рј? (РќРµС‚ - 0 | Р”Р° - 1): ";
+ 
+    int msg = get_number(0, 1);
 
-//Функция печатающая меню при работе с трубами
-void print_pipe_menu(void)
-{
-    std::cout << std::endl << "#################################################################" << std::endl
-        << "#\t 1. Добавить трубу                                \t#" << std::endl
-        << "#\t 2. Удалить трубу                                 \t#" << std::endl
-        << "#\t 3. Изменить состояние трубы (Работает/На ремонте)\t#" << std::endl
-        << "#\t 4. Напечатать все трубы                          \t#" << std::endl
-        << "#\t 5. Выбрать трубу                                 \t#" << std::endl
-        << "#\t 6. Удалить трубу из выбранных                    \t#" << std::endl
-        << "#\t 7. Напечатать выбранные трубы                    \t#" << std::endl
-        << "#\t 8. Поиск по параметру                            \t#" << std::endl
-        << "#\t 9. Изменение выбранных труб                      \t#" << std::endl
-        << "#\t10. Сохранение в файл                             \t#" << std::endl
-        << "#\t11. Загрузка из файла                             \t#" << std::endl
-        << "#\t12. Помощь                                        \t#" << std::endl
-        << "#\t0. Возврат в главное меню                         \t#" << std::endl
-        << "#################################################################" << std::endl << std::endl;
-}
-
-//Функция печатающая меню при работе с компрессорными станциями
-void print_ks_menu(void)
-{
-    std::cout << std::endl << "#################################################################" << std::endl
-        << "#\t 1. Добавить компрессорную станцию                \t#" << std::endl
-        << "#\t 2. Удалить компрессорную станцию                 \t#" << std::endl
-        << "#\t 3. Закрыть цех                                   \t#" << std::endl
-        << "#\t 4. Открыть цех                                   \t#" << std::endl
-        << "#\t 5. Напечатать все компрессорные станции          \t#" << std::endl
-        << "#\t 6. Выбрать компрессорную станцию                 \t#" << std::endl
-        << "#\t 7. Удалить компрессорную станцию из выбранных    \t#" << std::endl
-        << "#\t 8. Напечатать выбранные компрессорные станции    \t#" << std::endl
-        << "#\t 9. Поиск по параметру                            \t#" << std::endl
-        << "#\t10. Изменение выбранных компрессорных станций     \t#" << std::endl
-        << "#\t11. Сохранение в файл                             \t#" << std::endl
-        << "#\t12. Загрузка из файла                             \t#" << std::endl
-        << "#\t13. Помощь                                        \t#" << std::endl
-        << "#\t0. Возврат в главное меню                         \t#" << std::endl
-        << "#################################################################" << std::endl << std::endl;
-}
-
-//Функция печатающая меню при работе с графами
-void print_graph_menu(void)
-{
-    std::cout << std::endl << "#################################################################" << std::endl
-        << "#\t  1. Добавить компрессорную станцию в вершины      \t#" << std::endl
-        << "#\t  2. Удалить компрессорную станцию из вершин       \t#" << std::endl
-        << "#\t  3. Посмотреть вершину                            \t#" << std::endl
-        << "#\t  4. Посмотреть список вершин                      \t#" << std::endl
-        << "#\t  5. Соединить две вершины трубой                  \t#" << std::endl
-        << "#\t  6. Убрать соединение между двумя вершинами       \t#" << std::endl
-        << "#\t  7. Переориентировать дугу                        \t#" << std::endl
-        << "#\t  8. Топологическая сортировка                     \t#" << std::endl
-        << "#\t  9. Сохранить граф                                \t#" << std::endl
-        << "#\t 10. Загрузить граф                                \t#" << std::endl
-        << "#\t 11. Помощь                                        \t#" << std::endl
-        << "#\t 0. Возврат в главное меню                         \t#" << std::endl
-        << "#################################################################" << std::endl << std::endl;
-}
-
-//Функция возвращающая число в случае успешного ввода, 
-//которое принадлежит заданному интервалу
-unsigned int get_number(unsigned int min, unsigned int max)
-{
-    unsigned int n;
-    while ((std::cin >> n).fail() || n < min || n > max)
+    if (msg == 1)
     {
-        std::cin.clear();
-        std::cin.ignore(32767, '\n');
-        std::cout << "\tНеккоректный ввод. Введите число в диапазоне " << min << "-" << max << ": ";
+        for (auto it = searched_pipes.begin(); it != searched_pipes.end(); it++)
+            selected_pipes.push_back(*it);
+        std::cout << "\tРўСЂСѓР±С‹ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅС‹ Рє РІС‹Р±СЂР°РЅРЅС‹Рј" << std::endl;
     }
-    return n;
 }
+
+template<typename T> 
+inline void set_of_pipes::bunch_editing_pipe(T new_value, int parameter_id)
+{
+    std::for_each(selected_pipes.begin(), selected_pipes.end(), [&](int index) {pipes[index].change_parameter(new_value, parameter_id); });
+    std::cout << "\tРЈРєР°Р·Р°РЅРЅС‹Рµ РёР·РјРµРЅРµРЅРёСЏ СѓСЃРїРµС€РЅРѕ РїСЂРёРјРµРЅРµРЅС‹ Рє РІС‹Р±СЂР°РЅРЅС‹Рј С‚СЂСѓР±Р°Рј" << std::endl;
+}
+
 #endif

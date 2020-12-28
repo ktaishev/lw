@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <fstream>
 #include <locale>
 #include <set>
@@ -19,34 +19,34 @@ int main()
     graph g;
 
     setlocale(LC_ALL, "Russian");
-    std::cout << "Ëàáîðàòîðíàÿ ðàáîòà çà 1 ñåìåñòð 2 êóðñà" << std::endl;
+    std::cout << "Ð›Ð°Ð±Ð¾Ñ€Ð°Ñ‚Ð¾Ñ€Ð½Ð°Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ð° Ð·Ð° 1 ÑÐµÐ¼ÐµÑÑ‚Ñ€ 2 ÐºÑƒÑ€ÑÐ°" << std::endl;
     bool finish = false;
     print_main_menu();
     while (!finish)
     {
-        std::cout << "\tÂûáðàííûé ïóíêò: ";
+        std::cout << "\tÐ’Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð¿ÑƒÐ½ÐºÑ‚: ";
         int msg = get_number(0, 4);
         if (msg == 0)
         {
             finish = true;
-            std::cout << "\tÇàâåðøåíèå ðàáîòû" << std::endl;
+            std::cout << "\tÐ—Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹" << std::endl;
         }
         else if (msg == 1)
         {
             pipes_setup(pipes);
-            std::cout << "\tÂû â ãëàâíîì ìåíþ" << std::endl;
+            std::cout << "\tÐ’Ñ‹ Ð² Ð³Ð»Ð°Ð²Ð½Ð¾Ð¼ Ð¼ÐµÐ½ÑŽ" << std::endl;
             print_main_menu();
         }
         else if (msg == 2)
         {
             ks_setup(kss);
-            std::cout << "\tÂû â ãëàâíîì ìåíþ" << std::endl;
+            std::cout << "\tÐ’Ñ‹ Ð² Ð³Ð»Ð°Ð²Ð½Ð¾Ð¼ Ð¼ÐµÐ½ÑŽ" << std::endl;
             print_main_menu();
         }
         else if (msg == 3)
         {
             graph_setup(pipes, kss, g);
-            std::cout << "\tÂû â ãëàâíîì ìåíþ" << std::endl;
+            std::cout << "\tÐ’Ñ‹ Ð² Ð³Ð»Ð°Ð²Ð½Ð¾Ð¼ Ð¼ÐµÐ½ÑŽ" << std::endl;
             print_main_menu();
         }
         else if (msg == 4)
@@ -55,7 +55,7 @@ int main()
         }
         else
         {
-            std::cout << "\tÊîìàíäà íå ðàñïîçíàíà. Ïîâòîðèòå ââîä. Ââåäèòå 4 äëÿ ïîëó÷åíèÿ ïîìîùè" << std::endl;
+            std::cout << "\tÐšÐ¾Ð¼Ð°Ð½Ð´Ð° Ð½Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð½Ð°. ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð²Ð²Ð¾Ð´. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ 4 Ð´Ð»Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰Ð¸" << std::endl;
         }
     }
     return 0;
@@ -67,7 +67,7 @@ void pipes_setup(set_of_pipes& pipes)
     print_pipe_menu();
     while (!finish)
     {
-        std::cout << "\tÂûáðàííûé ïóíêò: ";
+        std::cout << "\tÐ’Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð¿ÑƒÐ½ÐºÑ‚: ";
         int msg = get_number(0, 12);
         if (msg == 0)
         {
@@ -75,26 +75,26 @@ void pipes_setup(set_of_pipes& pipes)
         }
         else if (msg == 1)
         {
-            std::cout << "\tÂâåäèòå ïàðàìåòðû òðóáû:" << std::endl;
-            std::cout << "\tÂâåäèòå äëèíó: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ñ‚Ñ€ÑƒÐ±Ñ‹:" << std::endl;
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð»Ð¸Ð½Ñƒ: ";
             int length_tmp = get_number(0, INT_MAX);
-            std::cout << "\tÂâåäèòå äèàìåòð (500-1420): ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð¸Ð°Ð¼ÐµÑ‚Ñ€ (500-1420): ";
             int diameter_tmp = get_number(500, 1420);
             pipes.add_pipe(length_tmp, diameter_tmp);
-            std::cout << "\tÒðóáà óñïåøíî äîáàâëåíà" << std::endl;
+            std::cout << "\tÐ¢Ñ€ÑƒÐ±Ð° ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð°" << std::endl;
             PRINT_HASH_LINE;
         }
         else if (msg == 2)
         {
-            std::cout << "\tÂâåäèòå ID óäàëÿåìîé òðóáû: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÑƒÐ´Ð°Ð»ÑÐµÐ¼Ð¾Ð¹ Ñ‚Ñ€ÑƒÐ±Ñ‹: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.delete_pipe(index);
-            std::cout << "\tÒðóáà ID " << index << " óñïåøíî óäàëåíà" << std::endl;
+            std::cout << "\tÐ¢Ñ€ÑƒÐ±Ð° ID " << index << " ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ ÑƒÐ´Ð°Ð»ÐµÐ½Ð°" << std::endl;
             PRINT_HASH_LINE;
         }
         else if (msg == 3)
         {
-            std::cout << "\tÂâåäèòå ID òðóáû äëÿ èçìåíåíèÿ ñòàòóñà ðåìîíòà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID Ñ‚Ñ€ÑƒÐ±Ñ‹ Ð´Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ ÑÑ‚Ð°Ñ‚ÑƒÑÐ° Ñ€ÐµÐ¼Ð¾Ð½Ñ‚Ð°: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.change_repair_status(index);
             PRINT_HASH_LINE;
@@ -106,14 +106,14 @@ void pipes_setup(set_of_pipes& pipes)
         }
         else if (msg == 5)
         {
-            std::cout << "\tÂâåäèòå ID òðóáû äëÿ âûáîðà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID Ñ‚Ñ€ÑƒÐ±Ñ‹ Ð´Ð»Ñ Ð²Ñ‹Ð±Ð¾Ñ€Ð°: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.select_pipe(index);
             PRINT_HASH_LINE;
         }
         else if (msg == 6)
         {
-            std::cout << "\tÂâåäèòå ID òðóáû äëÿ óäàëåíèÿ èç âûáðàííûõ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID Ñ‚Ñ€ÑƒÐ±Ñ‹ Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¸Ð· Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ…: ";
             int index = get_number(0, pipes.return_pipe_count() - 1);
             pipes.deselect_pipe(index);
             PRINT_HASH_LINE;
@@ -125,33 +125,33 @@ void pipes_setup(set_of_pipes& pipes)
         }
         else if (msg == 8)
         {
-            std::cout << "\tÂûáåðèòå ïàðàìåòð äëÿ ïîèñêà (ID - 0 | Äëèíà - 1 | Äèàìåòð - 2 | Ñîñòîÿíèå ðàáîòîñïîñîáíîñòè - 3): ";
+            std::cout << "\tÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ° (ID - 0 | Ð”Ð»Ð¸Ð½Ð° - 1 | Ð”Ð¸Ð°Ð¼ÐµÑ‚Ñ€ - 2 | Ð¡Ð¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ñ€Ð°Ð±Ð¾Ñ‚Ð¾ÑÐ¿Ð¾ÑÐ¾Ð±Ð½Ð¾ÑÑ‚Ð¸ - 3): ";
             int parametr_id = get_number(0, 3);
             if (parametr_id == 0)
             {
-                std::cout << "\tÂâåäèòå ID: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID: ";
                 int index = get_number(0, pipes.return_pipe_count() - 1);
                 pipes.search_pipe(index, index, 0);
             }
             else if (parametr_id == 1)
             {
-                std::cout << "\tÂâåäèòå ìèíèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "\tÂâåäèòå ìàêñèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int right = get_number(left, INT_MAX);
                 pipes.search_pipe(left, right, 1);
             }
             else if (parametr_id == 2)
             {
-                std::cout << "\tÂâåäèòå ìèíèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "\tÂâåäèòå ìàêñèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int right = get_number(left, INT_MAX);
                 pipes.search_pipe(left, right, 2);
             }
             else
             { 
-                std::cout << "\tÂâåäèòå ñîñòîÿíèå òðóáû äëÿ ïîèñêà (Ðàáîòàåò - 0 | Â ðåìîíòå - 1): ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ñ‚Ñ€ÑƒÐ±Ñ‹ Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ° (Ð Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚ - 0 | Ð’ Ñ€ÐµÐ¼Ð¾Ð½Ñ‚Ðµ - 1): ";
                 int param = get_number(0, 1);
                 pipes.search_pipe(param, param, 3);
             }
@@ -159,9 +159,9 @@ void pipes_setup(set_of_pipes& pipes)
         }
         else if (msg == 9)
         {
-            std::cout << "\tÂûáåðèòå ïàðàìåòð äëÿ ãðóïïîâîãî èçìåíåíèÿ (Äëèíà - 1 | Äèàìåòð - 2 | Ñîñòîÿíèå ðàáîòîñïîñîáíîñòè - 3): ";
+            std::cout << "\tÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð´Ð»Ñ Ð³Ñ€ÑƒÐ¿Ð¿Ð¾Ð²Ð¾Ð³Ð¾ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ (Ð”Ð»Ð¸Ð½Ð° - 1 | Ð”Ð¸Ð°Ð¼ÐµÑ‚Ñ€ - 2 | Ð¡Ð¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ñ€Ð°Ð±Ð¾Ñ‚Ð¾ÑÐ¿Ð¾ÑÐ¾Ð±Ð½Ð¾ÑÑ‚Ð¸ - 3): ";
             int parametr_id = get_number(1, 3);
-            std::cout << "\tÂâåäèòå íîâîå çíà÷åíèå: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
             int new_value;
             if (parametr_id == 1)
                 new_value = get_number(0, INT_MAX);
@@ -188,7 +188,7 @@ void pipes_setup(set_of_pipes& pipes)
         }
         else
         {
-            std::cout << "\tÊîìàíäà íå ðàñïîçíàíà. Ïîâòîðèòå ââîä. Ââåäèòå 11 äëÿ ïîëó÷åíèÿ ïîìîùè" << std::endl;
+            std::cout << "\tÐšÐ¾Ð¼Ð°Ð½Ð´Ð° Ð½Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð½Ð°. ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð²Ð²Ð¾Ð´. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ 11 Ð´Ð»Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰Ð¸" << std::endl;
             PRINT_HASH_LINE;
         }
     }
@@ -200,7 +200,7 @@ void ks_setup(set_of_kss& kss)
     print_ks_menu();
     while (!finish)
     {
-        std::cout << "\tÂûáðàííûé ïóíêò: ";
+        std::cout << "\tÐ’Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð¿ÑƒÐ½ÐºÑ‚: ";
         int msg = get_number(0, 13);
         if (msg == 0)
         {
@@ -208,38 +208,38 @@ void ks_setup(set_of_kss& kss)
         }
         else if (msg == 1)
         {
-            std::cout << "\tÂâåäèòå ïàðàìåòðû êîìïðåññîðíîé ñòàíöèè:" << std::endl;
-            std::cout << "\tÂâåäèòå èìÿ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸:" << std::endl;
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ: ";
             std::string name_tmp;
             std::cin >> name_tmp;
-            std::cout << "\tÂâåäèòå êîëè÷åñòâî öåõîâ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ†ÐµÑ…Ð¾Ð²: ";
             int num_of_shops_tmp = get_number(0, INT_MAX);
-            std::cout << "\tÂâåäèòå êîëè÷åñòâî àêòèâíûõ öåõîâ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ñ… Ñ†ÐµÑ…Ð¾Ð²: ";
             int num_of_active_shops_tmp = get_number(0, num_of_shops_tmp);
-            std::cout << "\tÂâåäèòå ýôôåêòèâíîñòü (0-100): ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÑ„Ñ„ÐµÐºÑ‚Ð¸Ð²Ð½Ð¾ÑÑ‚ÑŒ (0-100): ";
             int efficiency = get_number(0, 100);
             kss.add_ks(name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency / 100.0);
-            std::cout << "\tÊîìïðåññîðíàÿ ñòàíöèÿ óñïåøíî äîáàâëåíà" << std::endl;
+            std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð°" << std::endl;
             PRINT_HASH_LINE;
         }
         else if (msg == 2)
         {
-            std::cout << "\tÂâåäèòå ID óäàëÿåìîé êîìïðåññîðíîé ñòàíöèè: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÑƒÐ´Ð°Ð»ÑÐµÐ¼Ð¾Ð¹ ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.delete_ks(index);
-            std::cout << "\tÊîìðïåññîðíàÿ ñòàíöèÿ ID " << index << " óñïåøíî óäàëåíà" << std::endl;
+            std::cout << "\tÐšÐ¾Ð¼Ñ€Ð¿ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ID " << index << " ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ ÑƒÐ´Ð°Ð»ÐµÐ½Ð°" << std::endl;
             PRINT_HASH_LINE;
         }
         else if (msg == 3)
         {
-            std::cout << "\tÂâåäèòå ID òðóáû äëÿ èçìåíåíèÿ çàêðûòèÿ öåõà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID Ñ‚Ñ€ÑƒÐ±Ñ‹ Ð´Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ñ†ÐµÑ…Ð°: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.close_shop(index);
             PRINT_HASH_LINE;
         }
         else if (msg == 4)
         {
-            std::cout << "\tÂâåäèòå ID òðóáû äëÿ èçìåíåíèÿ îòêðûòèÿ öåõà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID Ñ‚Ñ€ÑƒÐ±Ñ‹ Ð´Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ñ†ÐµÑ…Ð°: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.open_shop(index);
             PRINT_HASH_LINE;
@@ -251,14 +251,14 @@ void ks_setup(set_of_kss& kss)
         }
         else if (msg == 6)
         {
-            std::cout << "\tÂâåäèòå ID êîìïðåññîðíîé ñòàíöèè äëÿ âûáîðà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸ Ð´Ð»Ñ Ð²Ñ‹Ð±Ð¾Ñ€Ð°: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.select_ks(index);
             PRINT_HASH_LINE;
         }
         else if (msg == 7)
         {
-            std::cout << "\tÂâåäèòå ID êîìïðåññîðíîé ñòàíöèè äëÿ óäàëåíèÿ èç âûáðàííûõ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸ Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¸Ð· Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ…: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             kss.deselect_ks(index);
             PRINT_HASH_LINE;
@@ -270,44 +270,44 @@ void ks_setup(set_of_kss& kss)
         }
         else if (msg == 9)
         {
-            std::cout << "\tÂûáåðèòå ïàðàìåòð äëÿ ïîèñêà (ID - 0 | Èìÿ - 1 | Êîëè÷åñòâî öåõîâ - 2 | Êîëè÷åñòâî àêòèâíûõ öåõîâ - 3 | Ýôôåêòèâíîñòü - 4): ";
+            std::cout << "\tÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ° (ID - 0 | Ð˜Ð¼Ñ - 1 | ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ†ÐµÑ…Ð¾Ð² - 2 | ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ñ… Ñ†ÐµÑ…Ð¾Ð² - 3 | Ð­Ñ„Ñ„ÐµÐºÑ‚Ð¸Ð²Ð½Ð¾ÑÑ‚ÑŒ - 4): ";
             int parametr_id = get_number(0, 4);
             if (parametr_id == 0)
             {
-                std::cout << "\tÂâåäèòå ID: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID: ";
                 int index = get_number(0, kss.return_ks_count() - 1);
                 kss.search_ks(index, index, 0);
             }
             else if (parametr_id == 1)
             {
-                std::cout << "\tÂâåäèòå èìÿ äëÿ ïîèñêà: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ°: ";
                 std::string param;
                 kss.search_ks(param, param, 1);
             }
             else if (parametr_id == 2)
             {
-                std::cout << "\tÂâåäèòå ìèíèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "\tÂâåäèòå ìàêñèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int right = get_number(left, INT_MAX);
                 kss.search_ks(left, right, 2);
             }
             else
             {
-                std::cout << "\tÂâåäèòå ìèíèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int left = get_number(0, INT_MAX);
-                std::cout << "\tÂâåäèòå ìàêñèìàëüíîå çíà÷åíèå: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
                 int right = get_number(left, INT_MAX);
                 kss.search_ks(left, right, 4);
             }
-            std::cout << "\tÏàðàìåòð óñïåøíî èçìåíåí" << std::endl;
+            std::cout << "\tÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½" << std::endl;
             PRINT_HASH_LINE;
         }
         else if (msg == 10)
         {
-            std::cout << "\tÂûáåðèòå ïàðàìåòð äëÿ ãðóïïîâîãî èçìåíåíèÿ (Èìÿ - 1 | Êîëè÷åñòâî öåõîâ - 2 | Êîëè÷åñòâî àêòèâíûõ öåõîâ - 3 | Ýôôåêòèâíîñòü - 4): ";
+            std::cout << "\tÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð´Ð»Ñ Ð³Ñ€ÑƒÐ¿Ð¿Ð¾Ð²Ð¾Ð³Ð¾ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ (Ð˜Ð¼Ñ - 1 | ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ†ÐµÑ…Ð¾Ð² - 2 | ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ñ… Ñ†ÐµÑ…Ð¾Ð² - 3 | Ð­Ñ„Ñ„ÐµÐºÑ‚Ð¸Ð²Ð½Ð¾ÑÑ‚ÑŒ - 4): ";
             int parametr_id = get_number(1, 4);
-            std::cout << "\tÂâåäèòå íîâîå çíà÷åíèå: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
             if (parametr_id == 1)
             {
                 std::string new_value;
@@ -342,7 +342,7 @@ void ks_setup(set_of_kss& kss)
         }
         else
         {
-            std::cout << "\tÊîìàíäà íå ðàñïîçíàíà. Ïîâòîðèòå ââîä. Ââåäèòå 11 äëÿ ïîëó÷åíèÿ ïîìîùè" << std::endl;
+            std::cout << "\tÐšÐ¾Ð¼Ð°Ð½Ð´Ð° Ð½Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð½Ð°. ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð²Ð²Ð¾Ð´. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ 11 Ð´Ð»Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰Ð¸" << std::endl;
             PRINT_HASH_LINE;
         }
     }
@@ -358,7 +358,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
     g.init(kss.return_ks_count());
     while (!finish)
     {
-        std::cout << "\tÂûáðàííûé ïóíêò: ";
+        std::cout << "\tÐ’Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð¿ÑƒÐ½ÐºÑ‚: ";
         int msg = get_number(0, 9);
         if (msg == 0)
         {
@@ -366,10 +366,10 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else if (msg == 1)
         {
-            std::cout << "\tÂâåäèòå ID êîìïðåññîðíîé ñòàíöèè äëÿ äîáàâëåíèâ â ãðàô: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸ Ð´Ð»Ñ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ð² Ð² Ð³Ñ€Ð°Ñ„: ";
             int index = get_number(0, kss.return_ks_count() - 1);
             if (kss.is_node(index) == true)
-                std::cout << "\tÊîìïðåññîðíàÿ ñòàíöèÿ óæå ÿâëÿåòñÿ âåðèøíîé" << std::endl;
+                std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ÑƒÐ¶Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²ÐµÑ€Ð¸ÑˆÐ½Ð¾Ð¹" << std::endl;
             else
             {
                 g.add_node(index);
@@ -379,10 +379,10 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else if (msg == 2)
         {
-            std::cout << "\tÂâåäèòå ID êîìïðåññîðíîé ñòàíöèè äëÿ óäàëåíèÿ èç ãðàôà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸ Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¸Ð· Ð³Ñ€Ð°Ñ„Ð°: ";
             int index = get_number(0, g.return_node_count() - 1);
             if (kss.is_node(index) == false)
-                std::cout << "\tÊîìïðåññîðíàÿ ñòàíöèÿ íå ÿâëÿåòñÿ âåðèøíîé" << std::endl;
+                std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ Ð½Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²ÐµÑ€Ð¸ÑˆÐ½Ð¾Ð¹" << std::endl;
             else
             {
                 auto edges_to_free = g.delete_node(index);
@@ -394,42 +394,42 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else if (msg == 3)
         {
-            std::cout << "\tÂâåäèòå ID êîìïðåññîðíîé ñòàíöèè äëÿ ïðîñìîòðà: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð¾Ð¹ ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸ Ð´Ð»Ñ Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€Ð°: ";
             int index = get_number(0, g.return_node_count() - 1);
             if (kss.is_node(index) == false)
-                std::cout << "\tÊîìïðåññîðíàÿ ñòàíöèÿ íå ÿâëÿåòñÿ âåðèøíîé" << std::endl;
+                std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¾Ñ€Ð½Ð°Ñ ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ Ð½Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²ÐµÑ€Ð¸ÑˆÐ½Ð¾Ð¹" << std::endl;
             else
                 g.print_node(index);
             PRINT_HASH_LINE;
         }
         else if (msg == 4)
         {
-            //Ïå÷àòàåò èíôîðìàöèþ î âñåõ âåðøèíàõ, äàæå íå èíèöèàëèçèðîâàííûõ
-            //Âîçìîæíî ñòîèò äåëàòü çàïóñê îòñþäà print_node äëÿ âñåõ êñ, êîòîðûå âåðøèíû
-            std::cout << "\tÂñå âåðøèíû:" << std::endl;
+            //ÐŸÐµÑ‡Ð°Ñ‚Ð°ÐµÑ‚ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ Ð²ÑÐµÑ… Ð²ÐµÑ€ÑˆÐ¸Ð½Ð°Ñ…, Ð´Ð°Ð¶Ðµ Ð½Ðµ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ñ…
+            //Ð’Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ ÑÑ‚Ð¾Ð¸Ñ‚ Ð´ÐµÐ»Ð°Ñ‚ÑŒ Ð·Ð°Ð¿ÑƒÑÐº Ð¾Ñ‚ÑÑŽÐ´Ð° print_node Ð´Ð»Ñ Ð²ÑÐµÑ… ÐºÑ, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹
+            std::cout << "\tÐ’ÑÐµ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹:" << std::endl;
             g.print_nodes();
             PRINT_HASH_LINE;
         }
         else if (msg == 5)
         {
-            //Îäèí ðàç ïîéìàë îøèáêó vector range error, îáðàùåíèå áûëî ê 0 òðóáå
-            //Â äàëüíåéøåì ïîâòîðèòü îøèáêó íå óäàëîñü
-            std::cout << "\tÂâåäèòå íà÷àëüíóþ âåðøèíó äëÿ ñîåäèíåíèÿ: ";
+            //ÐžÐ´Ð¸Ð½ Ñ€Ð°Ð· Ð¿Ð¾Ð¹Ð¼Ð°Ð» Ð¾ÑˆÐ¸Ð±ÐºÑƒ vector range error, Ð¾Ð±Ñ€Ð°Ñ‰ÐµÐ½Ð¸Ðµ Ð±Ñ‹Ð»Ð¾ Ðº 0 Ñ‚Ñ€ÑƒÐ±Ðµ
+            //Ð’ Ð´Ð°Ð»ÑŒÐ½ÐµÐ¹ÑˆÐµÐ¼ Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚ÑŒ Ð¾ÑˆÐ¸Ð±ÐºÑƒ Ð½Ðµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½ÑƒÑŽ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ Ð´Ð»Ñ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ: ";
             unsigned int node1 = get_number(0, g.return_node_count() - 1);
-            std::cout << "\tÂâåäèòå êîíå÷íóþ âåðøèíó äëÿ ñîåäèíåíèÿ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð½ÐµÑ‡Ð½ÑƒÑŽ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ Ð´Ð»Ñ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
             if (kss.is_node(node1) == false)
-                std::cout << "\tÊîìïðåñîðíûõ ñòàíöèÿ ID " << node1 << " íå ÿâëÿåòñÿ âåðøèíîé" << std::endl;
+                std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÐ¾Ñ€Ð½Ñ‹Ñ… ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ID " << node1 << " Ð½Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²ÐµÑ€ÑˆÐ¸Ð½Ð¾Ð¹" << std::endl;
             else if (kss.is_node(node2) == false)
-                std::cout << "\tÊîìïðåñîðíûõ ñòàíöèÿ ID " << node2 << " íå ÿâëÿåòñÿ âåðøèíîé" << std::endl;
+                std::cout << "\tÐšÐ¾Ð¼Ð¿Ñ€ÐµÑÐ¾Ñ€Ð½Ñ‹Ñ… ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ ID " << node2 << " Ð½Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²ÐµÑ€ÑˆÐ¸Ð½Ð¾Ð¹" << std::endl;
             else if (node1 == node2)
-                std::cout << "\tÍåâîçìîæíî ñîåäèíèòü âåðøèíó ñ ñàìîé ñîáîé";
+                std::cout << "\tÐÐµÐ²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ¾ÐµÐ´Ð¸Ð½Ð¸Ñ‚ÑŒ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ Ñ ÑÐ°Ð¼Ð¾Ð¹ ÑÐ¾Ð±Ð¾Ð¹";
             else
             {
-                std::cout << "\tÂâåäèòå ñîåäèíÿþùóþ òðóáó: ";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐ¾ÐµÐ´Ð¸Ð½ÑÑŽÑ‰ÑƒÑŽ Ñ‚Ñ€ÑƒÐ±Ñƒ: ";
                 unsigned int pipe_id = get_number(0, pipes.return_pipe_count() - 1);
                 if (pipes.is_edge(pipe_id) == true)
-                    std::cout << "\tÒðóáà óæå çàäåéñòâîâàíà â íåôòåñåòè, ñîåäèíåíèå ñ ïîìîùüþ íåå íå âîçìîæíî" << std::endl;
+                    std::cout << "\tÐ¢Ñ€ÑƒÐ±Ð° ÑƒÐ¶Ðµ Ð·Ð°Ð´ÐµÐ¹ÑÑ‚Ð²Ð¾Ð²Ð°Ð½Ð° Ð² Ð½ÐµÑ„Ñ‚ÐµÑÐµÑ‚Ð¸, ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ Ð½ÐµÐµ Ð½Ðµ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾" << std::endl;
                 else
                 {
                     g.connect_two_nodes(node1, node2, pipe_id);
@@ -440,9 +440,9 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else if (msg == 6)
         {
-            std::cout << "\tÂâåäèòå íà÷àëüíóþ âåðøèíó äëÿ îòñîåäèíåíèÿ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½ÑƒÑŽ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ Ð´Ð»Ñ Ð¾Ñ‚ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ: ";
             unsigned int node1 = get_number(0, g.return_node_count() - 1);
-            std::cout << "\tÂâåäèòå êîíå÷íóþ âåðøèíó äëÿ îòñîåäèíåíèÿ: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð½ÐµÑ‡Ð½ÑƒÑŽ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ Ð´Ð»Ñ Ð¾Ñ‚ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
             int pipe_id = g.disconnect_two_nodes(node1, node2);
             if (pipe_id != -1)
@@ -451,13 +451,13 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else if (msg == 7)
         {
-            std::cout << "\tÂâåäèòå âåðøèíû, äóãè ìåæäó êîòîðûìè íóæíî ðàçâåðíóòü: " << std::endl;
-            std::cout << "\tÂâåäèòå íà÷àëüíóþ âåðøèíó: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹, Ð´ÑƒÐ³Ð¸ Ð¼ÐµÐ¶Ð´Ñƒ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼Ð¸ Ð½ÑƒÐ¶Ð½Ð¾ Ñ€Ð°Ð·Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ: " << std::endl;
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½ÑƒÑŽ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ: ";
             unsigned int node1 = get_number(0, g.return_node_count() - 1);
-            std::cout << "\tÂâåäèòå êîíå÷íóþ âåðøèíó: ";
+            std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð½ÐµÑ‡Ð½ÑƒÑŽ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñƒ: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
             if (node1 == node2)
-                std::cout << "\tÂâåäèòå äâå îòëè÷íûå âåðøèíû";
+                std::cout << "\tÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð²Ðµ Ð¾Ñ‚Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹";
             else
                 g.redirect_arc(node1, node2);
             PRINT_HASH_LINE;
@@ -465,7 +465,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         else if (msg == 8)
         {
             g.top_sort();
-            std::cout << "\tÒîïîëîãè÷åñêàÿ ñîðòèðîâêà çàâåðøåíà" << std::endl;
+            std::cout << "\tÐ¢Ð¾Ð¿Ð¾Ð»Ð¾Ð³Ð¸Ñ‡ÐµÑÐºÐ°Ñ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð°" << std::endl;
             PRINT_HASH_LINE;
         }
         else if (msg == 9)
@@ -474,7 +474,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         }
         else
         {
-            std::cout << "\tÊîìàíäà íå ðàñïîçíàíà. Ïîâòîðèòå ââîä. Ââåäèòå 4 äëÿ ïîëó÷åíèÿ ïîìîùè" << std::endl;
+            std::cout << "\tÐšÐ¾Ð¼Ð°Ð½Ð´Ð° Ð½Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð½Ð°. ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð²Ð²Ð¾Ð´. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ 4 Ð´Ð»Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰Ð¸" << std::endl;
         }
     }
 }

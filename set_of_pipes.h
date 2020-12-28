@@ -1,4 +1,4 @@
-#ifndef LW_SET_OF_PIPES_H_
+п»ї#ifndef LW_SET_OF_PIPES_H_
 #define LW_SET_OF_PIPES_H_
 
 #include <algorithm>
@@ -13,10 +13,10 @@ private:
     class pipe {
     public:
         unsigned int id;
-        double length; //В метрах
-        double diameter; //В миллиметрах от 500 до 1420
+        double length; //Р’ РјРµС‚СЂР°С…
+        double diameter; //Р’ РјРёР»Р»РёРјРµС‚СЂР°С… РѕС‚ 500 РґРѕ 1420
         bool inRepair;
-        bool is_edge = false; //Для работы с нефтесетью, проверка является ли труба ребром
+        bool is_edge = false; //Р”Р»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅРµС„С‚РµСЃРµС‚СЊСЋ, РїСЂРѕРІРµСЂРєР° СЏРІР»СЏРµС‚СЃСЏ Р»Рё С‚СЂСѓР±Р° СЂРµР±СЂРѕРј
         pipe(unsigned int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
@@ -53,29 +53,29 @@ private:
         }
     };
 
-    std::vector<pipe> pipes; //Вектор, хранящий все трубы 
-    std::vector<int> selected_pipes; //Вектор, хранящий все выбранные трубы
-    std::vector<int> searched_pipes; //Вектор, хранящий все найденные трубы (только результаты последного запроса)
-    unsigned int pipe_count; //Текущее число труб
+    std::vector<pipe> pipes; //Р’РµРєС‚РѕСЂ, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ С‚СЂСѓР±С‹ 
+    std::vector<int> selected_pipes; //Р’РµРєС‚РѕСЂ, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ С‚СЂСѓР±С‹
+    std::vector<int> searched_pipes; //Р’РµРєС‚РѕСЂ, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ РЅР°Р№РґРµРЅРЅС‹Рµ С‚СЂСѓР±С‹ (С‚РѕР»СЊРєРѕ СЂРµР·СѓР»СЊС‚Р°С‚С‹ РїРѕСЃР»РµРґРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР°)
+    unsigned int pipe_count; //РўРµРєСѓС‰РµРµ С‡РёСЃР»Рѕ С‚СЂСѓР±
 public:
-    void add_pipe(double, double); //Добавление трубы
-    void delete_pipe(int); //Удаление трубы
-    void print_to_console(int); //Печать трубы в консоль по индексу
-    void print_selected_pipes_to_console(void); //Печать всех выбранных труб в консоль
-    void select_pipe(int); //Выбор определенной трубы по индексу
-    void deselect_pipe(int); //Удаление выбора с определенной трубы по индексу
-    void change_repair_status(int); //Изменение состояния "Ремонта" трубы по индексу
-    void print_all_pipes_to_console(void); //Печать всех труб в консоль
-    void save_to_file(void); //Сохранение всех труб в файл
-    void load_from_file(void); //Загрузка труб из файла
-    void set_edge(int, bool); //Установка является ли труба ребром в графе
-    bool is_edge(int); //Проверкаа является ли труба ребром в графе
-    unsigned int return_pipe_count(void); //Возврат числа труб
+    void add_pipe(double, double); //Р”РѕР±Р°РІР»РµРЅРёРµ С‚СЂСѓР±С‹
+    void delete_pipe(int); //РЈРґР°Р»РµРЅРёРµ С‚СЂСѓР±С‹
+    void print_to_console(int); //РџРµС‡Р°С‚СЊ С‚СЂСѓР±С‹ РІ РєРѕРЅСЃРѕР»СЊ РїРѕ РёРЅРґРµРєСЃСѓ
+    void print_selected_pipes_to_console(void); //РџРµС‡Р°С‚СЊ РІСЃРµС… РІС‹Р±СЂР°РЅРЅС‹С… С‚СЂСѓР± РІ РєРѕРЅСЃРѕР»СЊ
+    void select_pipe(int); //Р’С‹Р±РѕСЂ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ С‚СЂСѓР±С‹ РїРѕ РёРЅРґРµРєСЃСѓ
+    void deselect_pipe(int); //РЈРґР°Р»РµРЅРёРµ РІС‹Р±РѕСЂР° СЃ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ С‚СЂСѓР±С‹ РїРѕ РёРЅРґРµРєСЃСѓ
+    void change_repair_status(int); //РР·РјРµРЅРµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ "Р РµРјРѕРЅС‚Р°" С‚СЂСѓР±С‹ РїРѕ РёРЅРґРµРєСЃСѓ
+    void print_all_pipes_to_console(void); //РџРµС‡Р°С‚СЊ РІСЃРµС… С‚СЂСѓР± РІ РєРѕРЅСЃРѕР»СЊ
+    void save_to_file(void); //РЎРѕС…СЂР°РЅРµРЅРёРµ РІСЃРµС… С‚СЂСѓР± РІ С„Р°Р№Р»
+    void load_from_file(void); //Р—Р°РіСЂСѓР·РєР° С‚СЂСѓР± РёР· С„Р°Р№Р»Р°
+    void set_edge(int, bool); //РЈСЃС‚Р°РЅРѕРІРєР° СЏРІР»СЏРµС‚СЃСЏ Р»Рё С‚СЂСѓР±Р° СЂРµР±СЂРѕРј РІ РіСЂР°С„Рµ
+    bool is_edge(int); //РџСЂРѕРІРµСЂРєР°Р° СЏРІР»СЏРµС‚СЃСЏ Р»Рё С‚СЂСѓР±Р° СЂРµР±СЂРѕРј РІ РіСЂР°С„Рµ
+    unsigned int return_pipe_count(void); //Р’РѕР·РІСЂР°С‚ С‡РёСЃР»Р° С‚СЂСѓР±
 
-    template<typename T> //Поиск трубы в диапазоне по параметру 
+    template<typename T> //РџРѕРёСЃРє С‚СЂСѓР±С‹ РІ РґРёР°РїР°Р·РѕРЅРµ РїРѕ РїР°СЂР°РјРµС‚СЂСѓ 
     void search_pipe(T, T, int);
 
-    template<typename T> //Изменение выбранного параметра у всех выбранных труб
+    template<typename T> //РР·РјРµРЅРµРЅРёРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° Сѓ РІСЃРµС… РІС‹Р±СЂР°РЅРЅС‹С… С‚СЂСѓР±
     void bunch_editing_pipe(T, int);
 };
 
@@ -87,8 +87,8 @@ inline void set_of_pipes::search_pipe(T left, T right, int parameter_id)
     std::for_each(pipes.begin(), pipes.end(), [&](pipe p) mutable {
         if (left <= p.return_parameter(parameter_id) && p.return_parameter(parameter_id) <= right)
             searched_pipes.push_back(p.id); });
-    std::cout << "\tНайдено " << searched_pipes.size() << " труб" << std::endl;
-    std::cout << "\tДобавить найденные трубы к выбранным? (Нет - 0 | Да - 1): ";
+    std::cout << "\tРќР°Р№РґРµРЅРѕ " << searched_pipes.size() << " С‚СЂСѓР±" << std::endl;
+    std::cout << "\tР”РѕР±Р°РІРёС‚СЊ РЅР°Р№РґРµРЅРЅС‹Рµ С‚СЂСѓР±С‹ Рє РІС‹Р±СЂР°РЅРЅС‹Рј? (РќРµС‚ - 0 | Р”Р° - 1): ";
  
     int msg = get_number(0, 1);
 
@@ -96,7 +96,7 @@ inline void set_of_pipes::search_pipe(T left, T right, int parameter_id)
     {
         for (auto it = searched_pipes.begin(); it != searched_pipes.end(); it++)
             selected_pipes.push_back(*it);
-        std::cout << "\tТрубы успешно добавлены к выбранным" << std::endl;
+        std::cout << "\tРўСЂСѓР±С‹ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅС‹ Рє РІС‹Р±СЂР°РЅРЅС‹Рј" << std::endl;
     }
 }
 
@@ -104,7 +104,7 @@ template<typename T>
 inline void set_of_pipes::bunch_editing_pipe(T new_value, int parameter_id)
 {
     std::for_each(selected_pipes.begin(), selected_pipes.end(), [&](int index) {pipes[index].change_parameter(new_value, parameter_id); });
-    std::cout << "\tУказанные изменения успешно применены к выбранным трубам" << std::endl;
+    std::cout << "\tРЈРєР°Р·Р°РЅРЅС‹Рµ РёР·РјРµРЅРµРЅРёСЏ СѓСЃРїРµС€РЅРѕ РїСЂРёРјРµРЅРµРЅС‹ Рє РІС‹Р±СЂР°РЅРЅС‹Рј С‚СЂСѓР±Р°Рј" << std::endl;
 }
 
 #endif
