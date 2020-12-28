@@ -6,6 +6,8 @@
 #include <queue>
 #include <fstream>
 
+#include "set_of_pipes.h"
+
 unsigned int get_number(unsigned int min, unsigned int max);
 
 class graph {
@@ -25,6 +27,8 @@ public:
     void save_to_file(void); //Сохранение графа в файл
     void load_from_file(void); //Загрузка графа из файла
     void top_sort(void); //Топологическая сортировка
+    void max_flow(void); //Максимальный поток в сети
+    unsigned int minimal_distance(unsigned int, unsigned int, set_of_pipes&); //Кратчайший путь между двумя вершинами
     unsigned int return_node_count(void); //Возврат числа вершин
 };
 

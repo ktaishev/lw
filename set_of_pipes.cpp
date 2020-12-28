@@ -76,6 +76,10 @@ void set_of_pipes::change_repair_status(int index)
     //Меняем статус ремонта на обратный
     pipes[index].inRepair = !pipes[index].inRepair;
     std::cout << "\tТруба ID " << index << ((pipes[index].inRepair) ? " отправлена на ремонт" : " снова работает") << std::endl;
+    if (pipes[index].inRepair)
+        pipes[index].performance = 0;
+    else
+        pipes[index].performance = sqrt(pow5(pipes[index].diameter/1000)/pipes[index].length);
 }
 
 void set_of_pipes::print_all_pipes_to_console(void)
@@ -160,4 +164,12 @@ bool set_of_pipes::is_edge(int index)
 unsigned int set_of_pipes::return_pipe_count(void)
 {
     return pipe_count;
+}
+
+unsigned int set_of_pipes::return_pipe_cost(unsigned int index)
+{
+    if (pipes[index].inRepair)
+        return UINT_MAX;
+    else
+        return pipes[index].length;
 }

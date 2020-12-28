@@ -1,12 +1,12 @@
 ﻿#include "graph.h"
 
-void graph::swap_nodes(std::queue<unsigned int> stack)
+void graph::swap_nodes(std::queue<unsigned int> q)
 {
 	auto matrix_old = matrix;
-	for (size_t i = 0; i < node_count; i++, stack.pop())
+	for (size_t i = 0; i < node_count; i++, q.pop())
 	{
 		auto node1 = i; 
-		auto node2 = stack.front();
+		auto node2 = q.front();
 		if (node1 != node2)
 		{
 			std::vector<unsigned int> in_tmp(node_count, -1);
@@ -222,7 +222,7 @@ void graph::top_sort(void)
 	* 4. После освобождения стека работа алгоритма завершается
 	*/
 
-	std::queue<unsigned int> stack; //Стек, заполняющийся ко второй части алгоритма
+	std::queue<unsigned int> q; //Стек, заполняющийся ко второй части алгоритма
 	std::vector<unsigned int> table(node_count, 0); //Таблица, хранящая степени вершин. Значение i-того элемента равно степени i-той вершины
 	//Заполнение таблицы степенями
 	for (size_t i = 0; i < node_count; i++)
@@ -231,7 +231,7 @@ void graph::top_sort(void)
 				table[i]++;
 
 	//Нахождение нового порядка (Часть 1)
-	while (stack.size() < node_count)
+	while (q.size() < node_count)
 	{
 		auto pos = std::find(table.begin(), table.end(), 0);
 		if (pos == table.end())
@@ -240,7 +240,7 @@ void graph::top_sort(void)
 		{
 			*pos = -1;
 			auto index = std::distance(table.begin(), pos);
-			stack.push(index);
+			q.push(index);
 			for (size_t i = 0; i < node_count; i++)
 				if (matrix[index][i] != -1)
 					table[i]--;
@@ -248,7 +248,40 @@ void graph::top_sort(void)
 	}
 
 	//Установка нового порядка вершин в графе (Часть 2)
-	swap_nodes(stack);
+	swap_nodes(q);
+}
+
+void graph::max_flow(void)
+{
+}
+
+unsigned int graph::minimal_distance(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes)
+{
+	std::vector<unsigned int> distance(node_count, UINT_MAX);
+	std::vector<bool> is_visited(node_count, false);
+	std::queue<unsigned int> q;
+	q.push(start_node);
+	distance[start_node] = 0;
+	while (q.size() > 0)
+	{
+		unsigned int current_node = q.front();
+		q.pop();
+		is_visited[current_node] = true;
+
+		for (size_t i = 0; i < node_count; i++)
+		{
+			unsigned int connecting_pipe = matrix[current_node][i];
+			if (connecting_pipe != 1)
+			{
+				unsigned int new_distance = distance[current_node] + pipes.return_pipe_cost(connecting_pipe);
+				if (new_distance < distance[i])
+					distance[i] = new_distance;
+				if(is_visited[i] == false)
+					q.push(i);
+			}
+		}
+	}
+	return distance[end_node];
 }
 
 unsigned int graph::return_node_count(void)

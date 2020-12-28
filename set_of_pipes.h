@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector> 
 
+#define pow5(x) x*x*x*x*x
+
 unsigned int get_number(unsigned int min, unsigned int max);
 
 class set_of_pipes {
@@ -17,12 +19,14 @@ private:
         double diameter; //В миллиметрах от 500 до 1420
         bool inRepair;
         bool is_edge = false; //Для работы с нефтесетью, проверка является ли труба ребром
+        double performance;
         pipe(unsigned int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
             length = param1;
             diameter = param2;
             inRepair = param3;
+            performance = sqrt(pow5(diameter / 1000) / length);
         }
         double return_parameter(int parameter_id)
         {
@@ -71,6 +75,7 @@ public:
     void set_edge(int, bool); //Установка является ли труба ребром в графе
     bool is_edge(int); //Проверкаа является ли труба ребром в графе
     unsigned int return_pipe_count(void); //Возврат числа труб
+    unsigned int return_pipe_cost(unsigned int index); //Возвращаем вес трубы
 
     template<typename T> //Поиск трубы в диапазоне по параметру 
     void search_pipe(T, T, int);
