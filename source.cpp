@@ -359,7 +359,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 9);
+        int msg = get_number(0, 10);
         if (msg == 0)
         {
             finish = true;
@@ -419,9 +419,9 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             std::cout << "\tВведите конечную вершину для соединения: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
             if (kss.is_node(node1) == false)
-                std::cout << "\tКомпресорных станция ID " << node1 << " не является вершиной" << std::endl;
+                std::cout << "\tКомпресорная станция ID " << node1 << " не является вершиной" << std::endl;
             else if (kss.is_node(node2) == false)
-                std::cout << "\tКомпресорных станция ID " << node2 << " не является вершиной" << std::endl;
+                std::cout << "\tКомпресорная станция ID " << node2 << " не является вершиной" << std::endl;
             else if (node1 == node2)
                 std::cout << "\tНевозможно соединить вершину с самой собой";
             else
@@ -469,6 +469,22 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             PRINT_HASH_LINE;
         }
         else if (msg == 9)
+        {
+            std::cout << "\tВведите начальную вершину: ";
+            unsigned int node1 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tВведите конечную вершину: ";
+            unsigned int node2 = get_number(0, g.return_node_count() - 1);
+            if (kss.is_node(node1) == false)
+                std::cout << "\tКомпресорная станция ID " << node1 << " не является вершиной" << std::endl;
+            else if (kss.is_node(node2) == false)
+                std::cout << "\tКомпресорная станция ID " << node2 << " не является вершиной" << std::endl;
+            else if (node1 == node2)
+                std::cout << "\tДистанция: 0" << std::endl;
+            else
+                std::cout << "\tДистанция: " << g.minimal_distance(node1, node2, pipes) << std::endl;
+            PRINT_HASH_LINE;
+        }
+        else if (msg == 10)
         {
             print_graph_menu();
         }

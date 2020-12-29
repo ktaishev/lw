@@ -5,28 +5,17 @@ void graph::swap_nodes(std::queue<unsigned int> q)
 	auto matrix_old = matrix;
 	for (size_t i = 0; i < node_count; i++, q.pop())
 	{
-		auto node1 = i; 
+		auto node1 = i;
 		auto node2 = q.front();
+		std::cout << "V(" << node1 << ") <- V(" << node2 << ")" << std::endl;
 		if (node1 != node2)
 		{
-			std::vector<unsigned int> in_tmp(node_count, -1);
-			std::vector<unsigned int> out_tmp(node_count, -1);
-			unsigned int from_1_to_2 = matrix_old[node1][node2];
-			unsigned int from_2_to_1 = matrix_old[node2][node1];
-
 			for (size_t i = 0; i < node_count; i++)
 			{
-				in_tmp[i] = matrix_old[i][node1];
-				out_tmp[i] = matrix_old[node1][i];
 				matrix[i][node1] = matrix_old[i][node2];
 				matrix[node1][i] = matrix_old[node2][i];
-				matrix[i][node2] = in_tmp[i];
-				matrix[node2][i] = out_tmp[i];
 			}
-			matrix[node1][node1] = -1;
-			matrix[node2][node2] = -1;
-			matrix[node1][node2] = from_2_to_1;
-			matrix[node2][node1] = from_1_to_2;
+			matrix[node1][node1] = UINT_MAX;
 		}
 	}
 }
@@ -35,7 +24,7 @@ void graph::init(unsigned int size)
 {
 	for (size_t i = 0; i < size; i++)
 	{
-		std::vector<int> v(size, -1);
+		std::vector<int> v(size, UINT_MAX);
 		matrix.push_back(v);
 	}			
 }
@@ -49,19 +38,19 @@ void graph::add_node(unsigned int index)
 std::vector<unsigned int> graph::delete_node(unsigned int index)
 {
 	std::vector<unsigned int> edges_to_free;
-	if (matrix[index][index] != -1)
+	if (matrix[index][index] != UINT_MAX)
 		edges_to_free.push_back(matrix[index][index]);
 	for (size_t i = 0; i < node_count; i++)
 	{
 		if (i != index)
 		{
-			if (matrix[index][i] != -1)
+			if (matrix[index][i] != UINT_MAX)
 				edges_to_free.push_back(matrix[index][i]);
-			if (matrix[i][index] != -1)
+			if (matrix[i][index] != UINT_MAX)
 				edges_to_free.push_back(matrix[index][i]);
 		}
-		matrix[index][i] = -1;
-		matrix[i][index] = -1;
+		matrix[index][i] = UINT_MAX;
+		matrix[i][index] = UINT_MAX;
 	}
 
 	std::cout << "\tВершина удалена из графа" << std::endl;
@@ -74,7 +63,7 @@ void graph::print_node(unsigned int index)
 	bool is_way = false;
 	std::cout << "\tИз вершины " << index << " можно попасть в вершины: ";
 	for (size_t i = 0; i < node_count; i++)
-		if (matrix[index][i] != -1)
+		if (matrix[index][i] != UINT_MAX)
 		{
 			std::cout << i << " ";
 			is_way = true;
@@ -86,7 +75,7 @@ void graph::print_node(unsigned int index)
 	is_way = false;
 	std::cout << "\tВ вершину " << index << " можно попасть из вершин: ";
 	for (size_t i = 0; i < node_count; i++)
-		if (matrix[i][index] != -1)
+		if (matrix[i][index] != UINT_MAX)
 		{
 			std::cout << i << " ";
 			is_way = true;
@@ -124,9 +113,9 @@ void graph::connect_two_nodes(unsigned int node1, unsigned int node2, unsigned i
 int graph::disconnect_two_nodes(unsigned int node1, unsigned int node2)
 {
 	int pipe_id = matrix[node1][node2];
-	if (pipe_id != -1)
+	if (pipe_id != UINT_MAX)
 	{
-		matrix[node1][node2] = -1;
+		matrix[node1][node2] = UINT_MAX;
 		std::cout << "\tВершины успешно отсоединены" << std::endl;
 	}
 	else
@@ -139,7 +128,7 @@ void graph::redirect_arc(unsigned int node1, unsigned int node2)
 {
 	//В данном случае, если были две дуги то одна стирается
 	//Добавить предложение пользователю или развернуть вторую дугу, или предупредить о ее стирании
-	if (matrix[node1][node2] != -1)
+	if (matrix[node1][node2] != UINT_MAX)
 	{
 		matrix[node2][node1] = matrix[node1][node2];
 		std::cout << "\tДуга развернута" << std::endl;
@@ -227,7 +216,7 @@ void graph::top_sort(void)
 	//Заполнение таблицы степенями
 	for (size_t i = 0; i < node_count; i++)
 		for (size_t j = 0; j < node_count; j++)
-			if (matrix[j][i] != -1)
+			if (matrix[j][i] != UINT_MAX)
 				table[i]++;
 
 	//Нахождение нового порядка (Часть 1)
@@ -238,11 +227,11 @@ void graph::top_sort(void)
 			std::cout << "\tВ графе присутсвует цепь, топологическая сортировка невозможна" << std::endl;
 		else
 		{
-			*pos = -1;
+			*pos = UINT_MAX;
 			auto index = std::distance(table.begin(), pos);
 			q.push(index);
 			for (size_t i = 0; i < node_count; i++)
-				if (matrix[index][i] != -1)
+				if (matrix[index][i] != UINT_MAX)
 					table[i]--;
 		}
 	}
@@ -257,31 +246,39 @@ void graph::max_flow(void)
 
 unsigned int graph::minimal_distance(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes)
 {
-	std::vector<unsigned int> distance(node_count, UINT_MAX);
-	std::vector<bool> is_visited(node_count, false);
-	std::queue<unsigned int> q;
-	q.push(start_node);
-	distance[start_node] = 0;
-	while (q.size() > 0)
-	{
-		unsigned int current_node = q.front();
-		q.pop();
-		is_visited[current_node] = true;
+	std::vector<unsigned int> distance(node_count, UINT_MAX); //Дистанции от текущей до всех прочих, изначально бесконечно большие
+	std::vector<bool> is_visited(node_count, false); //Трекер посещенных вершин
+	std::queue<unsigned int> q; //очередь вершин для посещений
 
+	q.push(start_node); //Начинаем с начальной вершины
+	distance[start_node] = 0; //Дистанция в начальную вершину равна 0
+	while (q.size() > 0) //Пока есть необработанные вершины
+	{
+		unsigned int current_node = q.front(); //Достаем следующую из очереди
+		q.pop(); 
+		is_visited[current_node] = true; //Отмечаем, что данная вершина обработана (посещена)
+
+		//Для нахождения смежных вершин проверяем все
 		for (size_t i = 0; i < node_count; i++)
 		{
 			unsigned int connecting_pipe = matrix[current_node][i];
-			if (connecting_pipe != 1)
+			if (connecting_pipe != UINT_MAX) //Если вершина смежная
 			{
+				//Считаем новое расстояние как расстояние до текущей + длина трубы
+				std::cout << "###ОТЛАДКА### " << "connecting pipe " << connecting_pipe << std::endl;
 				unsigned int new_distance = distance[current_node] + pipes.return_pipe_cost(connecting_pipe);
-				if (new_distance < distance[i])
-					distance[i] = new_distance;
-				if(is_visited[i] == false)
+				if (new_distance < distance[i]) //Если дистанция вышла меньше той, что на данный момент в таблице, заменяем
+					distance[i] = new_distance; 
+				if(is_visited[i] == false) //Если соседняя вершина еще не была посещена, добавляем ее в очередь
 					q.push(i);
 			}
 		}
 	}
-	return distance[end_node];
+	return distance[end_node]; //Возвращаем дистанцию до заданного узла
+	/* 
+	* Возможно есть более эффективные методы, в которые начало алгоритма исходит из конечной вершины
+	* Так, что часть вершин будет пропущена. В текущем алгоритме посещаются все вершины, что затратно по ресурсам
+	*/
 }
 
 unsigned int graph::return_node_count(void)

@@ -171,5 +171,5 @@ unsigned int set_of_pipes::return_pipe_cost(unsigned int index)
     if (pipes[index].inRepair)
         return UINT_MAX;
     else
-        return pipes[index].length;
+        return unsigned int(pipes[index].length);
 }
