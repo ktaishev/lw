@@ -505,7 +505,9 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             {
                 std::cout << "\tДистанция: 0" << std::endl;
                 if (show_path)
-                    std::cout << "\tV(" << node1 << ") -> V(" << node2 << ")" << std::endl;
+                {
+                    std::cout << "\tКратчайший путь: V(" << node1 << ") -> V(" << node2 << ")" << std::endl;
+                }
             }
             else
             {
@@ -517,18 +519,10 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
                     std::cout << "\tДистанция: " << distance << std::endl;
                     if (show_path)
                     {
-                        for (auto& V : path)
-                            std::cout << " V " << V;
-                        std::cout << std::endl;
-                        for (auto rit = path.rbegin(); rit != path.rend(); rit++)
-                            std::cout << " V " << *rit;
-                        /*
-                        std::cout << "\tV(";
-                        for (auto rit = path.rbegin(); rit != path.rend(); rit++)
-                            std::cout << *rit << ") - > V(";
-                        std::cout << path[0] << ")" << std::endl;
-                        */
-                        
+                        std::cout << "\tКратчайший путь: ";
+                        for (auto rit = path.rbegin(); rit + 1!= path.rend(); rit++)
+                            std::cout << "V(" << *rit << ") -> ";
+                        std::cout << "V(" << *(path.rend() - 1) << ")" << std::endl;
                     }
                 }
             }
