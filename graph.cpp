@@ -1,22 +1,26 @@
 ﻿#include "graph.h"
 
-void graph::swap_nodes(std::queue<unsigned int> q)
+void graph::swap_nodes(std::queue<unsigned int> new_order)
 {
 	auto matrix_old = matrix;
+	auto q = new_order;
 	for (size_t i = 0; i < node_count; i++, q.pop())
 	{
 		auto node1 = i;
 		auto node2 = q.front();
-		std::cout << "V(" << node1 << ") <- V(" << node2 << ")" << std::endl;
 		if (node1 != node2)
-		{
-			for (size_t i = 0; i < node_count; i++)
-			{
-				matrix[i][node1] = matrix_old[i][node2];
-				matrix[node1][i] = matrix_old[node2][i];
-			}
-			matrix[node1][node1] = UINT_MAX;
-		}
+			for (size_t j = 0; j < node_count; j++)
+				matrix[node1][j] = matrix_old[node2][j];
+	}
+	matrix_old = matrix;
+	q = new_order;
+	for (size_t i = 0; i < node_count; i++, q.pop())
+	{
+		auto node1 = i;
+		auto node2 = q.front();
+		if (node1 != node2)
+			for (size_t j = 0; j < node_count; j++)
+				matrix[j][node1] = matrix_old[j][node2];
 	}
 }
 
