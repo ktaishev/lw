@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <sstream>
 #include <locale>
 #include <set>
 
@@ -25,7 +26,7 @@ int main()
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 4);
+        int msg = get_number(0, 6);
         if (msg == 0)
         {
             finish = true;
@@ -50,6 +51,34 @@ int main()
             print_main_menu();
         }
         else if (msg == 4)
+        {
+            std::cout << "\tВведите имя для сохраняемых файлов: ";
+            std::string filename;
+            std::cin >> filename;
+            filename += "\n" + filename + "\n" + filename;
+            auto original_buff = std::cin.rdbuf();
+            std::istringstream input(filename);
+            std::cin.rdbuf(input.rdbuf());
+            pipes.save_to_file();
+            kss.save_to_file();
+            g.save_to_file();
+            std::cin.rdbuf(original_buff);
+        }
+        else if (msg == 5)
+        {
+            std::cout << "\tВведите имя для загружаемых: ";
+            std::string filename;
+            std::cin >> filename;
+            filename += ".pipe\n" + filename + ".ks\n" + filename + ".graph";
+            auto original_buff = std::cin.rdbuf();
+            std::istringstream input(filename);
+            std::cin.rdbuf(input.rdbuf());
+            pipes.load_from_file();
+            kss.load_from_file();
+            g.load_from_file();
+            std::cin.rdbuf(original_buff);
+        }
+        else if (msg == 6)
         {
             print_main_menu();
         }
