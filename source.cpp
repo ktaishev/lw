@@ -481,7 +481,13 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             else if (node1 == node2)
                 std::cout << "\tДистанция: 0" << std::endl;
             else
-                std::cout << "\tДистанция: " << g.minimal_distance(node1, node2, pipes) << std::endl;
+            {
+                auto distance = g.minimal_distance(node1, node2, pipes);
+                if (distance == UINT_MAX)
+                    std::cout << "\tНе существует пути между указанными вершинами" << std::endl;
+                else
+                    std::cout << "\tДистанция: " << distance << std::endl;
+            }
             PRINT_HASH_LINE;
         }
         else if (msg == 10)

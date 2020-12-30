@@ -1,5 +1,7 @@
 ﻿#include "graph.h"
 
+#define OTLADKA(x) std::cout << "###ОТЛАДКА### x: " << x << std::endl;
+
 void graph::swap_nodes(std::queue<unsigned int> new_order)
 {
 	auto matrix_old = matrix;
@@ -217,6 +219,7 @@ void graph::top_sort(void)
 
 	std::queue<unsigned int> q; //Стек, заполняющийся ко второй части алгоритма
 	std::vector<unsigned int> table(node_count, 0); //Таблица, хранящая степени вершин. Значение i-того элемента равно степени i-той вершины
+	bool is_chain = false; //При появлении цепи топологическая сортировка невозможна
 	//Заполнение таблицы степенями
 	for (size_t i = 0; i < node_count; i++)
 		for (size_t j = 0; j < node_count; j++)
@@ -224,11 +227,14 @@ void graph::top_sort(void)
 				table[i]++;
 
 	//Нахождение нового порядка (Часть 1)
-	while (q.size() < node_count)
+	while (q.size() < node_count && !is_chain)
 	{
 		auto pos = std::find(table.begin(), table.end(), 0);
 		if (pos == table.end())
+		{
 			std::cout << "\tВ графе присутсвует цепь, топологическая сортировка невозможна" << std::endl;
+			is_chain = true;
+		}
 		else
 		{
 			*pos = UINT_MAX;
@@ -239,9 +245,9 @@ void graph::top_sort(void)
 					table[i]--;
 		}
 	}
-
-	//Установка нового порядка вершин в графе (Часть 2)
-	swap_nodes(q);
+	if(!is_chain)
+		//Установка нового порядка вершин в графе (Часть 2)
+		swap_nodes(q);
 }
 
 void graph::max_flow(void)
@@ -269,7 +275,7 @@ unsigned int graph::minimal_distance(unsigned int start_node, unsigned int end_n
 			if (connecting_pipe != UINT_MAX) //Если вершина смежная
 			{
 				//Считаем новое расстояние как расстояние до текущей + длина трубы
-				std::cout << "###ОТЛАДКА### " << "connecting pipe " << connecting_pipe << std::endl;
+				OTLADKA(connecting_pipe);
 				unsigned int new_distance = distance[current_node] + pipes.return_pipe_cost(connecting_pipe);
 				if (new_distance < distance[i]) //Если дистанция вышла меньше той, что на данный момент в таблице, заменяем
 					distance[i] = new_distance; 
@@ -278,6 +284,9 @@ unsigned int graph::minimal_distance(unsigned int start_node, unsigned int end_n
 			}
 		}
 	}
+	//Алгоритм работает, но иногда некоторые вершины проверяются дважды 
+	//Можно избавиться от is_visited, создать копию matrix, занулять уже пройденные трубы
+	//!!!Эффективность по памяти, так как is_visited в требует в node_count меньше памяти 
 	return distance[end_node]; //Возвращаем дистанцию до заданного узла
 	/* 
 	* Возможно есть более эффективные методы, в которые начало алгоритма исходит из конечной вершины
