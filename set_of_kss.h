@@ -27,14 +27,13 @@ private:
             num_of_active_shops = param3;
             efficiency = param4;
         }
-        /*
-        template<typename T>
-        T return_parameter(int parameter_id)
+
+        std::string return_name() { return name; };
+        void change_name(std::string new_value) { name = new_value; };
+        double return_parameter(int parameter_id)
         {
             if (parameter_id == 0)
                 return id;
-            else if (parameter_id == 1)
-                return 3;// return name;
             else if (parameter_id == 2)
                 return num_of_shops;
             else if (parameter_id == 3)
@@ -48,9 +47,7 @@ private:
         template<typename T>
         void change_parameter(T new_value, int parameter_id)
         {
-            if (parameter_id == 1)
-                name = new_value;
-            else if (parameter_id == 2)
+            if (parameter_id == 2)
                 num_of_shops = new_value;
             else if (parameter_id == 2)
                 num_of_active_shops = new_value;
@@ -59,8 +56,6 @@ private:
             else
                 is_node = new_value;
         }
-        */
-        
     };
 
     std::vector<ks> kss; //Вектор, хранящий все компрессорные станции 
@@ -86,6 +81,10 @@ public:
     template<typename T> //Поиск компрессорной станции в диапазоне по параметру 
     void search_ks(T, T, int);
 
+    void search_ks_by_name(std::string);
+
+    void bunch_editing_ks_name(std::string );
+
     template<typename T> //Изменение выбранного параметра у всех выбранных компрессорных станций 
     void bunch_editing_ks(T, int);
 };
@@ -95,16 +94,34 @@ inline void set_of_kss::search_ks(T left, T right, int parameter_id)
 {
     std::vector<int> ids;
     searched_ks.clear();
-    /*
     for_each(kss.begin(), kss.end(),
         [&](ks p) mutable {
-            if (left <= p.return_parameter(parameter_id) && p.return_parameter<double>(parameter_id) <= right)
+            if (left <= p.return_parameter(parameter_id) && p.return_parameter(parameter_id) <= right)
                 searched_ks.push_back(p.id);
         });
-    */
-    
 
-    std::cout << "Добавить найденные компрессорные станции к выбранным? (Нет - 0 | Да - 1): ";
+    std::cout << "\tНайдено " << searched_ks.size() << " КС" << std::endl;
+    std::cout << "\tДобавить найденные компрессорные станции к выбранным? (Нет - 0 | Да - 1): ";
+    
+    int msg = get_number(0, 1);
+
+    if (msg == 1)
+        for (auto it = searched_ks.begin(); it != searched_ks.end(); it++)
+            selected_ks.push_back(*it);
+}
+
+inline void set_of_kss::search_ks_by_name(std::string left)
+{
+    std::vector<int> ids;
+    searched_ks.clear();
+    for_each(kss.begin(), kss.end(),
+        [&](ks p) mutable {
+            if (left == p.return_name())
+                searched_ks.push_back(p.id);
+        });
+
+    std::cout << "\tНайдено " << searched_ks.size() << " КС" << std::endl;
+    std::cout << "\tДобавить найденные компрессорные станции к выбранным? (Нет - 0 | Да - 1): ";
     
     int msg = get_number(0, 1);
 
@@ -116,7 +133,12 @@ inline void set_of_kss::search_ks(T left, T right, int parameter_id)
 template<typename T>
 inline void set_of_kss::bunch_editing_ks(T new_value, int parameter_id)
 {
-    //for_each(selected_ks.begin(), selected_ks.end(), [&](int index) {kss[index].change_parameter(new_value, parameter_id); });
+    for_each(selected_ks.begin(), selected_ks.end(), [&](int index) {kss[index].change_parameter(new_value, parameter_id); });
+}
+
+inline void set_of_kss::bunch_editing_ks_name(std::string new_value)
+{
+    for_each(selected_ks.begin(), selected_ks.end(), [&](int index) {kss[index].change_name(new_value); });
 }
 
 #endif

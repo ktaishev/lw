@@ -303,7 +303,8 @@ void ks_setup(set_of_kss& kss)
             {
                 std::cout << "\tВведите имя для поиска: ";
                 std::string param;
-                kss.search_ks(param, param, 1);
+                std::cin >> param;
+                kss.search_ks_by_name(param);
             }
             else if (parametr_id == 2)
             {
@@ -333,7 +334,7 @@ void ks_setup(set_of_kss& kss)
             {
                 std::string new_value;
                 std::cin >> new_value;
-                kss.bunch_editing_ks(new_value, parametr_id);
+                kss.bunch_editing_ks_name(new_value);
             }
             else if (parametr_id == 2 || parametr_id == 3)
             {

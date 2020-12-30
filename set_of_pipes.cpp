@@ -137,7 +137,7 @@ void set_of_pipes::load_from_file(void)
             pipes.push_back(pipe(i, length_tmp, diameter_tmp, inRepait_tmp));
         }
         pipe_count += extra_pipe_count;
-        std::cout << "\tЗагружено " << extra_pipe_count << " труб" << std::endl;
+        std::cout << "\tЗагружено " << extra_pipe_count << " труб (из " << filename << ")" << std::endl;
         file.close();
     }
     else

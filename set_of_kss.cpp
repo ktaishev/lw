@@ -137,7 +137,7 @@ void set_of_kss::load_from_file(void)
             kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp));
         }
         ks_count += extra_ks_count;
-        std::cout << "\tЗагружено " << extra_ks_count << " компрессорных станций" << std::endl;
+        std::cout << "\tЗагружено " << extra_ks_count << " компрессорных станций (из " << filename << ")" << std::endl;
         file.close();
     }
     else
