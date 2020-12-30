@@ -5,6 +5,7 @@
 #include <vector> 
 #include <queue>
 #include <fstream>
+#include <tuple>
 
 #include "set_of_pipes.h"
 
@@ -28,7 +29,7 @@ public:
     void load_from_file(void); //Загрузка графа из файла
     void top_sort(void); //Топологическая сортировка
     void max_flow(void); //Максимальный поток в сети
-    unsigned int minimal_distance(unsigned int, unsigned int, set_of_pipes&); //Кратчайший путь между двумя вершинами
+    std::tuple<unsigned int, std::vector<unsigned int>> minimal_distance(unsigned int, unsigned int, set_of_pipes&); //Кратчайший путь между двумя вершинами
     unsigned int return_node_count(void); //Возврат числа вершин
 };
 

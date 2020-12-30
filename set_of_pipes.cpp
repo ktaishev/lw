@@ -122,6 +122,7 @@ void set_of_pipes::load_from_file(void)
     std::string filename;
     std::cout << "\tВведите имя загружаемого файла: ";
     std::cin >> filename;
+    filename += ".pipe";
     file.open(filename, std::ofstream::in);
     if (file.is_open())
     {
@@ -141,7 +142,7 @@ void set_of_pipes::load_from_file(void)
     }
     else
     {
-        std::cout << "\tПрограмма не смогла найти указанный файл" << std::endl;
+        std::cout << "\tПрограмма не смогла найти указанный файл (" << filename << ")" << std::endl;
         std::cout << "\tЗапустить поиск другого файла? (Нет - 0 | Да - 1): ";
         int msg = get_number(0, 1);
         if (msg == 1)

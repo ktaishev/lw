@@ -66,17 +66,9 @@ int main()
         }
         else if (msg == 5)
         {
-            std::cout << "\tВведите имя для загружаемых: ";
-            std::string filename;
-            std::cin >> filename;
-            filename += ".pipe\n" + filename + ".ks\n" + filename + ".graph";
-            auto original_buff = std::cin.rdbuf();
-            std::istringstream input(filename);
-            std::cin.rdbuf(input.rdbuf());
             pipes.load_from_file();
             kss.load_from_file();
             g.load_from_file();
-            std::cin.rdbuf(original_buff);
         }
         else if (msg == 6)
         {
@@ -503,19 +495,42 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             unsigned int node1 = get_number(0, g.return_node_count() - 1);
             std::cout << "\tВведите конечную вершину: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tОтобразить кратчайший путь? (Нет - 0 | Да - 1): ";
+            bool show_path = get_number(0, 1);
             if (kss.is_node(node1) == false)
                 std::cout << "\tКомпресорная станция ID " << node1 << " не является вершиной" << std::endl;
             else if (kss.is_node(node2) == false)
                 std::cout << "\tКомпресорная станция ID " << node2 << " не является вершиной" << std::endl;
             else if (node1 == node2)
+            {
                 std::cout << "\tДистанция: 0" << std::endl;
+                if (show_path)
+                    std::cout << "\tV(" << node1 << ") -> V(" << node2 << ")" << std::endl;
+            }
             else
             {
-                auto distance = g.minimal_distance(node1, node2, pipes);
+                auto [distance, path] = g.minimal_distance(node1, node2, pipes);
                 if (distance == UINT_MAX)
                     std::cout << "\tНе существует пути между указанными вершинами" << std::endl;
                 else
+                {
                     std::cout << "\tДистанция: " << distance << std::endl;
+                    if (show_path)
+                    {
+                        for (auto& V : path)
+                            std::cout << " V " << V;
+                        std::cout << std::endl;
+                        for (auto rit = path.rbegin(); rit != path.rend(); rit++)
+                            std::cout << " V " << *rit;
+                        /*
+                        std::cout << "\tV(";
+                        for (auto rit = path.rbegin(); rit != path.rend(); rit++)
+                            std::cout << *rit << ") - > V(";
+                        std::cout << path[0] << ")" << std::endl;
+                        */
+                        
+                    }
+                }
             }
             PRINT_HASH_LINE;
         }

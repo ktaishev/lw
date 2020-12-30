@@ -1,6 +1,6 @@
 ﻿#include "graph.h"
 
-#define OTLADKA(x) std::cout << "###ОТЛАДКА### x: " << x << std::endl;
+#define OTLADKA(x, text) std::cout << "###ОТЛАДКА### " << text << ": " << x << std::endl;
 
 void graph::swap_nodes(std::queue<unsigned int> new_order)
 {
@@ -172,20 +172,22 @@ void graph::load_from_file(void)
 	std::string filename;
 	std::cout << "\tВведите имя загружаемого файла: ";
 	std::cin >> filename;
+	filename += ".graph";
 	file.open(filename, std::ofstream::in);
 	if (file.is_open())
 	{
 		unsigned int node_count_tmp;
 		file >> node_count_tmp;
 		init(node_count_tmp);
-		for (size_t i = 0; i < node_count; i++)
-			for (size_t j = 0; j < node_count; j++)
+		for (size_t i = 0; i < node_count_tmp; i++)
+			for (size_t j = 0; j < node_count_tmp; j++)
 				file >> matrix[i][j];
 		file.close();
+		std::cout << "\tГраф успешно загружен (Число вершин: " << node_count_tmp << " )" << std::endl;
 	}
 	else
 	{
-		std::cout << "\tПрограмма не смогла найти указанный файл" << std::endl;
+		std::cout << "\tПрограмма не смогла найти указанный файл (" << filename << ")" << std::endl;
 		std::cout << "\tЗапустить поиск другого файла? (Нет - 0 | Да - 1): ";
 		int msg = get_number(0, 1);
 		if (msg == 1)
@@ -254,19 +256,22 @@ void graph::max_flow(void)
 {
 }
 
-unsigned int graph::minimal_distance(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes)
+std::tuple<unsigned int, std::vector<unsigned int>> graph::minimal_distance(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes)
 {
 	std::vector<unsigned int> distance(node_count, UINT_MAX); //Дистанции от текущей до всех прочих, изначально бесконечно большие
 	std::vector<bool> is_visited(node_count, false); //Трекер посещенных вершин
+	std::vector<unsigned int> prev_node(node_count, start_node); //Храним информацию о вершине, из которой вел кратчайший путь
+	std::vector<unsigned int> path; //Кратчайший путь
 	std::queue<unsigned int> q; //очередь вершин для посещений
 
+	//Нахождение кратчайшего пути 
 	q.push(start_node); //Начинаем с начальной вершины
 	distance[start_node] = 0; //Дистанция в начальную вершину равна 0
+	is_visited[0] = true;
 	while (q.size() > 0) //Пока есть необработанные вершины
 	{
 		unsigned int current_node = q.front(); //Достаем следующую из очереди
 		q.pop(); 
-		is_visited[current_node] = true; //Отмечаем, что данная вершина обработана (посещена)
 
 		//Для нахождения смежных вершин проверяем все
 		for (size_t i = 0; i < node_count; i++)
@@ -275,19 +280,34 @@ unsigned int graph::minimal_distance(unsigned int start_node, unsigned int end_n
 			if (connecting_pipe != UINT_MAX) //Если вершина смежная
 			{
 				//Считаем новое расстояние как расстояние до текущей + длина трубы
-				OTLADKA(connecting_pipe);
 				unsigned int new_distance = distance[current_node] + pipes.return_pipe_cost(connecting_pipe);
 				if (new_distance < distance[i]) //Если дистанция вышла меньше той, что на данный момент в таблице, заменяем
-					distance[i] = new_distance; 
-				if(is_visited[i] == false) //Если соседняя вершина еще не была посещена, добавляем ее в очередь
+				{
+					distance[i] = new_distance;
+					prev_node[i] = current_node; //Если из текущей вершины путь кратчайший, то меняем значение предыдущей вершины для соседа
+				}
+				if (is_visited[i] == false) //Если соседняя вершина еще не была посещена, добавляем ее в очередь
+				{
 					q.push(i);
+					is_visited[i] = true;
+				}
 			}
 		}
 	}
-	//Алгоритм работает, но иногда некоторые вершины проверяются дважды 
-	//Можно избавиться от is_visited, создать копию matrix, занулять уже пройденные трубы
-	//!!!Эффективность по памяти, так как is_visited в требует в node_count меньше памяти 
-	return distance[end_node]; //Возвращаем дистанцию до заданного узла
+
+	//Восстанавливаем кратчайший путь
+	bool finish = false;
+	path.push_back(end_node);
+	while (!finish)
+	{
+		path.push_back(prev_node[end_node]);
+		if (prev_node[end_node] != start_node)
+			end_node = prev_node[end_node];
+		else
+			finish = true;
+	}
+
+	return std::make_tuple(distance[end_node], path); //Возвращаем дистанцию до заданного узла
 	/* 
 	* Возможно есть более эффективные методы, в которые начало алгоритма исходит из конечной вершины
 	* Так, что часть вершин будет пропущена. В текущем алгоритме посещаются все вершины, что затратно по ресурсам
