@@ -174,3 +174,8 @@ unsigned int set_of_pipes::return_pipe_cost(unsigned int index)
     else
         return unsigned int(pipes[index].length);
 }
+
+double set_of_pipes::return_performance(unsigned int index)
+{
+    return pipes[index].performance;
+}

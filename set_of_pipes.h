@@ -36,8 +36,12 @@ private:
                 return length;
             else if (parameter_id == 2)
                 return diameter;
-            else
+            else if (parameter_id == 3)
                 return (inRepair ? 1.0 : 0.0);
+            else if (parameter_id == 2)
+                return (is_edge ? 1.0 : 0.0);
+            else
+                return performance;
         }
 
         template<typename T>
@@ -47,12 +51,19 @@ private:
                 length = new_value;
             else if (parameter_id == 2)
                 diameter = new_value;
-            else
+            else if (parameter_id == 3)
             {
                 if (new_value == 0)
-                    inRepair = true;
-                else
                     inRepair = false;
+                else
+                    inRepair = true;
+            }
+            else if (parameter_id == 3)
+            {
+                if (new_value == 0)
+                    is_edge = false;
+                else
+                    is_edge = true;
             }
         }
     };
@@ -73,9 +84,10 @@ public:
     void save_to_file(void); //Сохранение всех труб в файл
     void load_from_file(void); //Загрузка труб из файла
     void set_edge(int, bool); //Установка является ли труба ребром в графе
-    bool is_edge(int); //Проверкаа является ли труба ребром в графе
+    bool is_edge(int); //Проверка является ли труба ребром в графе
     unsigned int return_pipe_count(void); //Возврат числа труб
-    unsigned int return_pipe_cost(unsigned int index); //Возвращаем вес трубы
+    unsigned int return_pipe_cost(unsigned int); //Возвращаем вес трубы
+    double return_performance(unsigned int); //Возвращаем производительность
 
     template<typename T> //Поиск трубы в диапазоне по параметру 
     void search_pipe(T, T, int);

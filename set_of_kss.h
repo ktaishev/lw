@@ -27,19 +27,22 @@ private:
             num_of_active_shops = param3;
             efficiency = param4;
         }
-
         /*
         template<typename T>
         T return_parameter(int parameter_id)
         {
-            if (parameter_id == 1)
-                return name;
+            if (parameter_id == 0)
+                return id;
+            else if (parameter_id == 1)
+                return 3;// return name;
             else if (parameter_id == 2)
                 return num_of_shops;
             else if (parameter_id == 3)
                 return num_of_active_shops;
-            else
+            else if(parameter_id == 4)
                 return efficiency;
+            else
+                return (is_node ? 1.0 : 0.0);
         }
 
         template<typename T>
@@ -51,10 +54,13 @@ private:
                 num_of_shops = new_value;
             else if (parameter_id == 2)
                 num_of_active_shops = new_value;
+            else if (parameter_id == 3)
+                num_of_active_shops = new_value;
             else
-                efficiency = new_value;
+                is_node = new_value;
         }
         */
+        
     };
 
     std::vector<ks> kss; //Вектор, хранящий все компрессорные станции 
@@ -90,12 +96,13 @@ inline void set_of_kss::search_ks(T left, T right, int parameter_id)
     std::vector<int> ids;
     searched_ks.clear();
     /*
-    for_each(kss.begin(), kss.end(), 
+    for_each(kss.begin(), kss.end(),
         [&](ks p) mutable {
-            if (left <= p.return_parameter(parameter_id) && p.return_parameter(parameter_id) <= right)
+            if (left <= p.return_parameter(parameter_id) && p.return_parameter<double>(parameter_id) <= right)
                 searched_ks.push_back(p.id);
         });
-        */
+    */
+    
 
     std::cout << "Добавить найденные компрессорные станции к выбранным? (Нет - 0 | Да - 1): ";
     
