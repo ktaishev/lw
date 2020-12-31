@@ -27,7 +27,8 @@ void set_of_pipes::print_to_console(int index)
     std::cout << "\tID трубы: " << pipes[index].id << std::endl
         << "\tДлина трубы: " << pipes[index].length << std::endl
         << "\tДиаметр трубы: " << pipes[index].diameter << std::endl
-        << (pipes[index].inRepair ? "\tТруба в ремонте" : "\tТруба работает") << std::endl;
+        << (pipes[index].inRepair ? "\tТруба в ремонте" : "\tТруба работает") << std::endl
+        << "\tПроизводительность: " << pipes[index].performance << std::endl;
     std::cout << std::endl;
 }
 
@@ -79,7 +80,7 @@ void set_of_pipes::change_repair_status(int index)
     if (pipes[index].inRepair)
         pipes[index].performance = 0;
     else
-        pipes[index].performance = sqrt(pow5(pipes[index].diameter/1000)/pipes[index].length);
+        pipes[index].performance = std::round(10000 * sqrt(pow5(pipes[index].diameter / 1000) / pipes[index].length));
 }
 
 void set_of_pipes::print_all_pipes_to_console(void)
@@ -157,9 +158,20 @@ void set_of_pipes::set_edge(int index, bool status)
     pipes[index].is_edge = status;
 }
 
+void set_of_pipes::set_nodes(int index, unsigned int node1, unsigned int node2)
+{
+    pipes[index].first_node = node1;
+    pipes[index].second_node = node2;
+}
+
 bool set_of_pipes::is_edge(int index)
 {
     return pipes[index].is_edge;
+}
+
+std::pair<unsigned int, unsigned int> set_of_pipes::return_nodes(int index)
+{
+    return std::make_pair(pipes[index].first_node, pipes[index].second_node);
 }
 
 unsigned int set_of_pipes::return_pipe_count(void)

@@ -20,13 +20,16 @@ private:
         bool inRepair;
         bool is_edge = false; //Для работы с нефтесетью, проверка является ли труба ребром
         double performance;
+        unsigned int first_node;
+        unsigned int second_node;
+
         pipe(unsigned int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
             length = param1;
             diameter = param2;
             inRepair = param3;
-            performance = sqrt(pow5(diameter / 1000) / length);
+            performance = std::round(10000 * sqrt(pow5(diameter / 1000) / length));
         }
         double return_parameter(int parameter_id)
         {
@@ -84,7 +87,9 @@ public:
     void save_to_file(void); //Сохранение всех труб в файл
     void load_from_file(void); //Загрузка труб из файла
     void set_edge(int, bool); //Установка является ли труба ребром в графе
+    void set_nodes(int, unsigned int, unsigned int); //Установка является ли труба ребром в графе
     bool is_edge(int); //Проверка является ли труба ребром в графе
+    std::pair<unsigned int, unsigned int> return_nodes(int); //Возвращаем индексы вершин, которые соединяет труба
     unsigned int return_pipe_count(void); //Возврат числа труб
     unsigned int return_pipe_cost(unsigned int); //Возвращаем вес трубы
     double return_performance(unsigned int); //Возвращаем производительность

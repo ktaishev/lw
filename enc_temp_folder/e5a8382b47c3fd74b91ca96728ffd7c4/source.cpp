@@ -26,7 +26,7 @@ int main()
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 4);
+        int msg = get_number(0, 6);
         if (msg == 0)
         {
             finish = true;
@@ -51,6 +51,26 @@ int main()
             print_main_menu();
         }
         else if (msg == 4)
+        {
+            std::cout << "\tВведите имя для сохраняемых файлов: ";
+            std::string filename;
+            std::cin >> filename;
+            filename += "\n" + filename + "\n" + filename;
+            auto original_buff = std::cin.rdbuf();
+            std::istringstream input(filename);
+            std::cin.rdbuf(input.rdbuf());
+            pipes.save_to_file();
+            kss.save_to_file();
+            g.save_to_file();
+            std::cin.rdbuf(original_buff);
+        }
+        else if (msg == 5)
+        {
+            pipes.load_from_file();
+            kss.load_from_file();
+            g.load_from_file();
+        }
+        else if (msg == 6)
         {
             print_main_menu();
         }
@@ -527,7 +547,6 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
         else
         {
             auto flow = g.max_flow(node1, node2, pipes);
-            std::cout << "\tПоток между указанными вершинами: " << flow << std::endl;
         }
         PRINT_HASH_LINE;
         }

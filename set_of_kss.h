@@ -19,13 +19,14 @@ private:
         int num_of_active_shops; //Количество активных цехов
         double efficiency; //Число в диапазоне 0-1, отношение числа рабочих цехов ко всем
         bool is_node = false; //Для работы с нефтесетью, проверка является ли КС вершиной
-        ks(unsigned int param0, std::string param1, int param2, int param3, double param4)
+        ks(unsigned int param0, std::string param1, int param2, int param3, double param4, bool param5 = false)
         {
             id = param0;
             name = param1;
             num_of_shops = param2;
             num_of_active_shops = param3;
             efficiency = param4;
+            is_node = param5;
         }
 
         std::string return_name() { return name; };

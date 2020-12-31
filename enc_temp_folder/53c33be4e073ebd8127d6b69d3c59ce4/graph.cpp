@@ -260,7 +260,52 @@ void graph::top_sort(void)
 
 double graph::max_flow(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes)
 {
-	return 0;
+	auto tmp_matrix = matrix;
+	double flow = 0;
+	std::vector<std::pair<double, double>> flows(edge_count);
+	std::cout << "edge count " << edge_count << std::endl;
+	//Заполняем кортежи (ID трубы - текущий поток (0) - максимальный поток)
+	for (size_t i = 0; i < node_count; i++)
+		for (size_t j = 0; j < node_count; j++)
+			if (matrix[i][j] != UINT_MAX)
+			{
+				pipes.set_nodes(matrix[i][j], i, j);
+				flows[matrix[i][j]] = std::make_pair(0, pipes.return_performance(matrix[i][j]));
+			}
+	
+	auto matrix_orig = matrix;
+	bool finish = false;
+	while (!finish)
+	{
+		auto [distance, path] = minimal_distance(start_node, end_node, pipes);
+		std::cout << "Поток : " << flow << "Дистанция " << distance << " Путь : ";
+		for (auto& T : path)
+			std::cout << " " << T;
+		std::cout << std::endl;
+
+		if (distance != UINT_MAX)
+		{
+			unsigned int minimal_flow_pipe = 0; //ID трубы с минимальным потоком
+			double minimal_flow = flows[minimal_flow_pipe].second - flows[minimal_flow_pipe].first;
+			for (size_t i = 1; i < path.size(); i++)
+				if (flows[i].second - flows[i].first < flows[minimal_flow_pipe].second - flows[minimal_flow_pipe].first)
+					minimal_flow_pipe = i;
+			flow += flows[minimal_flow_pipe].second - flows[minimal_flow_pipe].first;
+			for (size_t i = 0; i < path.size(); i++)
+			{
+				flows[i].first = flows[minimal_flow_pipe].second - flows[minimal_flow_pipe].first;
+				if (flows[i].first == flows[i].second)
+				{
+					auto nodes = pipes.return_nodes(i);
+					disconnect_two_nodes(nodes.first, nodes.second);
+				}
+			}
+		}
+		else
+			finish = true;
+	}
+	matrix = matrix_orig;
+	return flow;
 }
 
 std::tuple<unsigned int, std::vector<unsigned int>> graph::minimal_distance(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes)
