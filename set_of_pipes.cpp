@@ -27,7 +27,8 @@ void set_of_pipes::print_to_console(int index)
     std::cout << "\tID трубы: " << pipes[index].id << std::endl
         << "\tДлина трубы: " << pipes[index].length << std::endl
         << "\tДиаметр трубы: " << pipes[index].diameter << std::endl
-        << (pipes[index].inRepair ? "\tТруба в ремонте" : "\tТруба работает") << std::endl;
+        << (pipes[index].inRepair ? "\tТруба в ремонте" : "\tТруба работает") << std::endl
+        << "\tПроизводительность: " << pipes[index].performance << std::endl;
     std::cout << std::endl;
 }
 
@@ -76,6 +77,10 @@ void set_of_pipes::change_repair_status(int index)
     //Меняем статус ремонта на обратный
     pipes[index].inRepair = !pipes[index].inRepair;
     std::cout << "\tТруба ID " << index << ((pipes[index].inRepair) ? " отправлена на ремонт" : " снова работает") << std::endl;
+    if (pipes[index].inRepair)
+        pipes[index].performance = 0;
+    else
+        pipes[index].performance = std::round(10000 * sqrt(pow5(pipes[index].diameter / 1000) / pipes[index].length));
 }
 
 void set_of_pipes::print_all_pipes_to_console(void)
@@ -118,6 +123,7 @@ void set_of_pipes::load_from_file(void)
     std::string filename;
     std::cout << "\tВведите имя загружаемого файла: ";
     std::cin >> filename;
+    filename += ".pipe";
     file.open(filename, std::ofstream::in);
     if (file.is_open())
     {
@@ -132,12 +138,12 @@ void set_of_pipes::load_from_file(void)
             pipes.push_back(pipe(i, length_tmp, diameter_tmp, inRepait_tmp));
         }
         pipe_count += extra_pipe_count;
-        std::cout << "\tЗагружено " << extra_pipe_count << " труб" << std::endl;
+        std::cout << "\tЗагружено " << extra_pipe_count << " труб (из " << filename << ")" << std::endl;
         file.close();
     }
     else
     {
-        std::cout << "\tПрограмма не смогла найти указанный файл" << std::endl;
+        std::cout << "\tПрограмма не смогла найти указанный файл (" << filename << ")" << std::endl;
         std::cout << "\tЗапустить поиск другого файла? (Нет - 0 | Да - 1): ";
         int msg = get_number(0, 1);
         if (msg == 1)
@@ -152,12 +158,36 @@ void set_of_pipes::set_edge(int index, bool status)
     pipes[index].is_edge = status;
 }
 
+void set_of_pipes::set_nodes(int index, unsigned int node1, unsigned int node2)
+{
+    pipes[index].first_node = node1;
+    pipes[index].second_node = node2;
+}
+
 bool set_of_pipes::is_edge(int index)
 {
     return pipes[index].is_edge;
 }
 
+std::pair<unsigned int, unsigned int> set_of_pipes::return_nodes(int index)
+{
+    return std::make_pair(pipes[index].first_node, pipes[index].second_node);
+}
+
 unsigned int set_of_pipes::return_pipe_count(void)
 {
     return pipe_count;
+}
+
+unsigned int set_of_pipes::return_pipe_cost(unsigned int index)
+{
+    if (pipes[index].inRepair)
+        return UINT_MAX;
+    else
+        return unsigned int(pipes[index].length);
+}
+
+double set_of_pipes::return_performance(unsigned int index)
+{
+    return pipes[index].performance;
 }

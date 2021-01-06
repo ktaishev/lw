@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <sstream>
 #include <locale>
 #include <set>
 
@@ -282,7 +283,8 @@ void ks_setup(set_of_kss& kss)
             {
                 std::cout << "\tВведите имя для поиска: ";
                 std::string param;
-                kss.search_ks(param, param, 1);
+                std::cin >> param;
+                kss.search_ks_by_name(param);
             }
             else if (parametr_id == 2)
             {
@@ -312,7 +314,7 @@ void ks_setup(set_of_kss& kss)
             {
                 std::string new_value;
                 std::cin >> new_value;
-                kss.bunch_editing_ks(new_value, parametr_id);
+                kss.bunch_editing_ks_name(new_value);
             }
             else if (parametr_id == 2 || parametr_id == 3)
             {
@@ -342,7 +344,7 @@ void ks_setup(set_of_kss& kss)
         }
         else
         {
-            std::cout << "\tКоманда не распознана. Повторите ввод. Введите 11 для получения помощи" << std::endl;
+            std::cout << "\tКоманда не распознана. Повторите ввод. Введите 13 для получения помощи" << std::endl;
             PRINT_HASH_LINE;
         }
     }
@@ -359,7 +361,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
     while (!finish)
     {
         std::cout << "\tВыбранный пункт: ";
-        int msg = get_number(0, 9);
+        int msg = get_number(0, 11);
         if (msg == 0)
         {
             finish = true;
@@ -419,9 +421,9 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             std::cout << "\tВведите конечную вершину для соединения: ";
             unsigned int node2 = get_number(0, g.return_node_count() - 1);
             if (kss.is_node(node1) == false)
-                std::cout << "\tКомпресорных станция ID " << node1 << " не является вершиной" << std::endl;
+                std::cout << "\tКомпресорная станция ID " << node1 << " не является вершиной" << std::endl;
             else if (kss.is_node(node2) == false)
-                std::cout << "\tКомпресорных станция ID " << node2 << " не является вершиной" << std::endl;
+                std::cout << "\tКомпресорная станция ID " << node2 << " не является вершиной" << std::endl;
             else if (node1 == node2)
                 std::cout << "\tНевозможно соединить вершину с самой собой";
             else
@@ -433,6 +435,7 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
                 else
                 {
                     g.connect_two_nodes(node1, node2, pipe_id);
+                    pipes.set_nodes(pipe_id, node1, node2);
                     pipes.set_edge(pipe_id, true);
                 }
             }
@@ -469,6 +472,66 @@ void graph_setup(set_of_pipes& pipes, set_of_kss& kss, graph& g)
             PRINT_HASH_LINE;
         }
         else if (msg == 9)
+        {
+            std::cout << "\tВведите начальную вершину: ";
+            unsigned int node1 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tВведите конечную вершину: ";
+            unsigned int node2 = get_number(0, g.return_node_count() - 1);
+            std::cout << "\tОтобразить кратчайший путь? (Нет - 0 | Да - 1): ";
+            bool show_path = get_number(0, 1);
+            if (kss.is_node(node1) == false)
+                std::cout << "\tКомпресорная станция ID " << node1 << " не является вершиной" << std::endl;
+            else if (kss.is_node(node2) == false)
+                std::cout << "\tКомпресорная станция ID " << node2 << " не является вершиной" << std::endl;
+            else if (node1 == node2)
+            {
+                std::cout << "\tДистанция: 0" << std::endl;
+                if (show_path)
+                {
+                    std::cout << "\tКратчайший путь: V(" << node1 << ") -> V(" << node2 << ")" << std::endl;
+                }
+            }
+            else
+            {
+                auto [distance, path] = g.minimal_distance(node1, node2, pipes);
+                if (distance == UINT_MAX)
+                    std::cout << "\tНе существует пути между указанными вершинами" << std::endl;
+                else
+                {
+                    std::cout << "\tДистанция: " << distance << std::endl;
+                    if (show_path)
+                    {
+                        std::cout << "\tКратчайший путь: ";
+                        for (auto rit = path.rbegin(); rit + 1!= path.rend(); rit++)
+                            std::cout << "V(" << *rit << ") -> ";
+                        std::cout << "V(" << *(path.rend() - 1) << ")" << std::endl;
+                    }
+                }
+            }
+            PRINT_HASH_LINE;
+        }
+        else if (msg == 10)
+        {
+        std::cout << "\tВведите начальную вершину: ";
+        unsigned int node1 = get_number(0, g.return_node_count() - 1);
+        std::cout << "\tВведите конечную вершину: ";
+        unsigned int node2 = get_number(0, g.return_node_count() - 1);
+        if (kss.is_node(node1) == false)
+            std::cout << "\tКомпресорная станция ID " << node1 << " не является вершиной" << std::endl;
+        else if (kss.is_node(node2) == false)
+            std::cout << "\tКомпресорная станция ID " << node2 << " не является вершиной" << std::endl;
+        else if (node1 == node2)
+        {
+            std::cout << "\tПоток равен бесконечности, указаны идентичные вершины" << std::endl;
+        }
+        else
+        {
+            auto flow = g.max_flow(node1, node2, pipes);
+            std::cout << "\tПоток между указанными вершинами: " << flow << std::endl;
+        }
+        PRINT_HASH_LINE;
+        }
+        else if (msg == 11)
         {
             print_graph_menu();
         }

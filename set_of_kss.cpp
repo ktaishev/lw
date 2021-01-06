@@ -19,7 +19,8 @@ void set_of_kss::print_to_console(int index)
         << "\tИмя: " << kss[index].name << std::endl
         << "\tКоличество цехов: " << kss[index].num_of_shops << std::endl
         << "\tКоличество активных цехов: " << kss[index].num_of_active_shops << std::endl
-        << "\tЭффективность: " << kss[index].efficiency * 100 << "%" << std::endl;
+        << "\tЭффективность: " << kss[index].efficiency * 100 << "%" << std::endl
+        << ((kss[index].is_node) ? "\tТруба задействована в нефтесети" : "\tТруба не задействована в нефтесети") << std::endl;
     std::cout << std::endl;
 }
 
@@ -107,7 +108,8 @@ void set_of_kss::save_to_file(void)
             file << kss[i].name << ' '
             << kss[i].num_of_shops << ' '
             << kss[i].num_of_active_shops << ' '
-            << kss[i].efficiency << std::endl;
+            << kss[i].efficiency << ' '
+            << kss[i].is_node << std::endl;
         std::cout << "\tДанные успешно сохранены в файл " << filename + ".ks" << std::endl;
         file.close();
     }
@@ -121,6 +123,7 @@ void set_of_kss::load_from_file(void)
     std::string filename;
     std::cout << "\tВведите имя загружаемого файла: ";
     std::cin >> filename;
+    filename += ".ks";
     file.open(filename, std::ofstream::in);
     if (file.is_open())
     {
@@ -132,16 +135,17 @@ void set_of_kss::load_from_file(void)
             int num_of_shops_tmp;
             int num_of_active_shops_tmp;
             double efficiency_tmp;
-            file >> name_tmp >> num_of_shops_tmp >> num_of_active_shops_tmp >> efficiency_tmp;
-            kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp));
+            bool is_node_tmp;
+            file >> name_tmp >> num_of_shops_tmp >> num_of_active_shops_tmp >> efficiency_tmp >> is_node_tmp;
+            kss.push_back(ks(i, name_tmp, num_of_shops_tmp, num_of_active_shops_tmp, efficiency_tmp, is_node_tmp));
         }
         ks_count += extra_ks_count;
-        std::cout << "\tЗагружено " << extra_ks_count << " компрессорных станций" << std::endl;
+        std::cout << "\tЗагружено " << extra_ks_count << " компрессорных станций (из " << filename << ")" << std::endl;
         file.close();
     }
     else
     {
-        std::cout << "\tПрограмма не смогла найти указанный файл" << std::endl;
+        std::cout << "\tПрограмма не смогла найти указанный файл (" << filename << ")" << std::endl;
         std::cout << "\tЗапустить поиск другого файла? (Нет - 0 | Да - 1): ";
         int msg = get_number(0, 1);
         if (msg == 1)

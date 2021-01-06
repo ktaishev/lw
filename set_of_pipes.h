@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector> 
 
+#define pow5(x) x*x*x*x*x
+
 unsigned int get_number(unsigned int min, unsigned int max);
 
 class set_of_pipes {
@@ -17,12 +19,17 @@ private:
         double diameter; //В миллиметрах от 500 до 1420
         bool inRepair;
         bool is_edge = false; //Для работы с нефтесетью, проверка является ли труба ребром
+        double performance;
+        unsigned int first_node;
+        unsigned int second_node;
+
         pipe(unsigned int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
             length = param1;
             diameter = param2;
             inRepair = param3;
+            performance = std::round(10000 * sqrt(pow5(diameter / 1000) / length));
         }
         double return_parameter(int parameter_id)
         {
@@ -32,8 +39,12 @@ private:
                 return length;
             else if (parameter_id == 2)
                 return diameter;
-            else
+            else if (parameter_id == 3)
                 return (inRepair ? 1.0 : 0.0);
+            else if (parameter_id == 2)
+                return (is_edge ? 1.0 : 0.0);
+            else
+                return performance;
         }
 
         template<typename T>
@@ -43,12 +54,19 @@ private:
                 length = new_value;
             else if (parameter_id == 2)
                 diameter = new_value;
-            else
+            else if (parameter_id == 3)
             {
                 if (new_value == 0)
-                    inRepair = true;
-                else
                     inRepair = false;
+                else
+                    inRepair = true;
+            }
+            else if (parameter_id == 3)
+            {
+                if (new_value == 0)
+                    is_edge = false;
+                else
+                    is_edge = true;
             }
         }
     };
@@ -69,8 +87,12 @@ public:
     void save_to_file(void); //Сохранение всех труб в файл
     void load_from_file(void); //Загрузка труб из файла
     void set_edge(int, bool); //Установка является ли труба ребром в графе
-    bool is_edge(int); //Проверкаа является ли труба ребром в графе
+    void set_nodes(int, unsigned int, unsigned int); //Установка является ли труба ребром в графе
+    bool is_edge(int); //Проверка является ли труба ребром в графе
+    std::pair<unsigned int, unsigned int> return_nodes(int); //Возвращаем индексы вершин, которые соединяет труба
     unsigned int return_pipe_count(void); //Возврат числа труб
+    unsigned int return_pipe_cost(unsigned int); //Возвращаем вес трубы
+    double return_performance(unsigned int); //Возвращаем производительность
 
     template<typename T> //Поиск трубы в диапазоне по параметру 
     void search_pipe(T, T, int);

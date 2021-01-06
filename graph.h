@@ -5,11 +5,15 @@
 #include <vector> 
 #include <queue>
 #include <fstream>
+#include <tuple>
+
+#include "set_of_pipes.h"
 
 unsigned int get_number(unsigned int min, unsigned int max);
 
 class graph {
     unsigned int node_count = 0; //Число вершин 
+    unsigned int edge_count = 0; //Число ребер
     std::vector<std::vector<int>> matrix; //Матрица смежности
     void swap_nodes(std::queue<unsigned int>); //Обмен двух вершин местами
 public:
@@ -25,7 +29,10 @@ public:
     void save_to_file(void); //Сохранение графа в файл
     void load_from_file(void); //Загрузка графа из файла
     void top_sort(void); //Топологическая сортировка
+    double max_flow(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes); //Максимальный поток в сети
+    std::tuple<unsigned int, std::vector<unsigned int>> minimal_distance(unsigned int, unsigned int, set_of_pipes&); //Кратчайший путь между двумя вершинами
     unsigned int return_node_count(void); //Возврат числа вершин
+    unsigned int return_edge_count(void); //Возврат числа ребер
 };
 
 #endif 
