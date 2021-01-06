@@ -79,9 +79,10 @@ void print_graph_menu(void)
 
 //Функция возвращающая число в случае успешного ввода, 
 //которое принадлежит заданному интервалу
-unsigned int get_number(unsigned int min, unsigned int max)
+template<typename T>
+T get_number(T min, T max)
 {
-    unsigned int n;
+    T n;
     while ((std::cin >> n).fail() || n < min || n > max)
     {
         std::cin.clear();

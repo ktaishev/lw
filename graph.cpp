@@ -301,7 +301,7 @@ std::tuple<unsigned int, std::vector<unsigned int>> graph::minimal_distance(unsi
 			}
 		}
 	}
-
+	auto copy_end_node = end_node;
 	//Восстанавливаем кратчайший путь
 	bool finish = false;
 	path.push_back(end_node);
@@ -314,14 +314,14 @@ std::tuple<unsigned int, std::vector<unsigned int>> graph::minimal_distance(unsi
 			finish = true;
 	}
 
-	return std::make_tuple(distance[end_node], path); //Возвращаем дистанцию до заданного узла
+	return std::make_tuple(distance[copy_end_node], path); //Возвращаем дистанцию до заданного узла
 	/* 
 	* Возможно есть более эффективные методы, в которые начало алгоритма исходит из конечной вершины
 	* Так, что часть вершин будет пропущена. В текущем алгоритме посещаются все вершины, что затратно по ресурсам
 	*/
 }
 
-unsigned int graph::return_node_count(void)
+int graph::return_node_count(void)
 {
 	return node_count;
 }

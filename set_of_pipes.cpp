@@ -174,7 +174,7 @@ std::pair<unsigned int, unsigned int> set_of_pipes::return_nodes(int index)
     return std::make_pair(pipes[index].first_node, pipes[index].second_node);
 }
 
-unsigned int set_of_pipes::return_pipe_count(void)
+int set_of_pipes::return_pipe_count(void)
 {
     return pipe_count;
 }

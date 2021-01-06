@@ -7,7 +7,8 @@
 #include <string>
 #include <vector>
 
-unsigned int get_number(unsigned int min, unsigned int max);
+template<typename T>
+T get_number(T, T);
 
 class set_of_kss {
 private:
@@ -76,7 +77,7 @@ public:
     void save_to_file(void); //Сохранение всех компрессорных станций в файл
     void load_from_file(void); //Загрузка компрессорных станций из файла
     void set_node(int, bool); //Установка является ли КС вершиной 
-    unsigned int return_ks_count(void); //Возврат числа компрессорных станций
+    int return_ks_count(void); //Возврат числа компрессорных станций
     bool is_node(int); //Проверка является ли КС вершиной
 
     template<typename T> //Поиск компрессорной станции в диапазоне по параметру 

@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
-#include <sstream>
+#include <sstream> // ???
 #include <locale>
 #include <set>
 
@@ -88,9 +88,14 @@ void pipes_setup(set_of_pipes& pipes)
         else if (msg == 2)
         {
             std::cout << "\tВведите ID удаляемой трубы: ";
-            int index = get_number(0, pipes.return_pipe_count() - 1);
-            pipes.delete_pipe(index);
-            std::cout << "\tТруба ID " << index << " успешно удалена" << std::endl;
+            if (pipes.return_pipe_count() == 0)
+                std::cout << "\tВ системе нет труб" << std::endl;
+            else 
+            {
+                int index = get_number(0, pipes.return_pipe_count() - 1);
+                pipes.delete_pipe(index);
+                std::cout << "\tТруба ID " << index << " успешно удалена" << std::endl;
+            }
             PRINT_HASH_LINE;
         }
         else if (msg == 3)

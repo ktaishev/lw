@@ -9,7 +9,8 @@
 
 #include "set_of_pipes.h"
 
-unsigned int get_number(unsigned int min, unsigned int max);
+template<typename T>
+T get_number(T, T);
 
 class graph {
     unsigned int node_count = 0; //Число вершин 
@@ -31,7 +32,7 @@ public:
     void top_sort(void); //Топологическая сортировка
     double max_flow(unsigned int start_node, unsigned int end_node, set_of_pipes& pipes); //Максимальный поток в сети
     std::tuple<unsigned int, std::vector<unsigned int>> minimal_distance(unsigned int, unsigned int, set_of_pipes&); //Кратчайший путь между двумя вершинами
-    unsigned int return_node_count(void); //Возврат числа вершин
+    int return_node_count(void); //Возврат числа вершин
     unsigned int return_edge_count(void); //Возврат числа ребер
 };
 
