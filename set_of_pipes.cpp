@@ -2,23 +2,17 @@
 
 void set_of_pipes::add_pipe(double length, double diameter)
 {
-    pipes.push_back(pipe(pipe_count, length, diameter)); //Добавляем трубу в вектом
-    pipe_count++; //Увеличиваем счетчик всех на 1 
+    auto pipe_tmp = pipe(pipe_count, length, diameter);
+    pipes.emplace(reinterpret_cast<int>(&pipe_tmp), &pipe_tmp);
+    pipe_count++; 
+    
 }
 
 void set_of_pipes::delete_pipe(int index)
 {
-    //Если труба была в выбранных, то при ее удалении автоматические деселектим ее
-    if (std::find(selected_pipes.begin(), selected_pipes.end(), pipes[index].id) != selected_pipes.end())
-        deselect_pipe(pipes[index].id);
-
-    //Чтобы не тратить время удаление (сдвиг элементов стоящих после нашего в векторе), время вплоть до O(n)
-    //Ставим на место удаляемого последний элемент, так как отсортированность не важна
-    //Последний элемент удаляем, время O(1)
-    pipes[index] = pipes.back();  
-    pipes[index].id = index;
-    pipes.pop_back();
-    pipe_count--; //Уменьшаем счетчик всех труб
+    pipes.erase(index);
+    selected_pipes.erase(index);
+    pipe_count--;
 }
 
 void set_of_pipes::print_to_console(int index)
@@ -91,7 +85,7 @@ void set_of_pipes::print_all_pipes_to_console(void)
     else
     {
         std::cout << "\tВсе трубы:" << std::endl << std::endl;
-        for (unsigned int i = 0; i < pipe_count; i++)
+        for (int i = 0; i < pipe_count; i++)
             print_to_console(i);
     }
 }
@@ -106,7 +100,7 @@ void set_of_pipes::save_to_file(void)
     if (file.is_open())
     {
         file << pipe_count << std::endl;
-        for (unsigned int i = 0; i < pipe_count; i++)
+        for (int i = 0; i < pipe_count; i++)
             file << pipes[i].length << ' '
             << pipes[i].diameter << ' '
             << pipes[i].inRepair << std::endl;
@@ -127,7 +121,7 @@ void set_of_pipes::load_from_file(void)
     file.open(filename, std::ofstream::in);
     if (file.is_open())
     {
-        unsigned int extra_pipe_count;
+        int extra_pipe_count;
         file >> extra_pipe_count;
         for (size_t i = pipe_count; i < pipe_count + extra_pipe_count; i++)
         {
@@ -158,7 +152,7 @@ void set_of_pipes::set_edge(int index, bool status)
     pipes[index].is_edge = status;
 }
 
-void set_of_pipes::set_nodes(int index, unsigned int node1, unsigned int node2)
+void set_of_pipes::set_nodes(int index, int node1, int node2)
 {
     pipes[index].first_node = node1;
     pipes[index].second_node = node2;
@@ -169,7 +163,7 @@ bool set_of_pipes::is_edge(int index)
     return pipes[index].is_edge;
 }
 
-std::pair<unsigned int, unsigned int> set_of_pipes::return_nodes(int index)
+std::pair<int, int> set_of_pipes::return_nodes(int index)
 {
     return std::make_pair(pipes[index].first_node, pipes[index].second_node);
 }
@@ -179,15 +173,15 @@ int set_of_pipes::return_pipe_count(void)
     return pipe_count;
 }
 
-unsigned int set_of_pipes::return_pipe_cost(unsigned int index)
+int set_of_pipes::return_pipe_cost(int index)
 {
     if (pipes[index].inRepair)
         return UINT_MAX;
     else
-        return unsigned int(pipes[index].length);
+        return int(pipes[index].length);
 }
 
-double set_of_pipes::return_performance(unsigned int index)
+double set_of_pipes::return_performance(int index)
 {
     return pipes[index].performance;
 }

@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <vector> 
+#include <unordered_map>
+#include <unordered_set>
 
 #define pow5(x) x*x*x*x*x
 
@@ -15,16 +17,16 @@ class set_of_pipes {
 private:
     class pipe {
     public:
-        unsigned int id;
+        int id;
         double length; //В метрах
         double diameter; //В миллиметрах от 500 до 1420
         bool inRepair;
         bool is_edge = false; //Для работы с нефтесетью, проверка является ли труба ребром
         double performance;
-        unsigned int first_node; //Вход
-        unsigned int second_node; //Выход
+        int first_node; //Вход
+        int second_node; //Выход
 
-        pipe(unsigned int param0, double param1, double param2, bool param3 = false)
+        pipe(int param0, double param1, double param2, bool param3 = false)
         {
             id = param0;
             length = param1;
@@ -72,10 +74,10 @@ private:
         }
     };
 
-    std::vector<pipe> pipes; //Вектор, хранящий все трубы 
-    std::vector<int> selected_pipes; //Вектор, хранящий все выбранные трубы
-    std::vector<int> searched_pipes; //Вектор, хранящий все найденные трубы (только результаты последного запроса)
-    unsigned int pipe_count; //Текущее число труб
+    std::unordered_map<int, pipe> pipes; //Вектор, хранящий все трубы 
+    std::unordered_set<int> selected_pipes; //Вектор, хранящий все выбранные трубы
+    std::unordered_set<int> searched_pipes; //Вектор, хранящий все найденные трубы (только результаты последного запроса)
+    int pipe_count; //Текущее число труб
 public:
     void add_pipe(double, double); //Добавление трубы
     void delete_pipe(int); //Удаление трубы
